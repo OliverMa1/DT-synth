@@ -1,0 +1,192 @@
+\hypertarget{teacher_8h}{}\section{teacher.\+h File Reference}
+\label{teacher_8h}\index{teacher.\+h@{teacher.\+h}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$tuple$>$}\newline
+{\ttfamily \#include $<$typeinfo$>$}\newline
+{\ttfamily \#include \char`\"{}z3++.\+h\char`\"{}}\newline
+Include dependency graph for teacher.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{teacher_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=137pt]{teacher_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ int $>$ \hyperlink{teacher_8h_aec1fd0b948385829532e05caf2ce9fa6}{check\+\_\+initial\+\_\+condition} (const z3\+::expr \&hypothesis, const z3\+::expr \&initial\+\_\+vertices, z3\+::context \&context, const z3\+::expr\+\_\+vector \&variables)
+\item 
+std\+::vector$<$ int $>$ \hyperlink{teacher_8h_aeabe39d27d05ea0bda7d0481df52541b}{check\+\_\+safe\+\_\+condition} (const z3\+::expr \&hypothesis, const z3\+::expr \&safe\+\_\+vertices, z3\+::context \&context, const z3\+::expr\+\_\+vector \&variables)
+\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \hyperlink{teacher_8h_a9217d55403f5e487bf7ac97a728e7b25}{build\+\_\+counterexample} (const z3\+::expr \&counterexample, const std\+::vector$<$ int $>$ \&start, const z3\+::expr \&edges, z3\+::context \&context, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&variables\+\_\+dash, const z3\+::expr\+\_\+vector \&all\+\_\+variables, const int n)
+\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \hyperlink{teacher_8h_a3acaa31b9de19512fb734e356a54af7b}{existential\+\_\+check} (const z3\+::expr \&hypothesis, z3\+::expr \&hypothesis\+\_\+edge\+\_\+nodes, const z3\+::expr \&vertices, const z3\+::expr \&vertices\+\_\+dash, const z3\+::expr \&vertices\+\_\+player0, const z3\+::expr \&edges, z3\+::context \&context, const z3\+::expr\+\_\+vector \&all\+\_\+variables, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&variables\+\_\+dash, const int \&n)
+\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \hyperlink{teacher_8h_a9c2ae867f683c54913e6e6059bbdee2c}{universal\+\_\+check} (const z3\+::expr \&hypothesis, z3\+::expr \&hypothesis\+\_\+edge\+\_\+nodes, const z3\+::expr \&vertices, const z3\+::expr \&vertices\+\_\+dash, const z3\+::expr \&vertices\+\_\+player1, const z3\+::expr \&edges, z3\+::context \&context, const z3\+::expr\+\_\+vector \&all\+\_\+variables, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&variables\+\_\+dash, const int n)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header for the teacher.
+
+This file has methods to implement a teacher such as check conditions that are required to hold for a winning set. \begin{DoxyAuthor}{Author}
+Oliver Markgraf 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+August 14 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{teacher_8h_a9217d55403f5e487bf7ac97a728e7b25}\label{teacher_8h_a9217d55403f5e487bf7ac97a728e7b25}} 
+\index{teacher.\+h@{teacher.\+h}!build\+\_\+counterexample@{build\+\_\+counterexample}}
+\index{build\+\_\+counterexample@{build\+\_\+counterexample}!teacher.\+h@{teacher.\+h}}
+\subsubsection{\texorpdfstring{build\+\_\+counterexample()}{build\_counterexample()}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$int$>$ $>$ build\+\_\+counterexample (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{counterexample,  }\item[{const std\+::vector$<$ int $>$ \&}]{start,  }\item[{const z3\+::expr \&}]{edges,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+dash,  }\item[{const z3\+::expr\+\_\+vector \&}]{all\+\_\+variables,  }\item[{const int}]{n }\end{DoxyParamCaption})}
+
+Method to build a transform a counterexample from z3\+::expr to a vector of int vectors. Used for existential and universal counterexamples.
+
+
+\begin{DoxyParams}{Parameters}
+{\em counterexample} & -\/ counterexample of the hypothesis encoded as z3\+::expr \\
+\hline
+{\em start} & -\/ This is the counterexample node. \\
+\hline
+{\em edges} & -\/ edges of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+{\em variables\+\_\+dash} & -\/ variables in the next step \\
+\hline
+{\em all\+\_\+variables} & -\/ variables and variables\+\_\+dash combined \\
+\hline
+{\em n} & -\/ maximum number of successors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a counterexample as a horn clause. First vector is left side, rest of the vectors are the right side. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{teacher_8h_aec1fd0b948385829532e05caf2ce9fa6}\label{teacher_8h_aec1fd0b948385829532e05caf2ce9fa6}} 
+\index{teacher.\+h@{teacher.\+h}!check\+\_\+initial\+\_\+condition@{check\+\_\+initial\+\_\+condition}}
+\index{check\+\_\+initial\+\_\+condition@{check\+\_\+initial\+\_\+condition}!teacher.\+h@{teacher.\+h}}
+\subsubsection{\texorpdfstring{check\+\_\+initial\+\_\+condition()}{check\_initial\_condition()}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ check\+\_\+initial\+\_\+condition (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{const z3\+::expr \&}]{initial\+\_\+vertices,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables }\end{DoxyParamCaption})}
+
+Checks the initial condition for a hypothesis of a safety game. I ⊆ W 
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis about the winning set W \\
+\hline
+{\em initial\+\_\+vertices} & -\/ initial vertices encodeded as z3\+::expr \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The counterexample, encoded as a int vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{teacher_8h_aeabe39d27d05ea0bda7d0481df52541b}\label{teacher_8h_aeabe39d27d05ea0bda7d0481df52541b}} 
+\index{teacher.\+h@{teacher.\+h}!check\+\_\+safe\+\_\+condition@{check\+\_\+safe\+\_\+condition}}
+\index{check\+\_\+safe\+\_\+condition@{check\+\_\+safe\+\_\+condition}!teacher.\+h@{teacher.\+h}}
+\subsubsection{\texorpdfstring{check\+\_\+safe\+\_\+condition()}{check\_safe\_condition()}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ check\+\_\+safe\+\_\+condition (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{const z3\+::expr \&}]{safe\+\_\+vertices,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables }\end{DoxyParamCaption})}
+
+Checks the initial condition for a hypothesis of a safety game. W ⊆ F 
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis about the winning set W \\
+\hline
+{\em safe\+\_\+vertices} & -\/ safe vertices encodeded as z3\+::expr \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The counterexample, encoded as a int vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{teacher_8h_a3acaa31b9de19512fb734e356a54af7b}\label{teacher_8h_a3acaa31b9de19512fb734e356a54af7b}} 
+\index{teacher.\+h@{teacher.\+h}!existential\+\_\+check@{existential\+\_\+check}}
+\index{existential\+\_\+check@{existential\+\_\+check}!teacher.\+h@{teacher.\+h}}
+\subsubsection{\texorpdfstring{existential\+\_\+check()}{existential\_check()}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$int$>$ $>$ existential\+\_\+check (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{z3\+::expr \&}]{hypothesis\+\_\+edge\+\_\+nodes,  }\item[{const z3\+::expr \&}]{vertices,  }\item[{const z3\+::expr \&}]{vertices\+\_\+dash,  }\item[{const z3\+::expr \&}]{vertices\+\_\+player0,  }\item[{const z3\+::expr \&}]{edges,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{all\+\_\+variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+dash,  }\item[{const int \&}]{n }\end{DoxyParamCaption})}
+
+Method to find a existential counterexample in a hypothesis.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis of a winning set encoded as z3\+::expr \\
+\hline
+{\em hypothesis\+\_\+edge\+\_\+nodes} & -\/ possible successors of the hypothesis after one step \\
+\hline
+{\em vertices} & -\/ vertices of the game graph \\
+\hline
+{\em vertices\+\_\+dash} & -\/ vertices encoded with the variables in the next step \\
+\hline
+{\em vertices\+\_\+player0} & -\/ vertices that are owned by player0 \\
+\hline
+{\em edges} & -\/ edges of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em all\+\_\+variables} & -\/ variables and variables\+\_\+dash combined \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+{\em variables\+\_\+dash} & -\/ variables in the next step \\
+\hline
+{\em n} & -\/ maximum number of successors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a counterexample as a horn clause. First vector is left side, rest of the vectors are the right side. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{teacher_8h_a9c2ae867f683c54913e6e6059bbdee2c}\label{teacher_8h_a9c2ae867f683c54913e6e6059bbdee2c}} 
+\index{teacher.\+h@{teacher.\+h}!universal\+\_\+check@{universal\+\_\+check}}
+\index{universal\+\_\+check@{universal\+\_\+check}!teacher.\+h@{teacher.\+h}}
+\subsubsection{\texorpdfstring{universal\+\_\+check()}{universal\_check()}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$int$>$ $>$ universal\+\_\+check (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{z3\+::expr \&}]{hypothesis\+\_\+edge\+\_\+nodes,  }\item[{const z3\+::expr \&}]{vertices,  }\item[{const z3\+::expr \&}]{vertices\+\_\+dash,  }\item[{const z3\+::expr \&}]{vertices\+\_\+player1,  }\item[{const z3\+::expr \&}]{edges,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{all\+\_\+variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+dash,  }\item[{const int}]{n }\end{DoxyParamCaption})}
+
+Method to find a existential counterexample in a hypothesis.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis of a winning set encoded as z3\+::expr \\
+\hline
+{\em hypothesis\+\_\+edge\+\_\+nodes} & -\/ possible successors of the hypothesis after one step \\
+\hline
+{\em vertices} & -\/ vertices of the game graph \\
+\hline
+{\em vertices\+\_\+dash} & -\/ vertices encoded with the variables in the next step \\
+\hline
+{\em vertices\+\_\+player1} & -\/ vertices that are owned by player1 \\
+\hline
+{\em edges} & -\/ edges of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em all\+\_\+variables} & -\/ variables and variables\+\_\+dash combined \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+{\em variables\+\_\+dash} & -\/ variables in the next step \\
+\hline
+{\em n} & -\/ maximum number of successors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a counterexample as a horn clause. First vector is left side, rest of the vectors are the right side. 
+\end{DoxyReturn}

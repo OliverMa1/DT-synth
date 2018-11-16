@@ -1,0 +1,445 @@
+\hypertarget{main_8cpp}{}\section{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.\+cpp@{main.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$iterator$>$}\newline
+{\ttfamily \#include $<$typeinfo$>$}\newline
+{\ttfamily \#include \char`\"{}z3++.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}parser.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}game.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}teacher.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$nlohmann/json.\+hpp$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structCounterexample}{Counterexample}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structCounterexample}{Counterexample} struct to encode counterexamples. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8cpp_ab701e3ac61a85b337ec5c1abaad6742d}\label{main_8cpp_ab701e3ac61a85b337ec5c1abaad6742d}} 
+using {\bfseries json} = nlohmann\+::json
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+z3\+::expr \hyperlink{main_8cpp_a05c829d51ea32790a877238ae39cddbe}{read\+\_\+json} (json \&j, std\+::map$<$ std\+::string, z3\+::expr $>$ \&variables, std\+::map$<$ std\+::string, z3\+::expr $>$ \&exprs\+\_\+map, int level, std\+::string \&tree)
+\item 
+void \hyperlink{main_8cpp_a0e97bf58e07b2914129e1455b405ae40}{prep} (std\+::vector$<$ std\+::string $>$ \&attributes)
+\item 
+void \hyperlink{main_8cpp_aac759501cf6c7895a70eecbef0226ae1}{write} ()
+\item 
+void \hyperlink{main_8cpp_a7f8b71f39cbfbfa39318854114f5223e}{store\+\_\+horn} (std\+::vector$<$ int $>$ horn)
+\item 
+void \hyperlink{main_8cpp_aac651fcf73c60a84961aadf71d3d9601}{eval\+\_\+exprs} (std\+::vector$<$ int $>$ \&ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+int \hyperlink{main_8cpp_a05d3ee2c937a102a96c0f7bf43345582}{store} (\hyperlink{structCounterexample}{Counterexample} ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+int \hyperlink{main_8cpp_ab16e639e29e2148cb8bbedab27c927ee}{create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample} (std\+::vector$<$ int $>$ \&ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+int \hyperlink{main_8cpp_ad9cb78a282786d0e3c340d1eb442533f}{create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample} (std\+::vector$<$ int $>$ \&ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+int \hyperlink{main_8cpp_a8f88348f60022c5218973949c1176b19}{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample} (std\+::vector$<$ int $>$ \&ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+bool \hyperlink{main_8cpp_aea111e2b2380b47fd98ae1112229e9aa}{create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample} (std\+::vector$<$ std\+::vector$<$ int $>$$>$ \&ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+bool \hyperlink{main_8cpp_ac158554b7d2399f8855417c89b5d732f}{create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample} (std\+::vector$<$ std\+::vector$<$ int $>$$>$ \&ce, const z3\+::expr\+\_\+vector \&variables\+\_\+vector, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+bool \hyperlink{main_8cpp_a9f9117fc0c279c0486e7c621e6cf48a8}{initial\+\_\+check} (const z3\+::expr \&hypothesis, const z3\+::expr \&initial\+\_\+vertices, z3\+::context \&context, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+bool \hyperlink{main_8cpp_a63731766047cbbe8b336311930e42455}{safe\+\_\+check} (const z3\+::expr \&hypothesis, const z3\+::expr \&safe\+\_\+vertices, z3\+::context \&context, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+bool \hyperlink{main_8cpp_aef6432b1d800fa50de929258bf0cdce0}{ex\+\_\+check} (const z3\+::expr \&hypothesis, z3\+::expr \&hypothesis\+\_\+edge\+\_\+nodes, const z3\+::expr \&vertices, const z3\+::expr \&vertices\+\_\+dash, const z3\+::expr \&vertices\+\_\+player0, const z3\+::expr \&edges, z3\+::context \&context, const z3\+::expr\+\_\+vector \&all\+\_\+variables, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&variables\+\_\+dash, const int \&n, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+bool \hyperlink{main_8cpp_a53a6fca0bec48e7ed06163689d83bc0a}{uni\+\_\+check} (const z3\+::expr \&hypothesis, z3\+::expr \&hypothesis\+\_\+edge\+\_\+nodes, const z3\+::expr \&vertices, const z3\+::expr \&vertices\+\_\+dash, const z3\+::expr \&vertices\+\_\+player1, const z3\+::expr \&edges, z3\+::context \&context, const z3\+::expr\+\_\+vector \&all\+\_\+variables, const z3\+::expr\+\_\+vector \&variables, const z3\+::expr\+\_\+vector \&variables\+\_\+dash, const int n, const z3\+::expr\+\_\+vector \&exprs, const z3\+::expr\+\_\+vector \&expr\+\_\+vars)
+\item 
+void \hyperlink{main_8cpp_ad05d3ac5d6fbd2a01301d0a2e69cf08b}{generate\+\_\+stats} (std\+::string \&result, \hyperlink{classGame}{Game} $\ast$\&game, int steps, std\+::vector$<$ double $>$ \&stats)
+\item 
+int \hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8cpp_ade4560be108f65d2a5c44be4f78afb99}\label{main_8cpp_ade4560be108f65d2a5c44be4f78afb99}} 
+std\+::map$<$ \hyperlink{structCounterexample}{Counterexample}, int $>$ {\bfseries counterexample\+\_\+map}
+\item 
+\mbox{\Hypertarget{main_8cpp_aa0f8f2512327a68a51f0a2d4789b203f}\label{main_8cpp_aa0f8f2512327a68a51f0a2d4789b203f}} 
+std\+::map$<$ int, \hyperlink{structCounterexample}{Counterexample} $>$ {\bfseries position\+\_\+map}
+\item 
+\mbox{\Hypertarget{main_8cpp_a0d0a2bbfb4cc99668a05c7cc7930a4c0}\label{main_8cpp_a0d0a2bbfb4cc99668a05c7cc7930a4c0}} 
+std\+::vector$<$ \hyperlink{structCounterexample}{Counterexample} $>$ {\bfseries counterexample\+\_\+vector}
+\item 
+\mbox{\Hypertarget{main_8cpp_ae47c8bfae4b3046ecf040fafafb2df4e}\label{main_8cpp_ae47c8bfae4b3046ecf040fafafb2df4e}} 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ {\bfseries horn\+\_\+clauses}
+\item 
+\mbox{\Hypertarget{main_8cpp_ae67bd383e767098e5d69712ff4420610}\label{main_8cpp_ae67bd383e767098e5d69712ff4420610}} 
+z3\+::context {\bfseries ctx}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Main file for learner and teacher interaction.
+
+Implements the loop between learner and teacher and the communication between them. \begin{DoxyAuthor}{Author}
+Oliver Markgraf 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+August 14 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_aea111e2b2380b47fd98ae1112229e9aa}\label{main_8cpp_aea111e2b2380b47fd98ae1112229e9aa}} 
+\index{main.\+cpp@{main.\+cpp}!create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample}}
+\index{create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample()}{create\_and\_store\_existential\_counterexample()}}
+{\footnotesize\ttfamily bool create\+\_\+and\+\_\+store\+\_\+existential\+\_\+counterexample (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ int $>$$>$ \&}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to create and store a counterexamples for the existential condition. calls \begin{DoxySeeAlso}{See also}
+\hyperlink{main_8cpp_a8f88348f60022c5218973949c1176b19}{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample}, to create an unclassified counterexample for each node and its successors. 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ data points of the counterexample with its successors, encoded as vector of int vectors \\
+\hline
+{\em variables\+\_\+vector} & -\/ variables as z3\+::expr \\
+\hline
+{\em exprs} & -\/ additional expressions for the learner \\
+\hline
+{\em expr\+\_\+vars} & -\/ additional expression variables for the learner \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns true if the method was successful, false if it was unsucessful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_ab16e639e29e2148cb8bbedab27c927ee}\label{main_8cpp_ab16e639e29e2148cb8bbedab27c927ee}} 
+\index{main.\+cpp@{main.\+cpp}!create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample}}
+\index{create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample()}{create\_and\_store\_initial\_counterexample()}}
+{\footnotesize\ttfamily int create\+\_\+and\+\_\+store\+\_\+initial\+\_\+counterexample (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to create and store a counterexample for the initial condition. Sets classification to 0. 
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ data points of the counterexample, encoded as int vector \\
+\hline
+{\em variables\+\_\+vector} & -\/ variables as z3\+::expr \\
+\hline
+{\em exprs} & -\/ additional expressions for the learner \\
+\hline
+{\em expr\+\_\+vars} & -\/ additional expression variables for the learner \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the position of the stored counterexample, -\/1 if it was unsucessful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_ad9cb78a282786d0e3c340d1eb442533f}\label{main_8cpp_ad9cb78a282786d0e3c340d1eb442533f}} 
+\index{main.\+cpp@{main.\+cpp}!create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample}}
+\index{create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample()}{create\_and\_store\_safe\_counterexample()}}
+{\footnotesize\ttfamily int create\+\_\+and\+\_\+store\+\_\+safe\+\_\+counterexample (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to create and store a counterexample for the safe condition. Sets classification to 1. 
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ data points of the counterexample, encoded as int vector \\
+\hline
+{\em variables\+\_\+vector} & -\/ variables as z3\+::expr \\
+\hline
+{\em exprs} & -\/ additional expressions for the learner \\
+\hline
+{\em expr\+\_\+vars} & -\/ additional expression variables for the learner \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the position of the stored counterexample, -\/1 if it was unsucessful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_a8f88348f60022c5218973949c1176b19}\label{main_8cpp_a8f88348f60022c5218973949c1176b19}} 
+\index{main.\+cpp@{main.\+cpp}!create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample}}
+\index{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample()}{create\_and\_store\_unclassified\_counterexample()}}
+{\footnotesize\ttfamily int create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to create and store a counterexample for the existential or universal condition. Sets classification to -\/1. 
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ data points of the counterexample, encoded as int vector \\
+\hline
+{\em variables\+\_\+vector} & -\/ variables as z3\+::expr \\
+\hline
+{\em exprs} & -\/ additional expressions for the learner \\
+\hline
+{\em expr\+\_\+vars} & -\/ additional expression variables for the learner \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the position of the stored counterexample, -\/1 if it was unsucessful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_ac158554b7d2399f8855417c89b5d732f}\label{main_8cpp_ac158554b7d2399f8855417c89b5d732f}} 
+\index{main.\+cpp@{main.\+cpp}!create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample}}
+\index{create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample@{create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample()}{create\_and\_store\_universal\_counterexample()}}
+{\footnotesize\ttfamily bool create\+\_\+and\+\_\+store\+\_\+universal\+\_\+counterexample (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ int $>$$>$ \&}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to create and store a counterexamples for the universal condition. calls \begin{DoxySeeAlso}{See also}
+\hyperlink{main_8cpp_a8f88348f60022c5218973949c1176b19}{create\+\_\+and\+\_\+store\+\_\+unclassified\+\_\+counterexample}, to create an unclassified counterexample for each node and its successors. 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ data points of the counterexample with its successors, encoded as vector of int vectors \\
+\hline
+{\em variables\+\_\+vector} & -\/ variables as z3\+::expr \\
+\hline
+{\em exprs} & -\/ additional expressions for the learner \\
+\hline
+{\em expr\+\_\+vars} & -\/ additional expression variables for the learner \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns true if the method was successful, false if it was unsucessful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_aac651fcf73c60a84961aadf71d3d9601}\label{main_8cpp_aac651fcf73c60a84961aadf71d3d9601}} 
+\index{main.\+cpp@{main.\+cpp}!eval\+\_\+exprs@{eval\+\_\+exprs}}
+\index{eval\+\_\+exprs@{eval\+\_\+exprs}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{eval\+\_\+exprs()}{eval\_exprs()}}
+{\footnotesize\ttfamily void eval\+\_\+exprs (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to evaluate the additional expressions give by the user. Adds the evaluation to the counterexample vector. 
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ the counterexample vector, used to extend the counterexample \\
+\hline
+{\em variables\+\_\+vector} & -\/ variables, used to assign values to the counterexample \\
+\hline
+{\em exprs} & -\/ vector of the additional expressions \\
+\hline
+{\em expr\+\_\+vars} & -\/ variables used in the additional expressions \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main_8cpp_aef6432b1d800fa50de929258bf0cdce0}\label{main_8cpp_aef6432b1d800fa50de929258bf0cdce0}} 
+\index{main.\+cpp@{main.\+cpp}!ex\+\_\+check@{ex\+\_\+check}}
+\index{ex\+\_\+check@{ex\+\_\+check}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{ex\+\_\+check()}{ex\_check()}}
+{\footnotesize\ttfamily bool ex\+\_\+check (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{z3\+::expr \&}]{hypothesis\+\_\+edge\+\_\+nodes,  }\item[{const z3\+::expr \&}]{vertices,  }\item[{const z3\+::expr \&}]{vertices\+\_\+dash,  }\item[{const z3\+::expr \&}]{vertices\+\_\+player0,  }\item[{const z3\+::expr \&}]{edges,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{all\+\_\+variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+dash,  }\item[{const int \&}]{n,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method that calls the existential condition check in \hyperlink{teacher_8h}{teacher.\+h} 
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis of a winning set encoded as z3\+::expr \\
+\hline
+{\em hypothesis\+\_\+edge\+\_\+nodes} & -\/ possible successors of the hypothesis after one step \\
+\hline
+{\em vertices} & -\/ vertices of the game graph \\
+\hline
+{\em vertices\+\_\+dash} & -\/ vertices encoded with the variables in the next step \\
+\hline
+{\em vertices\+\_\+player0} & -\/ vertices that are owned by player0 \\
+\hline
+{\em edges} & -\/ edges of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em all\+\_\+variables} & -\/ variables and variables\+\_\+dash combined \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+{\em variables\+\_\+dash} & -\/ variables in the next step \\
+\hline
+{\em n} & -\/ maximum number of successors \\
+\hline
+{\em exprs} & -\/ z3\+::expr\+\_\+vector of the additional expressions \\
+\hline
+{\em expr\+\_\+vars} & -\/ variables of the additional expressions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if counterexample was found, false if no counterexample was found 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_ad05d3ac5d6fbd2a01301d0a2e69cf08b}\label{main_8cpp_ad05d3ac5d6fbd2a01301d0a2e69cf08b}} 
+\index{main.\+cpp@{main.\+cpp}!generate\+\_\+stats@{generate\+\_\+stats}}
+\index{generate\+\_\+stats@{generate\+\_\+stats}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{generate\+\_\+stats()}{generate\_stats()}}
+{\footnotesize\ttfamily void generate\+\_\+stats (\begin{DoxyParamCaption}\item[{std\+::string \&}]{result,  }\item[{\hyperlink{classGame}{Game} $\ast$\&}]{game,  }\item[{int}]{steps,  }\item[{std\+::vector$<$ double $>$ \&}]{stats }\end{DoxyParamCaption})}
+
+Method to generate overall stats of the safety game learning process. 
+\begin{DoxyParams}{Parameters}
+{\em result} & -\/ string to pass on the result and print it out later \\
+\hline
+{\em game} & -\/ game to access stats \\
+\hline
+{\em stats} & -\/ time statistics \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main_8cpp_a9f9117fc0c279c0486e7c621e6cf48a8}\label{main_8cpp_a9f9117fc0c279c0486e7c621e6cf48a8}} 
+\index{main.\+cpp@{main.\+cpp}!initial\+\_\+check@{initial\+\_\+check}}
+\index{initial\+\_\+check@{initial\+\_\+check}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{initial\+\_\+check()}{initial\_check()}}
+{\footnotesize\ttfamily bool initial\+\_\+check (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{const z3\+::expr \&}]{initial\+\_\+vertices,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method that calls the initial condition check in \hyperlink{teacher_8h}{teacher.\+h} 
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis about the winning condition \\
+\hline
+{\em initial\+\_\+vertices} & -\/ initial vertices of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate variables \\
+\hline
+{\em variables} & -\/ z3\+::expr\+\_\+vector of the variables used \\
+\hline
+{\em exprs} & -\/ z3\+::expr\+\_\+vector of the additional expressions \\
+\hline
+{\em expr\+\_\+vars} & -\/ variables of the additional expressions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if counterexample was found, false if no counterexample was found 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{main.\+cpp@{main.\+cpp}!main@{main}}
+\index{main@{main}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Main method that encodes the interaction between teacher and learner. 
+\begin{DoxyParams}{Parameters}
+{\em argc} & -\/ number of inputs, should be 2 \\
+\hline
+{\em argv} & -\/ argv\mbox{[}1\mbox{]}, should be the path to the input file \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main_8cpp_a0e97bf58e07b2914129e1455b405ae40}\label{main_8cpp_a0e97bf58e07b2914129e1455b405ae40}} 
+\index{main.\+cpp@{main.\+cpp}!prep@{prep}}
+\index{prep@{prep}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{prep()}{prep()}}
+{\footnotesize\ttfamily void prep (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$ \&}]{attributes }\end{DoxyParamCaption})}
+
+Method to write attributes in a file for the learner. 
+\begin{DoxyParams}{Parameters}
+{\em attribute} & -\/ given attributes to write \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main_8cpp_a05c829d51ea32790a877238ae39cddbe}\label{main_8cpp_a05c829d51ea32790a877238ae39cddbe}} 
+\index{main.\+cpp@{main.\+cpp}!read\+\_\+json@{read\+\_\+json}}
+\index{read\+\_\+json@{read\+\_\+json}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{read\+\_\+json()}{read\_json()}}
+{\footnotesize\ttfamily z3\+::expr read\+\_\+json (\begin{DoxyParamCaption}\item[{json \&}]{j,  }\item[{std\+::map$<$ std\+::string, z3\+::expr $>$ \&}]{variables,  }\item[{std\+::map$<$ std\+::string, z3\+::expr $>$ \&}]{exprs\+\_\+map,  }\item[{int}]{level,  }\item[{std\+::string \&}]{tree }\end{DoxyParamCaption})}
+
+Method to read a json file given by the learner.
+
+Translates the json to a z3\+::expr. 
+\begin{DoxyParams}{Parameters}
+{\em variables} & -\/ a map to assign variable names to z3\+::expr variables \\
+\hline
+{\em exprs\+\_\+map} & -\/ a map to assign additional expression variables to z3\+::expr \\
+\hline
+{\em level} & -\/ the level the tree is at, used to print out the hypothesis \\
+\hline
+{\em tree} & -\/ string that is a output for the hypothesis \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Hypothesis from the learner encoded as z3\+::expr 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_a63731766047cbbe8b336311930e42455}\label{main_8cpp_a63731766047cbbe8b336311930e42455}} 
+\index{main.\+cpp@{main.\+cpp}!safe\+\_\+check@{safe\+\_\+check}}
+\index{safe\+\_\+check@{safe\+\_\+check}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{safe\+\_\+check()}{safe\_check()}}
+{\footnotesize\ttfamily bool safe\+\_\+check (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{const z3\+::expr \&}]{safe\+\_\+vertices,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method that calls the safe condition check in \hyperlink{teacher_8h}{teacher.\+h} 
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis about the winning condition \\
+\hline
+{\em safe\+\_\+vertices} & -\/ safe vertices of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate variables \\
+\hline
+{\em variables} & -\/ z3\+::expr\+\_\+vector of the variables used \\
+\hline
+{\em exprs} & -\/ z3\+::expr\+\_\+vector of the additional expressions \\
+\hline
+{\em expr\+\_\+vars} & -\/ variables of the additional expressions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if counterexample was found, false if no counterexample was found 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_a05d3ee2c937a102a96c0f7bf43345582}\label{main_8cpp_a05d3ee2c937a102a96c0f7bf43345582}} 
+\index{main.\+cpp@{main.\+cpp}!store@{store}}
+\index{store@{store}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{store()}{store()}}
+{\footnotesize\ttfamily int store (\begin{DoxyParamCaption}\item[{\hyperlink{structCounterexample}{Counterexample}}]{ce,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+vector,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method to store counterexamples in a global field. 
+\begin{DoxyParams}{Parameters}
+{\em ce} & -\/ counterexample given as a \hyperlink{structCounterexample}{Counterexample} object \\
+\hline
+{\em variables\+\_\+vector} & -\/ passed on to evaluate the additional expressions \\
+\hline
+{\em exprs} & -\/ passed on to evaluate the additional expressions \\
+\hline
+{\em expr\+\_\+vars} & -\/ passed on to evaluate the additional expressions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the position in the field, where the counterexample was written, -\/1 if the method was unsuccessful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_a7f8b71f39cbfbfa39318854114f5223e}\label{main_8cpp_a7f8b71f39cbfbfa39318854114f5223e}} 
+\index{main.\+cpp@{main.\+cpp}!store\+\_\+horn@{store\+\_\+horn}}
+\index{store\+\_\+horn@{store\+\_\+horn}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{store\+\_\+horn()}{store\_horn()}}
+{\footnotesize\ttfamily void store\+\_\+horn (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$}]{horn }\end{DoxyParamCaption})}
+
+Method to store horn clauses in a global field. \mbox{\Hypertarget{main_8cpp_a53a6fca0bec48e7ed06163689d83bc0a}\label{main_8cpp_a53a6fca0bec48e7ed06163689d83bc0a}} 
+\index{main.\+cpp@{main.\+cpp}!uni\+\_\+check@{uni\+\_\+check}}
+\index{uni\+\_\+check@{uni\+\_\+check}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{uni\+\_\+check()}{uni\_check()}}
+{\footnotesize\ttfamily bool uni\+\_\+check (\begin{DoxyParamCaption}\item[{const z3\+::expr \&}]{hypothesis,  }\item[{z3\+::expr \&}]{hypothesis\+\_\+edge\+\_\+nodes,  }\item[{const z3\+::expr \&}]{vertices,  }\item[{const z3\+::expr \&}]{vertices\+\_\+dash,  }\item[{const z3\+::expr \&}]{vertices\+\_\+player1,  }\item[{const z3\+::expr \&}]{edges,  }\item[{z3\+::context \&}]{context,  }\item[{const z3\+::expr\+\_\+vector \&}]{all\+\_\+variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables,  }\item[{const z3\+::expr\+\_\+vector \&}]{variables\+\_\+dash,  }\item[{const int}]{n,  }\item[{const z3\+::expr\+\_\+vector \&}]{exprs,  }\item[{const z3\+::expr\+\_\+vector \&}]{expr\+\_\+vars }\end{DoxyParamCaption})}
+
+Method that calls the universal condition check in \hyperlink{teacher_8h}{teacher.\+h} 
+\begin{DoxyParams}{Parameters}
+{\em hypothesis} & -\/ hypothesis of a winning set encoded as z3\+::expr \\
+\hline
+{\em hypothesis\+\_\+edge\+\_\+nodes} & -\/ possible successors of the hypothesis after one step \\
+\hline
+{\em vertices} & -\/ vertices of the game graph \\
+\hline
+{\em vertices\+\_\+dash} & -\/ vertices encoded with the variables in the next step \\
+\hline
+{\em vertices\+\_\+player1} & -\/ vertices that are owned by player1 \\
+\hline
+{\em edges} & -\/ edges of the game graph \\
+\hline
+{\em context} & -\/ context to evaluate the expressions \\
+\hline
+{\em all\+\_\+variables} & -\/ variables and variables\+\_\+dash combined \\
+\hline
+{\em variables} & -\/ variables to get the value of each variable assigned \\
+\hline
+{\em variables\+\_\+dash} & -\/ variables in the next step \\
+\hline
+{\em n} & -\/ maximum number of successors \\
+\hline
+{\em exprs} & -\/ z3\+::expr\+\_\+vector of the additional expressions \\
+\hline
+{\em expr\+\_\+vars} & -\/ variables of the additional expressions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if counterexample was found, false if no counterexample was found 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8cpp_aac759501cf6c7895a70eecbef0226ae1}\label{main_8cpp_aac759501cf6c7895a70eecbef0226ae1}} 
+\index{main.\+cpp@{main.\+cpp}!write@{write}}
+\index{write@{write}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Method to write counterexamples for the learner to a file. 

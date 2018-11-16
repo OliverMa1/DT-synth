@@ -1,0 +1,2 @@
+{"variables":["x","y","z"],"variables_dash":["x_dash","y_dash","z_dash"],"successors":10,"exprs":[],"smt2":"(assert(and (and(= x 0) (= y 0)) (= z 0)))(assert(and(and(and(<= x 4)(<= -4 x))(<= y 4))(<= -4 y)))(assert(= z 0))(assert(= z 1))(assert(and(or(or(= x x_dash)(= x (+ x_dash 1)))(= x (- x_dash 1)))(and(or(or(= y y_dash)(= y (+ y_dash 1)))(= y (- y_dash 1)))(= z (- 1 z_dash)))))"}
+

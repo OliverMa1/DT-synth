@@ -1,0 +1,78 @@
+\hypertarget{classGame}{}\section{Game Class Reference}
+\label{classGame}\index{Game@{Game}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGame_a1051ad3ca91f98eade1fe84c68ec721b}{Game} (z3\+::context \&ctx, const std\+::vector$<$ std\+::string $>$ \&var\+\_\+char, const std\+::vector$<$ std\+::string $>$ \&var\+\_\+dash\+\_\+char, const std\+::vector$<$ std\+::string $>$ \&exprs\+\_\+var\+\_\+char, const std\+::string \&smt2lib, int n)
+\item 
+\mbox{\Hypertarget{classGame_afd949c6a35db3fbcdc8179756b64508d}\label{classGame_afd949c6a35db3fbcdc8179756b64508d}} 
+z3\+::expr {\bfseries get\+\_\+initial\+\_\+vertices} ()
+\item 
+\mbox{\Hypertarget{classGame_aec1f8c4d7631011de0b662d4803f7bf6}\label{classGame_aec1f8c4d7631011de0b662d4803f7bf6}} 
+z3\+::expr {\bfseries get\+\_\+safe\+\_\+vertices} ()
+\item 
+\mbox{\Hypertarget{classGame_a6cfdd0807fa2a55342e5a60da1051973}\label{classGame_a6cfdd0807fa2a55342e5a60da1051973}} 
+z3\+::expr {\bfseries get\+\_\+player0\+\_\+vertices} ()
+\item 
+\mbox{\Hypertarget{classGame_a46a04d741f3bc1a6d31580248a37368f}\label{classGame_a46a04d741f3bc1a6d31580248a37368f}} 
+z3\+::expr {\bfseries get\+\_\+player1\+\_\+vertices} ()
+\item 
+\mbox{\Hypertarget{classGame_a82cc1c9bf325c497538c61a7e75e35e2}\label{classGame_a82cc1c9bf325c497538c61a7e75e35e2}} 
+z3\+::expr {\bfseries get\+\_\+edges} ()
+\item 
+\mbox{\Hypertarget{classGame_af63ba8c0eed410040b262196747602c1}\label{classGame_af63ba8c0eed410040b262196747602c1}} 
+z3\+::expr\+\_\+vector {\bfseries get\+\_\+variables\+\_\+vector} ()
+\item 
+\mbox{\Hypertarget{classGame_a4a88d4eb5b82e90a567eb85e87e89b54}\label{classGame_a4a88d4eb5b82e90a567eb85e87e89b54}} 
+z3\+::expr\+\_\+vector {\bfseries get\+\_\+variables\+\_\+dash\+\_\+vector} ()
+\item 
+\mbox{\Hypertarget{classGame_a969b1ec48d650af2e79ba26d86ea094b}\label{classGame_a969b1ec48d650af2e79ba26d86ea094b}} 
+z3\+::expr\+\_\+vector {\bfseries get\+\_\+all\+\_\+variables\+\_\+vector} ()
+\item 
+\mbox{\Hypertarget{classGame_abf8cdc443e10c1038a644a2f3d5ab70f}\label{classGame_abf8cdc443e10c1038a644a2f3d5ab70f}} 
+z3\+::expr\+\_\+vector {\bfseries get\+\_\+exprs\+\_\+var} ()
+\item 
+\mbox{\Hypertarget{classGame_a9f17d224ff020a442dbd44b481a10d93}\label{classGame_a9f17d224ff020a442dbd44b481a10d93}} 
+z3\+::expr\+\_\+vector {\bfseries get\+\_\+exprs} ()
+\item 
+\mbox{\Hypertarget{classGame_a6fdcd6543693b71ae7080fc2cebd251f}\label{classGame_a6fdcd6543693b71ae7080fc2cebd251f}} 
+std\+::map$<$ std\+::string, z3\+::expr $>$ {\bfseries get\+\_\+variables} ()
+\item 
+\mbox{\Hypertarget{classGame_a40e4c2b72f3c3facb9e361a8951984a6}\label{classGame_a40e4c2b72f3c3facb9e361a8951984a6}} 
+std\+::map$<$ std\+::string, z3\+::expr $>$ {\bfseries get\+\_\+expr\+\_\+map} ()
+\item 
+\mbox{\Hypertarget{classGame_a9bb60a5d9bd93eaa7a7c9efe24df7ab0}\label{classGame_a9bb60a5d9bd93eaa7a7c9efe24df7ab0}} 
+int {\bfseries get\+\_\+successors} ()
+\item 
+\mbox{\Hypertarget{classGame_a5290c5e9b5a8e114b7a1e1a7803805bf}\label{classGame_a5290c5e9b5a8e114b7a1e1a7803805bf}} 
+std\+::vector$<$ std\+::string $>$ \& {\bfseries get\+\_\+attributes} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classGame_a1051ad3ca91f98eade1fe84c68ec721b}\label{classGame_a1051ad3ca91f98eade1fe84c68ec721b}} 
+\index{Game@{Game}!Game@{Game}}
+\index{Game@{Game}!Game@{Game}}
+\subsubsection{\texorpdfstring{Game()}{Game()}}
+{\footnotesize\ttfamily Game\+::\+Game (\begin{DoxyParamCaption}\item[{z3\+::context \&}]{ctx,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{var\+\_\+char,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{var\+\_\+dash\+\_\+char,  }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{exprs\+\_\+var\+\_\+char,  }\item[{const std\+::string \&}]{smt2lib,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor for a game object, stores all the data in z3\+::expr and z3\+::expr\+\_\+vector. Ensures that correct amount of variables are given. 
+\begin{DoxyParams}{Parameters}
+{\em ctx} & -\/ context to create the variables and make sure they all have the same context \\
+\hline
+{\em var\+\_\+char} & -\/ variables names, stored in a string vector \\
+\hline
+{\em var\+\_\+dash\+\_\+char} & -\/ variables names for the next step, stored in a string vector \\
+\hline
+{\em exprs\+\_\+var\+\_\+char} & -\/ expression variables names, stored in a string vector for the learner \\
+\hline
+{\em smt2lib} & -\/ string that encodes the game with assertions \\
+\hline
+{\em n} & -\/ number of maximal successors of each node \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{game_8h}{game.\+h}\end{DoxyCompactItemize}

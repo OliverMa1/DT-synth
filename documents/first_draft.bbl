@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{beyene2014constraint}
+Tewodros Beyene, Swarat Chaudhuri, Corneliu Popeea, and Andrey Rybalchenko.
+\newblock A constraint-based approach to solving games on infinite graphs.
+\newblock In {\em ACM SIGPLAN Notices}, volume~49, pages 221--233. ACM, 2014.
+
+\bibitem{de2008z3}
+Leonardo De~Moura and Nikolaj Bj{\o}rner.
+\newblock Z3: An efficient smt solver.
+\newblock In {\em International conference on Tools and Algorithms for the
+  Construction and Analysis of Systems}, pages 337--340. Springer, 2008.
+
+\bibitem{d2017horn}
+Deepak D'Souza, P~Ezudheen, Pranav Garg, P~Madhusudan, and Daniel Neider.
+\newblock Horn-ice learning for synthesizing invariants and contracts.
+\newblock {\em arXiv preprint arXiv:1712.09418}, 2017.
+
+\bibitem{neider2016automaton}
+Daniel Neider and Ufuk Topcu.
+\newblock An automaton learning approach to solving safety games over infinite
+  graphs.
+\newblock In {\em International Conference on Tools and Algorithms for the
+  Construction and Analysis of Systems}, pages 204--221. Springer, 2016.
+
+\end{thebibliography}

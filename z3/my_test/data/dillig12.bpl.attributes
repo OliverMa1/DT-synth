@@ -1,0 +1,4 @@
+cat,$func,1
+int,x1-x2
+int,y1-y2
+int,z

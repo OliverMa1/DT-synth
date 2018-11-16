@@ -1,0 +1,2 @@
+{"variables":["x","y","z","p"],"variables_dash":["x_dash","y_dash","z_dash","p_dash"],"successors":27,"exprs":[],"smt2":"(assert(and(and(and(= x 0)(= y 0))(= z 0))(= p 0)))(assert(and(and(and(and(and(<= 0 x)(<= x 3))(<= 0 y))(<= y 3))(<= 0 z))(<= z 3)))(assert(= p 0))(assert(= p 1))(assert(and(and(and(or(or(= x x_dash)(= x (+ x_dash 1)))(= x (- x_dash 1)))(or(or(= y y_dash)(= y (+ y_dash 1)))(= y (- y_dash 1))))(or(or(= z z_dash)(= z (+ z_dash 1)))(= z (- z_dash 1))))(= p (- 1 p_dash))))"}
+
