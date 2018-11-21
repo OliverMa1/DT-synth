@@ -6,7 +6,7 @@ This file describes how to compile and run the prototype solver for automatic
 safety games.
 
 Currently, the prototype does not provide a user interface and games are given
-as JSON files. That means that the desired game has to be selected in the
+as .json files. This means that the desired game has to be selected in the
 sources (as described below) and the prototype needs to be executed with the game as input.
 
 
@@ -24,15 +24,14 @@ When compiled or downloaded, copy the files libz3.so
 (respectively libz3.dll) to the ./lib directory.
 
 Additional prerequisites are a C++ compiler and C++ runtime environment. Use "sudo apt-get install build-essential"
-on Linux to install the prerequisites. On Windows install MinGW or GNUWin32 and add respective make command to the
-environment variables.
+on Linux to install the prerequisites. On Windows install MinGW or GNUWin32.
 
 
 Compiling the prototype
 -----------------------
 
-The sources of the prototype contains a MAKEFILE. To compile the sources, change 
-into the directory containing the MAKEFILE and execute the command "make".
+The sources of the prototype contains a makefile. To compile the sources, change 
+into the directory containing the makefile and execute the command "make".
 
 
 Running the prototype
