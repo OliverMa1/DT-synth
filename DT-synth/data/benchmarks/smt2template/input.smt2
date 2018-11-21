@@ -1,9 +1,3 @@
-;;Declare variables, variables for edges, variables for additional exprs
-(declare-const x Int)
-(declare-const y Int)
-(declare-const x_dash Int)
-(declare-const y_dash Int)
-(declare-const x+y Int)
 ;; Initial Condition
 (assert (and (= x 0) (= y 0)))
 ;; Safe Condition
@@ -14,5 +8,5 @@
 (assert (= y 1))
 ;; Edge Relation
 (assert (or (and (= x (+ x_dash 1)) (= y_dash (- 1 y)))(and (= x (- x_dash 1))(= y_dash (- 1 y)))))
-;; one expr per assert
-(assert(= x+y (+ x y)))
+;; one expr per assert, left side is 0, right side is the expression
+(assert(= 0 (+ x y)))
