@@ -13,26 +13,16 @@ sources (as described below) and the prototype needs to be executed with the gam
 Prerequisites
 -------------
 
-The prototype requires Microsoft Z3 4.8.0 to run. Z3 can be obtained at
 
-    https://github.com/Z3Prover/z3
-    
-A successful build should produce the files libz3java.dll and libz3.dll (on Windows), respectively
-libz3java.so and libz3.so (on Linux). Refer to Z3's README for further details.
-
-When compiled or downloaded, copy the files libz3.so
-(respectively libz3.dll) to the ./lib directory.
-
-Additional prerequisites are a C++ compiler and C++ runtime environment. Use "sudo apt-get install build-essential"
+Prerequisites are a C++ compiler and C++ runtime environment. Use "sudo apt-get install build-essential"
 on Linux to install the prerequisites. On Windows install MinGW or GNUWin32.
 
 
 Compiling the prototype
 -----------------------
 
-The sources of the prototype contains a makefile. To compile the sources, change 
-into the directory containing the makefile and execute the command "make".
-
+Run the makefile in the DT-synth directory with the command "make". This will build z3 and install it as well build and 
+compile the prototype.
 
 Running the prototype
 ---------------------
