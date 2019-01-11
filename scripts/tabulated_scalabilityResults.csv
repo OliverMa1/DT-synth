@@ -1,0 +1,6 @@
+Benchmark program, Rounds, Positive, Negative, Total Time(ms)
+/home/oliver/DT-synth/benchmarks/scalabilityBenchmarks/GridWorldSequence1D.json100.time ,  63, 8.000000, 2.000000, 6350.000000
+/home/oliver/DT-synth/benchmarks/scalabilityBenchmarks/GridWorldSequence1D.json10.time ,  14, 4.000000, 2.000000, 1005.000000
+/home/oliver/DT-synth/benchmarks/scalabilityBenchmarks/GridWorldSequence1D.json30.time ,  28, 8.000000, 2.000000, 2183.000000
+/home/oliver/DT-synth/benchmarks/scalabilityBenchmarks/GridWorldSequence1D.json50.time ,  39, 7.000000, 2.000000, 3452.000000
+/home/oliver/DT-synth/benchmarks/scalabilityBenchmarks/GridWorldSequence1D.json.time ,  63, 8.000000, 2.000000, 6291.000000
