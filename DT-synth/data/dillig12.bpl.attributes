@@ -1,3 +1,8 @@
 cat,$func,1
 int,x
-int,y
+int,y1
+int,y2
+int,z
+int,pc1
+int,pc2
+int,pc3

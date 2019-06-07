@@ -631,11 +631,11 @@ int main(int argc, char* argv[])
 				json j = json::parse(ifs);
 				std::string tree = "";
 				hypothesis = read_json(j, variables, expr_map,0, tree);
-				//std::cout << "\n Hypothesis: \n" << tree << std::endl;
+				std::cout << "\n Hypothesis: \n" << tree << std::endl;
 				//std::cout << "Time taken for the learner: " << duration << " milliseconds " << std::endl;
 				hypothesis_edges_test  = hypothesis.substitute(variables_vector,variables_dash_vector);
 				safety_counter++;
-				if (safety_counter >= 1500)
+				if (safety_counter >= 15000)
 				{
 					flag = false;
 					std::cout << "Safety counter reached" << std::endl;
