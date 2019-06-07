@@ -1,0 +1,18 @@
+Amount of steps needed: 63
+Amount of variables used: 2
+Amount of additional expressions used: 0
+Amount of counterexamples: 112
+Amount of horn constraints: 102
+Average length of horn constraints: 2.019608
+Average teacher computation time: 92.825397 milliseconds
+Lowest teacher computation time: 20.000000 milliseconds
+Highest teacher computation time: 135.000000 milliseconds
+Average learner computation time: 5.095238 milliseconds
+Lowest learner computation time: 3.000000 milliseconds
+Highest learner computation time: 14.000000 milliseconds
+Total computation time: 6291.000000 milliseconds
+Positive counterexamples found: 8.000000
+Negative counterexamples found: 2.000000
+Existential counterexamples found: 2.000000
+Universal counterexamples found: 50.000000
+63, 8.000000, 2.000000, 6291.000000

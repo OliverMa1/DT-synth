@@ -523,6 +523,8 @@ const z3::expr & edges, z3::context & context, const z3::expr_vector & all_varia
 	 result += "\n";
 	 result += "Universal counterexamples found: "+ std::to_string(stats[10]);
 	 result += "\n";	 
+	 result += std::to_string(steps) + ", " + std::to_string(stats[7]) + ", " + std::to_string(stats[8]) + ", " + std::to_string(stats[6]);
+	 
  }
 /** Main method that encodes the interaction between teacher and learner.
  * @param argc - number of inputs, should be 2
@@ -610,10 +612,10 @@ int main(int argc, char* argv[])
 				{
 					stats[2] = duration;
 				}
-				std::cout << "Time taken for the teacher: " << duration << " milliseconds" << std::endl;			
+				//std::cout << "Time taken for the teacher: " << duration << " milliseconds" << std::endl;			
 				write();
 				t1 = high_resolution_clock::now();
-				system("learner/main data/dillig12.bpl");
+				system("learner/main data/dillig12.bpl >> /dev/null");
 				t2 = high_resolution_clock::now();
 				duration = duration_cast<milliseconds>(t2-t1).count();	
 				stats[3] += duration;
@@ -630,10 +632,10 @@ int main(int argc, char* argv[])
 				std::string tree = "";
 				hypothesis = read_json(j, variables, expr_map,0, tree);
 				std::cout << "\n Hypothesis: \n" << tree << std::endl;
-				std::cout << "Time taken for the learner: " << duration << " milliseconds " << std::endl;
+				//std::cout << "Time taken for the learner: " << duration << " milliseconds " << std::endl;
 				hypothesis_edges_test  = hypothesis.substitute(variables_vector,variables_dash_vector);
 				safety_counter++;
-				if (safety_counter >= 1500)
+				if (safety_counter >= 15000)
 				{
 					flag = false;
 					std::cout << "Safety counter reached" << std::endl;
