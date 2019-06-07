@@ -54,8 +54,9 @@ adding the corresponding directory to the LD_LIBRARY_PATH environment variables.
 
 On Linux, for instance, the prototype can be started using the command
 
-    ./main data/benchmarks/boxGame.json     
+    ./main ../benchmarks/infiniteArenaBenchmarks/boxGame.json     
          
+starting from the directory ./DT-Synth.
 
 The prototype outputs statistics of the learning process on termination 
 and all the decision trees produced in the intermediate steps.
@@ -73,5 +74,5 @@ One can also create a game by writing a new .json file. Such a file needs
 the name of the variables ("variables") and the name of the variables in the next step
 ("variables_dash"), the maximum amount of successors for each vertex ("successors"),
 any additional expressions like "x+y" or "x-y" and the game encoded in SMT-LIB.
-A template can be found in data/benchmarks/smt2template/input.smt2.
+A template and a README can be found in /benchmarks/smt2template/
 
