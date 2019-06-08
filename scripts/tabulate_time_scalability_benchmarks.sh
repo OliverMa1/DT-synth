@@ -5,7 +5,7 @@ echo "$path"
 
 elapsed() {
 
-  grep "," $1 | tail -1  
+  grep ', ' $1 | tail -1
 
 }
 
@@ -17,9 +17,9 @@ run_the_test() {
 
   FileNames=$(ls $path/*.time)
 
-    echo "Benchmark program, Rounds, Positive, Negative, Total Time(ms)"> tabulated_scalabilityResults.csv
+    echo "Benchmark program, Rounds, Positive, Negative, Total Time(ms)"> Tabulated-Data/tabulated_scalability_dt.csv
   for file_name in $FileNames; do
-    echo $file_name ", " $(elapsed $file_name) >> tabulated_scalabilityResults.csv
+    echo $(basename $file_name) ", " $(elapsed $file_name) >>Tabulated-Data/tabulated_scalability_dt.csv
   done
 
   echo "Test over."

@@ -61,6 +61,76 @@ starting from the directory ./DT-Synth.
 The prototype outputs statistics of the learning process on termination 
 and all the decision trees produced in the intermediate steps.
 
+Running the Benchmark Suite
+-----------------------
+The following instructions describe how the benchmarks can be run on a machine that has the Horn-ICE verification toolkit installed as described above. We provide two different types of benchmarks:
+
+  1. Benchmarks over infinite arena games
+  2. scalability benchmarks
+
+For more detailed instructions view instructions.html.
+
+Running the Benchmark Suits and comparison to other Tools
+--------------
+The entire benchmark suite can be executed using the following command from inside the ./dt/artifact-evaluation-master/scripts/ directory:
+
+sh runAll.sh
+The runAll.sh script will generate eight log files, as described below. 
+  1. tabulated_infinite_dt.csv lists all the benchmark programs for the infinite arena benchmark using the dt-synth 
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive,
+ Negative and Horn samples, the total time taken by the learner and the verification process.
+     
+  2. tabulated_infinite_rpni.csv lists all the benchmark programs for the infinite arena benchmark using the RPNI solver
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
+Negative and Horn samples, the total time taken by the learner and the verification process.
+     
+  3. tabulated_infinite_sat.csv lists all the benchmark programs for the infinite arena benchmark using the SAT solver
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
+Negative and Horn samples, the total time taken by the learner and the verification process. 
+     
+  4. tabulated_scalability_dt.csv lists all the benchmark programs for the scalability benchmark using the dt-synth 
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
+Negative and Horn samples, the total time taken by the learner and the verification process. 
+    
+  5. tabulated_scalability_fixed.csv lists all the benchmark programs for the scalability benchmark using the fixed-point algorithm
+     program with execution details. The execution details includes the total time taken by the learner and the verification process. 
+   
+  6. tabulated_scalability_rpni.csv lists all the benchmark programs for the scalability benchmark using the RPNI solver
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
+Negative and Horn samples, the total time taken by the learner and the verification process. 
+     
+  7. tabulated_scalability_sat.csv lists all the benchmark programs for the scalability benchmark using the SAT solver
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive,
+ Negative and Horn samples, the total time taken by the learner and the verification process. 
+ 
+  8. tabulated_scalability_dt.csv lists all the benchmark programs for the scalability benchmark using TuLiP 
+     program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
+Negative and Horn samples, the total time taken by the learner and the verification process. 
+
+Running an Individual Benchmark Set
+--------------
+
+The ./dt/artifact-evaluation-master/scripts/ contains scripts to execute individual sets of benchmarks and to tabulate their results:
+
+  - The infinite arena benchmarks can be executed and tabulated with sh ./run_infinite.sh
+
+  - The scalability benchmarks can be executed and tabulated with sh ./run_scalability.sh
+  
+Comparing DT-Synth to GAVS+
+--------------
+
+There is no script automating the benchmarks for GAVS+, thus you need to execute following steps to compute the benchmarks:
+
+The python scripts are used to generate the .pddl domain and problem files.
+
+1- Run the python script in ./dt/artifact-evaluation-master/GAVS+. Edit the first line "k = 100" to the desired value to test.
+
+2- Run GAVS+ (use: java -jar GAVS+.jar in ./dt/artifact-evaluation-master/GAVS+/GAVS+_dist_20160404/GAVS+_dist )
+
+3- Go to (GAVS+ ->Planning Domain Definition Language -> Solve PDDL using Symbolic
+Games(domain,problem) -> Safety) then select the domain file then the problem file and the solver will run.
+
+
 
 Changing games
 --------------

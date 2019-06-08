@@ -17,9 +17,9 @@ run_the_test() {
 
   FileNames=$(ls $path/*.time)
 
-    echo "Benchmark program, Rounds, Positive, Negative, Total Time(ms)"> tabulated_infinite_results.csv
+    echo "Benchmark program, Rounds, Positive, Negative, Total Time(ms)"> Tabulated-Data/tabulated_infinite_dt.csv
   for file_name in $FileNames; do
-    echo $file_name ", " $(elapsed $file_name) >> tabulated_infinite_results.csv
+    echo $(basename $file_name) ", " $(elapsed $file_name) >> Tabulated-Data/tabulated_infinite_dt.csv
   done
 
   echo "Test over."

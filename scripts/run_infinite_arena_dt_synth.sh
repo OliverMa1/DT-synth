@@ -2,6 +2,7 @@
 
 path="$(dirname "$PWD")"/benchmarks/infiniteArenaBenchmarks
 echo "$path"
+export LD_LIBRARY_PATH=/home/tacas19/dt/artifact-evaluation-master/DT-synth/lib/
 
 run_the_test() {
 
