@@ -21,10 +21,12 @@ Revision History:
 #include<sstream>
 
 #ifdef _WINDOWS
+#if defined(_MSC_VER)
 #pragma float_control( except, on )   // exception semantics; this does _not_ mean that exceptions are enabled (we want them off!)
 #pragma float_control( precise, on )  // precise semantics (no guessing!)
 #pragma fp_contract(off)              // contractions off (`contraction' means x*y+z is turned into a fused-mul-add).
 #pragma fenv_access(on)               // fpu environment sensitivity (needed to be allowed to make FPU mode changes).
+#endif
 #else
 #include<fenv.h>
 #endif
@@ -45,7 +47,7 @@ Revision History:
 // For SSE2, it is best to use compiler intrinsics because this makes it completely
 // clear to the compiler what instructions should be used. E.g., for sqrt(), the Windows compiler selects
 // the x87 FPU, even when /arch:SSE2 is on.
-// Luckily, these are kind of standardized, at least for Windows/Linux/OSX.
+// Luckily, these are kind of standardized, at least for Windows/Linux/macOS.
 #ifdef __clang__
 #undef USE_INTRINSICS
 #endif
@@ -61,7 +63,7 @@ hwf_manager::hwf_manager() :
     m_mpz_manager(m_mpq_manager)
 {
 #ifdef _WINDOWS
-#if defined(_AMD64_) || defined(_M_IA64)
+#if defined(_WIN64)
     // Precision control is not supported on x64.
     // See: http://msdn.microsoft.com/en-us/library/e9b52ceh(VS.110).aspx
     // CMW: I think this is okay though, the compiler will chose the right instructions
@@ -75,14 +77,14 @@ hwf_manager::hwf_manager() :
 #endif
 #endif
 #else
-    // OSX/Linux: Nothing.
+    // macOS/Linux: Nothing.
 #endif
 
     // We only set the precision of the FPU here in the constructor. At the moment, there are no
     // other parts of the code that could overwrite this, and Windows takes care of context switches.
 
     // CMW: I'm not sure what happens on CPUs with hyper-threading (since the FPU is shared).
-    // I have yet to discover whether Linux and OSX save the FPU state when switching context.
+    // I have yet to discover whether Linux and macOS save the FPU state when switching context.
     // As long as we stick to using the SSE2 FPU though, there shouldn't be any problems with respect
     // to the precision (not sure about the rounding modes though).
 }
@@ -253,41 +255,10 @@ void hwf_manager::div(mpf_rounding_mode rm, hwf const & x, hwf const & y, hwf & 
 #endif
 }
 
-#ifdef _M_IA64
-#pragma fp_contract(on)
-#endif
-
 void hwf_manager::fma(mpf_rounding_mode rm, hwf const & x, hwf const & y, hwf const &z, hwf & o) {
-    // CMW: fused_mul_add is not available on most CPUs. As of 2012, only Itanium,
-    // Intel Sandybridge and AMD Bulldozers support that (via AVX).
-
     set_rounding_mode(rm);
-
-#ifdef _M_IA64
-    // IA64 (Itanium) will do it, if contractions are on.
-    o.value = x.value * y.value + z.value;
-#else
-#if defined(_WINDOWS)
-#if _MSC_VER >= 1800
     o.value = ::fma(x.value, y.value, z.value);
-#else // Windows, older than VS 2013
-  #ifdef USE_INTRINSICS
-      _mm_store_sd(&o.value, _mm_fmadd_sd(_mm_set_sd(x.value), _mm_set_sd(y.value), _mm_set_sd(z.value)));
-  #else
-      // If all else fails, we are imprecise.
-      o.value = (x.value * y.value) + z;
-  #endif
-#endif
-#else
-    // Linux, OSX
-    o.value = ::fma(x.value, y.value, z.value);
-#endif
-#endif
 }
-
-#ifdef _M_IA64
-#pragma fp_contract(off)
-#endif
 
 void hwf_manager::sqrt(mpf_rounding_mode rm, hwf const & x, hwf & o) {
     set_rounding_mode(rm);
@@ -303,10 +274,13 @@ void hwf_manager::round_to_integral(mpf_rounding_mode rm, hwf const & x, hwf & o
     // CMW: modf is not the right function here.
     // modf(x.value, &o.value);
 
-    // According to the Intel Architecture manual, the x87-instrunction FRNDINT is the
+    // According to the Intel Architecture manual, the x87-instruction FRNDINT is the
     // same in 32-bit and 64-bit mode. The _mm_round_* intrinsics are SSE4 extensions.
 #ifdef _WINDOWS
-#if defined(USE_INTRINSICS) && \
+#if defined( __MINGW32__ ) && ( defined( __GNUG__ ) || defined( __clang__ ) )
+    o.value = nearbyint(x.value);
+#else
+  #if defined(USE_INTRINSICS) &&                                           \
     (defined(_WINDOWS) && (defined(__AVX__) || defined(_M_X64))) || \
     (!defined(_WINDOWS) && defined(__SSE4_1__))
     switch (rm) {
@@ -320,7 +294,7 @@ void hwf_manager::round_to_integral(mpf_rounding_mode rm, hwf const & x, hwf & o
     default:
         UNREACHABLE(); // Unknown rounding mode.
     }
-#else
+  #else
     double xv = x.value;
     double & ov = o.value;
 
@@ -329,9 +303,10 @@ void hwf_manager::round_to_integral(mpf_rounding_mode rm, hwf const & x, hwf & o
         frndint
         fstp    ov // Store result away.
     }
+  #endif
 #endif
 #else
-    // Linux, OSX.
+    // Linux, macOS.
     o.value = nearbyint(x.value);
 #endif
 }
@@ -557,7 +532,7 @@ void hwf_manager::mk_ninf(hwf & o) {
 }
 
 #ifdef _WINDOWS
-#if defined(_AMD64_) || defined(_M_IA64)
+#if defined(_WIN64)
 #ifdef USE_INTRINSICS
 #define SETRM(RM) _MM_SET_ROUNDING_MODE(RM)
 #else
@@ -623,7 +598,7 @@ void hwf_manager::set_rounding_mode(mpf_rounding_mode rm)
         UNREACHABLE(); // Note: MPF_ROUND_NEAREST_TAWAY is not supported by the hardware!
     }
 #endif
-#else // OSX/Linux
+#else // macOS/Linux
     switch (rm) {
     case MPF_ROUND_NEAREST_TEVEN:
         SETRM(FE_TONEAREST);

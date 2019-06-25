@@ -80,6 +80,11 @@ namespace smt {
                 m_queue.decreased(v);
         }
 
+        void activity_decreased_eh(bool_var v) override {
+            if (m_queue.contains(v))
+                m_queue.increased(v);
+        }
+
         void mk_var_eh(bool_var v) override {
             m_queue.reserve(v+1);
             SASSERT(!m_queue.contains(v));
@@ -167,6 +172,14 @@ namespace smt {
                 m_delayed_queue.decreased(v);
         }
 
+        void activity_decreased_eh(bool_var v) override {
+            act_case_split_queue::activity_decreased_eh(v);
+            if (m_queue.contains(v))
+                m_queue.increased(v);
+            if (m_delayed_queue.contains(v))
+                m_delayed_queue.increased(v);
+        }
+
         void mk_var_eh(bool_var v) override {
             m_queue.reserve(v+1);
             m_delayed_queue.reserve(v+1);
@@ -232,7 +245,7 @@ namespace smt {
         void mk_var_eh(bool_var v) override {
             expr * n = m_context.bool_var2expr(v);
             double act;
-            if (m_cache.find(n, act))
+            if (n && m_cache.find(n, act))
                 m_context.set_activity(v, act);
             act_case_split_queue::mk_var_eh(v);
         }
@@ -242,8 +255,10 @@ namespace smt {
                 double act = m_context.get_activity(v);
                 if (act > 0.0) {
                     expr * n = m_context.bool_var2expr(v);
-                    m_cache.insert(n, act);
-                    m_cache_domain.push_back(n);
+                    if (n) {
+                        m_cache.insert(n, act);
+                        m_cache_domain.push_back(n);
+                    }
                 }
             }
             act_case_split_queue::del_var_eh(v);
@@ -281,7 +296,7 @@ namespace smt {
             }
         }
         if (order == 1) {
-            if (undef_children.size() == 0) {
+            if (undef_children.empty()) {
                 // a bug?
             } else if (undef_children.size() == 1) {
                 undef_child = undef_children[0];
@@ -323,6 +338,8 @@ namespace smt {
         }
         
         void activity_increased_eh(bool_var v) override {}
+
+        void activity_decreased_eh(bool_var v) override {}
 
         void mk_var_eh(bool_var v) override {}
 
@@ -508,6 +525,8 @@ namespace smt {
         }
 
         void activity_increased_eh(bool_var v) override {}
+
+        void activity_decreased_eh(bool_var v) override {}
 
         void mk_var_eh(bool_var v) override {
             if (m_context.is_searching()) {
@@ -752,6 +771,8 @@ namespace smt {
         }
         
         void activity_increased_eh(bool_var v) override {}
+
+        void activity_decreased_eh(bool_var v) override {}
 
         void mk_var_eh(bool_var v) override {}
 
@@ -1131,6 +1152,11 @@ namespace smt {
         void activity_increased_eh(bool_var v) override {
             if (m_queue.contains(v))
                 m_queue.decreased(v);
+        }
+
+        void activity_decreased_eh(bool_var v) override {
+            if (m_queue.contains(v))
+                m_queue.increased(v);
         }
 
         void mk_var_eh(bool_var v) override {

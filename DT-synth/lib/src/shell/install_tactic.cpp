@@ -13,6 +13,7 @@
 #include "qe/qe_sat_tactic.h"
 #include "qe/qe_tactic.h"
 #include "qe/qsat.h"
+#include "sat/sat_solver/inc_sat_solver.h"
 #include "sat/tactic/sat_tactic.h"
 #include "smt/tactic/ctx_solver_simplify_tactic.h"
 #include "smt/tactic/smt_tactic.h"
@@ -59,16 +60,18 @@
 #include "tactic/core/pb_preprocess_tactic.h"
 #include "tactic/core/propagate_values_tactic.h"
 #include "tactic/core/reduce_args_tactic.h"
+#include "tactic/core/reduce_invertible_tactic.h"
 #include "tactic/core/simplify_tactic.h"
 #include "tactic/core/solve_eqs_tactic.h"
+#include "tactic/core/special_relations_tactic.h"
 #include "tactic/core/split_clause_tactic.h"
 #include "tactic/core/symmetry_reduce_tactic.h"
 #include "tactic/core/tseitin_cnf_tactic.h"
+#include "tactic/fd_solver/fd_solver.h"
 #include "tactic/fpa/fpa2bv_tactic.h"
 #include "tactic/fpa/qffp_tactic.h"
 #include "tactic/fpa/qffplra_tactic.h"
 #include "tactic/portfolio/default_tactic.h"
-#include "tactic/portfolio/fd_solver.h"
 #include "tactic/probe.h"
 #include "tactic/sine_filter.h"
 #include "tactic/sls/sls_tactic.h"
@@ -89,221 +92,118 @@
 #include "tactic/ufbv/quasi_macros_tactic.h"
 #include "tactic/ufbv/ufbv_rewriter_tactic.h"
 #include "tactic/ufbv/ufbv_tactic.h"
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_0, mk_ackermannize_bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_1, mk_subpaving_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_2, mk_horn_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_3, mk_horn_simplify_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_4, mk_nlsat_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_5, mk_qfnra_nlsat_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_6, mk_nlqsat_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_7, mk_qe_lite_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_8, qe::mk_sat_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_9, mk_qe_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_10, mk_qsat_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_11, mk_qe2_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_12, mk_qe_rec_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_13, mk_sat_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_14, mk_sat_preprocessor_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_15, mk_ctx_solver_simplify_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_16, mk_smt_tactic(p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_17, mk_parallel_smt_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_18, mk_unit_subsumption_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_19, mk_aig_tactic());
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_20, mk_add_bounds_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_21, mk_card2bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_22, mk_degree_shift_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_23, mk_diff_neq_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_24, mk_eq2bv_tactic(m));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_25, mk_factor_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_26, mk_fix_dl_var_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_27, mk_fm_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_28, mk_lia2card_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_29, mk_lia2pb_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_30, mk_nla2bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_31, mk_normalize_bounds_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_32, mk_pb2bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_33, mk_propagate_ineqs_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_34, mk_purify_arith_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_35, mk_recover_01_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_36, mk_bit_blaster_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_37, mk_bv1_blaster_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_38, mk_bv_bound_chk_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_39, mk_bv_bounds_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_40, mk_dom_bv_bounds_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_41, mk_bv_size_reduction_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_42, mk_bvarray2uf_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_43, mk_dt2bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_44, mk_elim_small_bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_45, mk_max_bv_sharing_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_46, mk_blast_term_ite_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_47, mk_cofactor_term_ite_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_48, mk_collect_statistics_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_49, mk_ctx_simplify_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_50, mk_der_tactic(m));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_51, mk_distribute_forall_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_52, mk_dom_simplify_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_53, mk_elim_term_ite_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_54, mk_elim_uncnstr_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_55, mk_injectivity_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_56, mk_snf_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_57, mk_nnf_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_58, mk_occf_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_59, mk_pb_preprocess_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_60, mk_propagate_values_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_61, mk_reduce_args_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_62, mk_simplify_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_63, mk_elim_and_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_64, mk_solve_eqs_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_65, mk_split_clause_tactic(p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_66, mk_symmetry_reduce_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_67, mk_tseitin_cnf_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_68, mk_tseitin_cnf_core_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_69, mk_fpa2bv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_70, mk_qffp_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_71, mk_qffpbv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_72, mk_qffplra_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_73, mk_default_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_74, mk_fd_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_75, mk_parallel_qffd_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_76, mk_sine_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_77, mk_qfbv_sls_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_78, mk_nra_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_79, mk_qfaufbv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_80, mk_qfauflia_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_81, mk_qfbv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_82, mk_qfidl_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_83, mk_qflia_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_84, mk_qflra_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_85, mk_qfnia_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_86, mk_qfnra_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_87, mk_qfuf_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_88, mk_qfufbv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_89, mk_qfufbv_ackr_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_90, mk_ufnia_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_91, mk_uflra_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_92, mk_auflia_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_93, mk_auflira_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_94, mk_aufnira_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_95, mk_lra_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_96, mk_lia_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_97, mk_lira_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_98, mk_skip_tactic());
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_99, mk_fail_tactic());
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_100, mk_fail_if_undecided_tactic());
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_101, mk_macro_finder_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_102, mk_quasi_macros_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_103, mk_quasi_macros_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_104, mk_ufbv_tactic(m, p));
-MK_SIMPLE_TACTIC_FACTORY(__Z3_local_factory_105, mk_ufbv_tactic(m, p));
-#define ADD_TACTIC_CMD(NAME, DESCR, FACTORY) ctx.insert(alloc(tactic_cmd, symbol(NAME), DESCR, alloc(FACTORY)))
+#define ADD_TACTIC_CMD(NAME, DESCR, CODE) ctx.insert(alloc(tactic_cmd, symbol(NAME), DESCR, [](ast_manager &m, const params_ref &p) { return CODE; }))
 #define ADD_PROBE(NAME, DESCR, PROBE) ctx.insert(alloc(probe_info, symbol(NAME), DESCR, PROBE))
 void install_tactics(tactic_manager & ctx) {
-  ADD_TACTIC_CMD("ackermannize_bv", "A tactic for performing full Ackermannization on bv instances.", __Z3_local_factory_0);
-  ADD_TACTIC_CMD("subpaving", "tactic for testing subpaving module.", __Z3_local_factory_1);
-  ADD_TACTIC_CMD("horn", "apply tactic for horn clauses.", __Z3_local_factory_2);
-  ADD_TACTIC_CMD("horn-simplify", "simplify horn clauses.", __Z3_local_factory_3);
-  ADD_TACTIC_CMD("nlsat", "(try to) solve goal using a nonlinear arithmetic solver.", __Z3_local_factory_4);
-  ADD_TACTIC_CMD("qfnra-nlsat", "builtin strategy for solving QF_NRA problems using only nlsat.", __Z3_local_factory_5);
-  ADD_TACTIC_CMD("nlqsat", "apply a NL-QSAT solver.", __Z3_local_factory_6);
-  ADD_TACTIC_CMD("qe-light", "apply light-weight quantifier elimination.", __Z3_local_factory_7);
-  ADD_TACTIC_CMD("qe-sat", "check satisfiability of quantified formulas using quantifier elimination.", __Z3_local_factory_8);
-  ADD_TACTIC_CMD("qe", "apply quantifier elimination.", __Z3_local_factory_9);
-  ADD_TACTIC_CMD("qsat", "apply a QSAT solver.", __Z3_local_factory_10);
-  ADD_TACTIC_CMD("qe2", "apply a QSAT based quantifier elimination.", __Z3_local_factory_11);
-  ADD_TACTIC_CMD("qe_rec", "apply a QSAT based quantifier elimination recursively.", __Z3_local_factory_12);
-  ADD_TACTIC_CMD("sat", "(try to) solve goal using a SAT solver.", __Z3_local_factory_13);
-  ADD_TACTIC_CMD("sat-preprocess", "Apply SAT solver preprocessing procedures (bounded resolution, Boolean constant propagation, 2-SAT, subsumption, subsumption resolution).", __Z3_local_factory_14);
-  ADD_TACTIC_CMD("ctx-solver-simplify", "apply solver-based contextual simplification rules.", __Z3_local_factory_15);
-  ADD_TACTIC_CMD("smt", "apply a SAT based SMT solver.", __Z3_local_factory_16);
-  ADD_TACTIC_CMD("psmt", "builtin strategy for SMT tactic in parallel.", __Z3_local_factory_17);
-  ADD_TACTIC_CMD("unit-subsume-simplify", "unit subsumption simplification.", __Z3_local_factory_18);
-  ADD_TACTIC_CMD("aig", "simplify Boolean structure using AIGs.", __Z3_local_factory_19);
-  ADD_TACTIC_CMD("add-bounds", "add bounds to unbounded variables (under approximation).", __Z3_local_factory_20);
-  ADD_TACTIC_CMD("card2bv", "convert pseudo-boolean constraints to bit-vectors.", __Z3_local_factory_21);
-  ADD_TACTIC_CMD("degree-shift", "try to reduce degree of polynomials (remark: :mul2power simplification is automatically applied).", __Z3_local_factory_22);
-  ADD_TACTIC_CMD("diff-neq", "specialized solver for integer arithmetic problems that contain only atoms of the form (<= k x) (<= x k) and (not (= (- x y) k)), where x and y are constants and k is a numeral, and all constants are bounded.", __Z3_local_factory_23);
-  ADD_TACTIC_CMD("eq2bv", "convert integer variables used as finite domain elements to bit-vectors.", __Z3_local_factory_24);
-  ADD_TACTIC_CMD("factor", "polynomial factorization.", __Z3_local_factory_25);
-  ADD_TACTIC_CMD("fix-dl-var", "if goal is in the difference logic fragment, then fix the variable with the most number of occurrences at 0.", __Z3_local_factory_26);
-  ADD_TACTIC_CMD("fm", "eliminate variables using fourier-motzkin elimination.", __Z3_local_factory_27);
-  ADD_TACTIC_CMD("lia2card", "introduce cardinality constraints from 0-1 integer.", __Z3_local_factory_28);
-  ADD_TACTIC_CMD("lia2pb", "convert bounded integer variables into a sequence of 0-1 variables.", __Z3_local_factory_29);
-  ADD_TACTIC_CMD("nla2bv", "convert a nonlinear arithmetic problem into a bit-vector problem, in most cases the resultant goal is an under approximation and is useul for finding models.", __Z3_local_factory_30);
-  ADD_TACTIC_CMD("normalize-bounds", "replace a variable x with lower bound k <= x with x' = x - k.", __Z3_local_factory_31);
-  ADD_TACTIC_CMD("pb2bv", "convert pseudo-boolean constraints to bit-vectors.", __Z3_local_factory_32);
-  ADD_TACTIC_CMD("propagate-ineqs", "propagate ineqs/bounds, remove subsumed inequalities.", __Z3_local_factory_33);
-  ADD_TACTIC_CMD("purify-arith", "eliminate unnecessary operators: -, /, div, mod, rem, is-int, to-int, ^, root-objects.", __Z3_local_factory_34);
-  ADD_TACTIC_CMD("recover-01", "recover 0-1 variables hidden as Boolean variables.", __Z3_local_factory_35);
-  ADD_TACTIC_CMD("bit-blast", "reduce bit-vector expressions into SAT.", __Z3_local_factory_36);
-  ADD_TACTIC_CMD("bv1-blast", "reduce bit-vector expressions into bit-vectors of size 1 (notes: only equality, extract and concat are supported).", __Z3_local_factory_37);
-  ADD_TACTIC_CMD("bv_bound_chk", "attempts to detect inconsistencies of bounds on bv expressions.", __Z3_local_factory_38);
-  ADD_TACTIC_CMD("propagate-bv-bounds", "propagate bit-vector bounds by simplifying implied or contradictory bounds.", __Z3_local_factory_39);
-  ADD_TACTIC_CMD("propagate-bv-bounds-new", "propagate bit-vector bounds by simplifying implied or contradictory bounds.", __Z3_local_factory_40);
-  ADD_TACTIC_CMD("reduce-bv-size", "try to reduce bit-vector sizes using inequalities.", __Z3_local_factory_41);
-  ADD_TACTIC_CMD("bvarray2uf", "Rewrite bit-vector arrays into bit-vector (uninterpreted) functions.", __Z3_local_factory_42);
-  ADD_TACTIC_CMD("dt2bv", "eliminate finite domain data-types. Replace by bit-vectors.", __Z3_local_factory_43);
-  ADD_TACTIC_CMD("elim-small-bv", "eliminate small, quantified bit-vectors by expansion.", __Z3_local_factory_44);
-  ADD_TACTIC_CMD("max-bv-sharing", "use heuristics to maximize the sharing of bit-vector expressions such as adders and multipliers.", __Z3_local_factory_45);
-  ADD_TACTIC_CMD("blast-term-ite", "blast term if-then-else by hoisting them.", __Z3_local_factory_46);
-  ADD_TACTIC_CMD("cofactor-term-ite", "eliminate term if-the-else using cofactors.", __Z3_local_factory_47);
-  ADD_TACTIC_CMD("collect-statistics", "Collects various statistics.", __Z3_local_factory_48);
-  ADD_TACTIC_CMD("ctx-simplify", "apply contextual simplification rules.", __Z3_local_factory_49);
-  ADD_TACTIC_CMD("der", "destructive equality resolution.", __Z3_local_factory_50);
-  ADD_TACTIC_CMD("distribute-forall", "distribute forall over conjunctions.", __Z3_local_factory_51);
-  ADD_TACTIC_CMD("dom-simplify", "apply dominator simplification rules.", __Z3_local_factory_52);
-  ADD_TACTIC_CMD("elim-term-ite", "eliminate term if-then-else by adding fresh auxiliary declarations.", __Z3_local_factory_53);
-  ADD_TACTIC_CMD("elim-uncnstr", "eliminate application containing unconstrained variables.", __Z3_local_factory_54);
-  ADD_TACTIC_CMD("injectivity", "Identifies and applies injectivity axioms.", __Z3_local_factory_55);
-  ADD_TACTIC_CMD("snf", "put goal in skolem normal form.", __Z3_local_factory_56);
-  ADD_TACTIC_CMD("nnf", "put goal in negation normal form.", __Z3_local_factory_57);
-  ADD_TACTIC_CMD("occf", "put goal in one constraint per clause normal form (notes: fails if proof generation is enabled; only clauses are considered).", __Z3_local_factory_58);
-  ADD_TACTIC_CMD("pb-preprocess", "pre-process pseudo-Boolean constraints a la Davis Putnam.", __Z3_local_factory_59);
-  ADD_TACTIC_CMD("propagate-values", "propagate constants.", __Z3_local_factory_60);
-  ADD_TACTIC_CMD("reduce-args", "reduce the number of arguments of function applications, when for all occurrences of a function f the i-th is a value.", __Z3_local_factory_61);
-  ADD_TACTIC_CMD("simplify", "apply simplification rules.", __Z3_local_factory_62);
-  ADD_TACTIC_CMD("elim-and", "convert (and a b) into (not (or (not a) (not b))).", __Z3_local_factory_63);
-  ADD_TACTIC_CMD("solve-eqs", "eliminate variables by solving equations.", __Z3_local_factory_64);
-  ADD_TACTIC_CMD("split-clause", "split a clause in many subgoals.", __Z3_local_factory_65);
-  ADD_TACTIC_CMD("symmetry-reduce", "apply symmetry reduction.", __Z3_local_factory_66);
-  ADD_TACTIC_CMD("tseitin-cnf", "convert goal into CNF using tseitin-like encoding (note: quantifiers are ignored).", __Z3_local_factory_67);
-  ADD_TACTIC_CMD("tseitin-cnf-core", "convert goal into CNF using tseitin-like encoding (note: quantifiers are ignored). This tactic does not apply required simplifications to the input goal like the tseitin-cnf tactic.", __Z3_local_factory_68);
-  ADD_TACTIC_CMD("fpa2bv", "convert floating point numbers to bit-vectors.", __Z3_local_factory_69);
-  ADD_TACTIC_CMD("qffp", "(try to) solve goal using the tactic for QF_FP.", __Z3_local_factory_70);
-  ADD_TACTIC_CMD("qffpbv", "(try to) solve goal using the tactic for QF_FPBV (floats+bit-vectors).", __Z3_local_factory_71);
-  ADD_TACTIC_CMD("qffplra", "(try to) solve goal using the tactic for QF_FPLRA.", __Z3_local_factory_72);
-  ADD_TACTIC_CMD("default", "default strategy used when no logic is specified.", __Z3_local_factory_73);
-  ADD_TACTIC_CMD("qffd", "builtin strategy for solving QF_FD problems.", __Z3_local_factory_74);
-  ADD_TACTIC_CMD("pqffd", "builtin strategy for solving QF_FD problems in parallel.", __Z3_local_factory_75);
-  ADD_TACTIC_CMD("sine-filter", "eliminate premises using Sine Qua Non", __Z3_local_factory_76);
-  ADD_TACTIC_CMD("qfbv-sls", "(try to) solve using stochastic local search for QF_BV.", __Z3_local_factory_77);
-  ADD_TACTIC_CMD("nra", "builtin strategy for solving NRA problems.", __Z3_local_factory_78);
-  ADD_TACTIC_CMD("qfaufbv", "builtin strategy for solving QF_AUFBV problems.", __Z3_local_factory_79);
-  ADD_TACTIC_CMD("qfauflia", "builtin strategy for solving QF_AUFLIA problems.", __Z3_local_factory_80);
-  ADD_TACTIC_CMD("qfbv", "builtin strategy for solving QF_BV problems.", __Z3_local_factory_81);
-  ADD_TACTIC_CMD("qfidl", "builtin strategy for solving QF_IDL problems.", __Z3_local_factory_82);
-  ADD_TACTIC_CMD("qflia", "builtin strategy for solving QF_LIA problems.", __Z3_local_factory_83);
-  ADD_TACTIC_CMD("qflra", "builtin strategy for solving QF_LRA problems.", __Z3_local_factory_84);
-  ADD_TACTIC_CMD("qfnia", "builtin strategy for solving QF_NIA problems.", __Z3_local_factory_85);
-  ADD_TACTIC_CMD("qfnra", "builtin strategy for solving QF_NRA problems.", __Z3_local_factory_86);
-  ADD_TACTIC_CMD("qfuf", "builtin strategy for solving QF_UF problems.", __Z3_local_factory_87);
-  ADD_TACTIC_CMD("qfufbv", "builtin strategy for solving QF_UFBV problems.", __Z3_local_factory_88);
-  ADD_TACTIC_CMD("qfufbv_ackr", "A tactic for solving QF_UFBV based on Ackermannization.", __Z3_local_factory_89);
-  ADD_TACTIC_CMD("ufnia", "builtin strategy for solving UFNIA problems.", __Z3_local_factory_90);
-  ADD_TACTIC_CMD("uflra", "builtin strategy for solving UFLRA problems.", __Z3_local_factory_91);
-  ADD_TACTIC_CMD("auflia", "builtin strategy for solving AUFLIA problems.", __Z3_local_factory_92);
-  ADD_TACTIC_CMD("auflira", "builtin strategy for solving AUFLIRA problems.", __Z3_local_factory_93);
-  ADD_TACTIC_CMD("aufnira", "builtin strategy for solving AUFNIRA problems.", __Z3_local_factory_94);
-  ADD_TACTIC_CMD("lra", "builtin strategy for solving LRA problems.", __Z3_local_factory_95);
-  ADD_TACTIC_CMD("lia", "builtin strategy for solving LIA problems.", __Z3_local_factory_96);
-  ADD_TACTIC_CMD("lira", "builtin strategy for solving LIRA problems.", __Z3_local_factory_97);
-  ADD_TACTIC_CMD("skip", "do nothing tactic.", __Z3_local_factory_98);
-  ADD_TACTIC_CMD("fail", "always fail tactic.", __Z3_local_factory_99);
-  ADD_TACTIC_CMD("fail-if-undecided", "fail if goal is undecided.", __Z3_local_factory_100);
-  ADD_TACTIC_CMD("macro-finder", "Identifies and applies macros.", __Z3_local_factory_101);
-  ADD_TACTIC_CMD("quasi-macros", "Identifies and applies quasi-macros.", __Z3_local_factory_102);
-  ADD_TACTIC_CMD("ufbv-rewriter", "Applies UFBV-specific rewriting rules, mainly demodulation.", __Z3_local_factory_103);
-  ADD_TACTIC_CMD("bv", "builtin strategy for solving BV problems (with quantifiers).", __Z3_local_factory_104);
-  ADD_TACTIC_CMD("ufbv", "builtin strategy for solving UFBV problems (with quantifiers).", __Z3_local_factory_105);
+  ADD_TACTIC_CMD("ackermannize_bv", "A tactic for performing full Ackermannization on bv instances.", mk_ackermannize_bv_tactic(m, p));
+  ADD_TACTIC_CMD("subpaving", "tactic for testing subpaving module.", mk_subpaving_tactic(m, p));
+  ADD_TACTIC_CMD("horn", "apply tactic for horn clauses.", mk_horn_tactic(m, p));
+  ADD_TACTIC_CMD("horn-simplify", "simplify horn clauses.", mk_horn_simplify_tactic(m, p));
+  ADD_TACTIC_CMD("nlsat", "(try to) solve goal using a nonlinear arithmetic solver.", mk_nlsat_tactic(m, p));
+  ADD_TACTIC_CMD("qfnra-nlsat", "builtin strategy for solving QF_NRA problems using only nlsat.", mk_qfnra_nlsat_tactic(m, p));
+  ADD_TACTIC_CMD("nlqsat", "apply a NL-QSAT solver.", mk_nlqsat_tactic(m, p));
+  ADD_TACTIC_CMD("qe-light", "apply light-weight quantifier elimination.", mk_qe_lite_tactic(m, p));
+  ADD_TACTIC_CMD("qe-sat", "check satisfiability of quantified formulas using quantifier elimination.", qe::mk_sat_tactic(m, p));
+  ADD_TACTIC_CMD("qe", "apply quantifier elimination.", mk_qe_tactic(m, p));
+  ADD_TACTIC_CMD("qsat", "apply a QSAT solver.", mk_qsat_tactic(m, p));
+  ADD_TACTIC_CMD("qe2", "apply a QSAT based quantifier elimination.", mk_qe2_tactic(m, p));
+  ADD_TACTIC_CMD("qe_rec", "apply a QSAT based quantifier elimination recursively.", mk_qe_rec_tactic(m, p));
+  ADD_TACTIC_CMD("psat", "(try to) solve goal using a parallel SAT solver.", mk_psat_tactic(m, p));
+  ADD_TACTIC_CMD("sat", "(try to) solve goal using a SAT solver.", mk_sat_tactic(m, p));
+  ADD_TACTIC_CMD("sat-preprocess", "Apply SAT solver preprocessing procedures (bounded resolution, Boolean constant propagation, 2-SAT, subsumption, subsumption resolution).", mk_sat_preprocessor_tactic(m, p));
+  ADD_TACTIC_CMD("ctx-solver-simplify", "apply solver-based contextual simplification rules.", mk_ctx_solver_simplify_tactic(m, p));
+  ADD_TACTIC_CMD("smt", "apply a SAT based SMT solver.", mk_smt_tactic(m, p));
+  ADD_TACTIC_CMD("psmt", "builtin strategy for SMT tactic in parallel.", mk_parallel_smt_tactic(m, p));
+  ADD_TACTIC_CMD("unit-subsume-simplify", "unit subsumption simplification.", mk_unit_subsumption_tactic(m, p));
+  ADD_TACTIC_CMD("aig", "simplify Boolean structure using AIGs.", mk_aig_tactic());
+  ADD_TACTIC_CMD("add-bounds", "add bounds to unbounded variables (under approximation).", mk_add_bounds_tactic(m, p));
+  ADD_TACTIC_CMD("card2bv", "convert pseudo-boolean constraints to bit-vectors.", mk_card2bv_tactic(m, p));
+  ADD_TACTIC_CMD("degree-shift", "try to reduce degree of polynomials (remark: :mul2power simplification is automatically applied).", mk_degree_shift_tactic(m, p));
+  ADD_TACTIC_CMD("diff-neq", "specialized solver for integer arithmetic problems that contain only atoms of the form (<= k x) (<= x k) and (not (= (- x y) k)), where x and y are constants and k is a numeral, and all constants are bounded.", mk_diff_neq_tactic(m, p));
+  ADD_TACTIC_CMD("eq2bv", "convert integer variables used as finite domain elements to bit-vectors.", mk_eq2bv_tactic(m));
+  ADD_TACTIC_CMD("factor", "polynomial factorization.", mk_factor_tactic(m, p));
+  ADD_TACTIC_CMD("fix-dl-var", "if goal is in the difference logic fragment, then fix the variable with the most number of occurrences at 0.", mk_fix_dl_var_tactic(m, p));
+  ADD_TACTIC_CMD("fm", "eliminate variables using fourier-motzkin elimination.", mk_fm_tactic(m, p));
+  ADD_TACTIC_CMD("lia2card", "introduce cardinality constraints from 0-1 integer.", mk_lia2card_tactic(m, p));
+  ADD_TACTIC_CMD("lia2pb", "convert bounded integer variables into a sequence of 0-1 variables.", mk_lia2pb_tactic(m, p));
+  ADD_TACTIC_CMD("nla2bv", "convert a nonlinear arithmetic problem into a bit-vector problem, in most cases the resultant goal is an under approximation and is useul for finding models.", mk_nla2bv_tactic(m, p));
+  ADD_TACTIC_CMD("normalize-bounds", "replace a variable x with lower bound k <= x with x' = x - k.", mk_normalize_bounds_tactic(m, p));
+  ADD_TACTIC_CMD("pb2bv", "convert pseudo-boolean constraints to bit-vectors.", mk_pb2bv_tactic(m, p));
+  ADD_TACTIC_CMD("propagate-ineqs", "propagate ineqs/bounds, remove subsumed inequalities.", mk_propagate_ineqs_tactic(m, p));
+  ADD_TACTIC_CMD("purify-arith", "eliminate unnecessary operators: -, /, div, mod, rem, is-int, to-int, ^, root-objects.", mk_purify_arith_tactic(m, p));
+  ADD_TACTIC_CMD("recover-01", "recover 0-1 variables hidden as Boolean variables.", mk_recover_01_tactic(m, p));
+  ADD_TACTIC_CMD("bit-blast", "reduce bit-vector expressions into SAT.", mk_bit_blaster_tactic(m, p));
+  ADD_TACTIC_CMD("bv1-blast", "reduce bit-vector expressions into bit-vectors of size 1 (notes: only equality, extract and concat are supported).", mk_bv1_blaster_tactic(m, p));
+  ADD_TACTIC_CMD("bv_bound_chk", "attempts to detect inconsistencies of bounds on bv expressions.", mk_bv_bound_chk_tactic(m, p));
+  ADD_TACTIC_CMD("propagate-bv-bounds", "propagate bit-vector bounds by simplifying implied or contradictory bounds.", mk_bv_bounds_tactic(m, p));
+  ADD_TACTIC_CMD("propagate-bv-bounds-new", "propagate bit-vector bounds by simplifying implied or contradictory bounds.", mk_dom_bv_bounds_tactic(m, p));
+  ADD_TACTIC_CMD("reduce-bv-size", "try to reduce bit-vector sizes using inequalities.", mk_bv_size_reduction_tactic(m, p));
+  ADD_TACTIC_CMD("bvarray2uf", "Rewrite bit-vector arrays into bit-vector (uninterpreted) functions.", mk_bvarray2uf_tactic(m, p));
+  ADD_TACTIC_CMD("dt2bv", "eliminate finite domain data-types. Replace by bit-vectors.", mk_dt2bv_tactic(m, p));
+  ADD_TACTIC_CMD("elim-small-bv", "eliminate small, quantified bit-vectors by expansion.", mk_elim_small_bv_tactic(m, p));
+  ADD_TACTIC_CMD("max-bv-sharing", "use heuristics to maximize the sharing of bit-vector expressions such as adders and multipliers.", mk_max_bv_sharing_tactic(m, p));
+  ADD_TACTIC_CMD("blast-term-ite", "blast term if-then-else by hoisting them.", mk_blast_term_ite_tactic(m, p));
+  ADD_TACTIC_CMD("cofactor-term-ite", "eliminate term if-the-else using cofactors.", mk_cofactor_term_ite_tactic(m, p));
+  ADD_TACTIC_CMD("collect-statistics", "Collects various statistics.", mk_collect_statistics_tactic(m, p));
+  ADD_TACTIC_CMD("ctx-simplify", "apply contextual simplification rules.", mk_ctx_simplify_tactic(m, p));
+  ADD_TACTIC_CMD("der", "destructive equality resolution.", mk_der_tactic(m));
+  ADD_TACTIC_CMD("distribute-forall", "distribute forall over conjunctions.", mk_distribute_forall_tactic(m, p));
+  ADD_TACTIC_CMD("dom-simplify", "apply dominator simplification rules.", mk_dom_simplify_tactic(m, p));
+  ADD_TACTIC_CMD("elim-term-ite", "eliminate term if-then-else by adding fresh auxiliary declarations.", mk_elim_term_ite_tactic(m, p));
+  ADD_TACTIC_CMD("elim-uncnstr", "eliminate application containing unconstrained variables.", mk_elim_uncnstr_tactic(m, p));
+  ADD_TACTIC_CMD("injectivity", "Identifies and applies injectivity axioms.", mk_injectivity_tactic(m, p));
+  ADD_TACTIC_CMD("snf", "put goal in skolem normal form.", mk_snf_tactic(m, p));
+  ADD_TACTIC_CMD("nnf", "put goal in negation normal form.", mk_nnf_tactic(m, p));
+  ADD_TACTIC_CMD("occf", "put goal in one constraint per clause normal form (notes: fails if proof generation is enabled; only clauses are considered).", mk_occf_tactic(m, p));
+  ADD_TACTIC_CMD("pb-preprocess", "pre-process pseudo-Boolean constraints a la Davis Putnam.", mk_pb_preprocess_tactic(m, p));
+  ADD_TACTIC_CMD("propagate-values", "propagate constants.", mk_propagate_values_tactic(m, p));
+  ADD_TACTIC_CMD("reduce-args", "reduce the number of arguments of function applications, when for all occurrences of a function f the i-th is a value.", mk_reduce_args_tactic(m, p));
+  ADD_TACTIC_CMD("reduce-invertible", "reduce invertible variable occurrences.", mk_reduce_invertible_tactic(m, p));
+  ADD_TACTIC_CMD("simplify", "apply simplification rules.", mk_simplify_tactic(m, p));
+  ADD_TACTIC_CMD("elim-and", "convert (and a b) into (not (or (not a) (not b))).", mk_elim_and_tactic(m, p));
+  ADD_TACTIC_CMD("solve-eqs", "eliminate variables by solving equations.", mk_solve_eqs_tactic(m, p));
+  ADD_TACTIC_CMD("special-relations", "detect and replace by special relations.", mk_special_relations_tactic(m, p));
+  ADD_TACTIC_CMD("split-clause", "split a clause in many subgoals.", mk_split_clause_tactic(p));
+  ADD_TACTIC_CMD("symmetry-reduce", "apply symmetry reduction.", mk_symmetry_reduce_tactic(m, p));
+  ADD_TACTIC_CMD("tseitin-cnf", "convert goal into CNF using tseitin-like encoding (note: quantifiers are ignored).", mk_tseitin_cnf_tactic(m, p));
+  ADD_TACTIC_CMD("tseitin-cnf-core", "convert goal into CNF using tseitin-like encoding (note: quantifiers are ignored). This tactic does not apply required simplifications to the input goal like the tseitin-cnf tactic.", mk_tseitin_cnf_core_tactic(m, p));
+  ADD_TACTIC_CMD("qffd", "builtin strategy for solving QF_FD problems.", mk_fd_tactic(m, p));
+  ADD_TACTIC_CMD("pqffd", "builtin strategy for solving QF_FD problems in parallel.", mk_parallel_qffd_tactic(m, p));
+  ADD_TACTIC_CMD("fpa2bv", "convert floating point numbers to bit-vectors.", mk_fpa2bv_tactic(m, p));
+  ADD_TACTIC_CMD("qffp", "(try to) solve goal using the tactic for QF_FP.", mk_qffp_tactic(m, p));
+  ADD_TACTIC_CMD("qffpbv", "(try to) solve goal using the tactic for QF_FPBV (floats+bit-vectors).", mk_qffpbv_tactic(m, p));
+  ADD_TACTIC_CMD("qffplra", "(try to) solve goal using the tactic for QF_FPLRA.", mk_qffplra_tactic(m, p));
+  ADD_TACTIC_CMD("default", "default strategy used when no logic is specified.", mk_default_tactic(m, p));
+  ADD_TACTIC_CMD("sine-filter", "eliminate premises using Sine Qua Non", mk_sine_tactic(m, p));
+  ADD_TACTIC_CMD("qfbv-sls", "(try to) solve using stochastic local search for QF_BV.", mk_qfbv_sls_tactic(m, p));
+  ADD_TACTIC_CMD("nra", "builtin strategy for solving NRA problems.", mk_nra_tactic(m, p));
+  ADD_TACTIC_CMD("qfaufbv", "builtin strategy for solving QF_AUFBV problems.", mk_qfaufbv_tactic(m, p));
+  ADD_TACTIC_CMD("qfauflia", "builtin strategy for solving QF_AUFLIA problems.", mk_qfauflia_tactic(m, p));
+  ADD_TACTIC_CMD("qfbv", "builtin strategy for solving QF_BV problems.", mk_qfbv_tactic(m, p));
+  ADD_TACTIC_CMD("qfidl", "builtin strategy for solving QF_IDL problems.", mk_qfidl_tactic(m, p));
+  ADD_TACTIC_CMD("qflia", "builtin strategy for solving QF_LIA problems.", mk_qflia_tactic(m, p));
+  ADD_TACTIC_CMD("qflra", "builtin strategy for solving QF_LRA problems.", mk_qflra_tactic(m, p));
+  ADD_TACTIC_CMD("qfnia", "builtin strategy for solving QF_NIA problems.", mk_qfnia_tactic(m, p));
+  ADD_TACTIC_CMD("qfnra", "builtin strategy for solving QF_NRA problems.", mk_qfnra_tactic(m, p));
+  ADD_TACTIC_CMD("qfuf", "builtin strategy for solving QF_UF problems.", mk_qfuf_tactic(m, p));
+  ADD_TACTIC_CMD("qfufbv", "builtin strategy for solving QF_UFBV problems.", mk_qfufbv_tactic(m, p));
+  ADD_TACTIC_CMD("qfufbv_ackr", "A tactic for solving QF_UFBV based on Ackermannization.", mk_qfufbv_ackr_tactic(m, p));
+  ADD_TACTIC_CMD("ufnia", "builtin strategy for solving UFNIA problems.", mk_ufnia_tactic(m, p));
+  ADD_TACTIC_CMD("uflra", "builtin strategy for solving UFLRA problems.", mk_uflra_tactic(m, p));
+  ADD_TACTIC_CMD("auflia", "builtin strategy for solving AUFLIA problems.", mk_auflia_tactic(m, p));
+  ADD_TACTIC_CMD("auflira", "builtin strategy for solving AUFLIRA problems.", mk_auflira_tactic(m, p));
+  ADD_TACTIC_CMD("aufnira", "builtin strategy for solving AUFNIRA problems.", mk_aufnira_tactic(m, p));
+  ADD_TACTIC_CMD("lra", "builtin strategy for solving LRA problems.", mk_lra_tactic(m, p));
+  ADD_TACTIC_CMD("lia", "builtin strategy for solving LIA problems.", mk_lia_tactic(m, p));
+  ADD_TACTIC_CMD("lira", "builtin strategy for solving LIRA problems.", mk_lira_tactic(m, p));
+  ADD_TACTIC_CMD("skip", "do nothing tactic.", mk_skip_tactic());
+  ADD_TACTIC_CMD("fail", "always fail tactic.", mk_fail_tactic());
+  ADD_TACTIC_CMD("fail-if-undecided", "fail if goal is undecided.", mk_fail_if_undecided_tactic());
+  ADD_TACTIC_CMD("macro-finder", "Identifies and applies macros.", mk_macro_finder_tactic(m, p));
+  ADD_TACTIC_CMD("quasi-macros", "Identifies and applies quasi-macros.", mk_quasi_macros_tactic(m, p));
+  ADD_TACTIC_CMD("ufbv-rewriter", "Applies UFBV-specific rewriting rules, mainly demodulation.", mk_quasi_macros_tactic(m, p));
+  ADD_TACTIC_CMD("bv", "builtin strategy for solving BV problems (with quantifiers).", mk_ufbv_tactic(m, p));
+  ADD_TACTIC_CMD("ufbv", "builtin strategy for solving UFBV problems (with quantifiers).", mk_ufbv_tactic(m, p));
   ADD_PROBE("ackr-bound-probe", "A probe to give an upper bound of Ackermann congruence lemmas that a formula might generate.", mk_ackr_bound_probe());
   ADD_PROBE("is-unbounded", "true if the goal contains integer/real constants that do not have lower/upper bounds.", mk_is_unbounded_probe());
   ADD_PROBE("is-pb", "true if the goal is a pseudo-boolean problem.", mk_is_pb_probe());

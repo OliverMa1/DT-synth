@@ -21,7 +21,6 @@ Revision History:
 --*/
 #include "tactic/tactical.h"
 #include "tactic/generic_model_converter.h"
-#include "util/cooperate.h"
 #include "ast/arith_decl_plugin.h"
 #include "tactic/core/simplify_tactic.h"
 #include "ast/ast_smt2_pp.h"
@@ -100,7 +99,6 @@ class degree_shift_tactic : public tactic {
         void checkpoint() {
             if (m.canceled())
                 throw tactic_exception(m.limit().get_cancel_msg());
-            cooperate("degree_shift");
         }
 
         void visit(expr * t, expr_fast_mark1 & visited) {
@@ -204,7 +202,7 @@ class degree_shift_tactic : public tactic {
             for (auto const& kv : m_var2degree) {
                 SASSERT(kv.m_value.is_int());
                 SASSERT(kv.m_value >= rational(2));
-                app * fresh = m.mk_fresh_const(0, kv.m_key->get_decl()->get_range());
+                app * fresh = m.mk_fresh_const(nullptr, kv.m_key->get_decl()->get_range());
                 m_pinned.push_back(fresh);
                 m_var2var.insert(kv.m_key, fresh);
                 if (m_produce_models) {

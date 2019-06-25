@@ -20,7 +20,6 @@
 #include "ackermannization/ackr_info.h"
 #include "ackermannization/ackr_helper.h"
 #include "ast/rewriter/th_rewriter.h"
-#include "util/cooperate.h"
 #include "ast/bv_decl_plugin.h"
 #include "util/lbool.h"
 #include "model/model.h"
@@ -42,8 +41,8 @@ struct lackr_stats {
 **/
 class lackr {
     public:
-        lackr(ast_manager& m, params_ref p, lackr_stats& st,
-            expr_ref_vector& formulas, solver * uffree_solver);
+        lackr(ast_manager& m, const params_ref& p, lackr_stats& st,
+              const ptr_vector<expr>& formulas, solver * uffree_solver);
         ~lackr();
         void updt_params(params_ref const & _p);
 
@@ -75,14 +74,13 @@ class lackr {
             if (m_m.canceled()) {
                 throw tactic_exception(TACTIC_CANCELED_MSG);
             }
-            cooperate("lackr");
         }
     private:
         typedef ackr_helper::fun2terms_map fun2terms_map;
         typedef ackr_helper::app_set       app_set;
         ast_manager&                         m_m;
         params_ref                           m_p;
-        expr_ref_vector                      m_formulas;
+        const ptr_vector<expr>&              m_formulas;
         expr_ref_vector                      m_abstr;
         fun2terms_map                        m_fun2terms;
         ackr_info_ref                        m_info;
@@ -102,7 +100,7 @@ class lackr {
         //
         // Introduce congruence ackermann lemma for the two given terms.
         //
-        bool ackr(app * const t1, app * const t2);
+        bool ackr(app * t1, app * t2);
 
         //
         // Introduce the ackermann lemma for each pair of terms.

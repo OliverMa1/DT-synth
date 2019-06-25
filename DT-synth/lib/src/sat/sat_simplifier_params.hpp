@@ -10,7 +10,7 @@ struct sat_simplifier_params {
      p(_p), g(gparams::get_module("sat")) {}
   static void collect_param_descrs(param_descrs & d) {
     d.insert("bce", CPK_BOOL, "eliminate blocked clauses", "false","sat");
-    d.insert("abce", CPK_BOOL, "eliminate blocked clauses using asymmmetric literals", "false","sat");
+    d.insert("abce", CPK_BOOL, "eliminate blocked clauses using asymmetric literals", "false","sat");
     d.insert("cce", CPK_BOOL, "eliminate covered clauses", "false","sat");
     d.insert("ate", CPK_BOOL, "asymmetric tautology elimination", "true","sat");
     d.insert("acce", CPK_BOOL, "eliminate covered clauses using asymmetric added literals", "false","sat");
@@ -19,7 +19,7 @@ struct sat_simplifier_params {
     d.insert("bce_delay", CPK_UINT, "delay eliminate blocked clauses until simplification round", "2","sat");
     d.insert("retain_blocked_clauses", CPK_BOOL, "retain blocked clauses as lemmas", "true","sat");
     d.insert("blocked_clause_limit", CPK_UINT, "maximum number of literals visited during blocked clause elimination", "100000000","sat");
-    d.insert("override_incremental", CPK_BOOL, "override incemental safety gaps. Enable elimination of blocked clauses and variables even if solver is reused", "false","sat");
+    d.insert("override_incremental", CPK_BOOL, "override incremental safety gaps. Enable elimination of blocked clauses and variables even if solver is reused", "false","sat");
     d.insert("resolution.limit", CPK_UINT, "approx. maximum number of literals visited during variable elimination", "500000000","sat");
     d.insert("resolution.occ_cutoff", CPK_UINT, "first cutoff (on number of positive/negative occurrences) for Boolean variable elimination", "10","sat");
     d.insert("resolution.occ_cutoff_range1", CPK_UINT, "second cutoff (number of positive/negative occurrences) for Boolean variable elimination, for problems containing less than res_cls_cutoff1 clauses", "8","sat");

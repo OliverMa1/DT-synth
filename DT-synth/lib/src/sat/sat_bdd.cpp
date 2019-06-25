@@ -87,7 +87,7 @@ namespace sat {
             try {
                 return apply_rec(arg1, arg2, op);
             }
-            catch (mem_out) {
+            catch (const mem_out &) {
                 try_reorder();
                 if (!first) throw;
                 first = false;
@@ -108,7 +108,7 @@ namespace sat {
 
     bool bdd_manager::check_result(op_entry*& e1, op_entry const* e2, BDD a, BDD b, BDD c) {
         if (e1 != e2) {
-            SASSERT(e2->m_result != -1);
+            SASSERT(e2->m_result != null_bdd);
             push_entry(e1);
             e1 = nullptr;
             return true;            
@@ -117,7 +117,7 @@ namespace sat {
             e1->m_bdd1 = a;
             e1->m_bdd2 = b;
             e1->m_op = c;
-            SASSERT(e1->m_result == -1);
+            SASSERT(e1->m_result == null_bdd);
             return false;        
         }
     }
@@ -203,7 +203,7 @@ namespace sat {
             void * mem = m_alloc.allocate(sizeof(op_entry));
             result = new (mem) op_entry(l, r, op);
         }
-        result->m_result = -1;
+        result->m_result = null_bdd;
         return result;
     }
 
@@ -546,7 +546,7 @@ namespace sat {
             try {
                 return bdd(mk_not_rec(b.root), this);
             }
-            catch (mem_out) {
+            catch (const mem_out &) {
                 try_reorder();
                 if (!first) throw;
                 first = false;
@@ -575,7 +575,7 @@ namespace sat {
             try {
                 return bdd(mk_ite_rec(c.root, t.root, e.root), this); 
             }
-            catch (mem_out) {
+            catch (const mem_out &) {
                 try_reorder();
                 if (!first) throw;
                 first = false;
@@ -667,7 +667,7 @@ namespace sat {
                 r = e2->m_result;
             }
             else {
-                SASSERT(e1->m_result == -1);
+                SASSERT(e1->m_result == null_bdd);
                 push(mk_quant_rec(l, lo(b), op));
                 push(mk_quant_rec(l, hi(b), op));
                 r = make_node(lvl, read(2), read(1));
@@ -782,7 +782,7 @@ namespace sat {
 
         ptr_vector<op_entry> to_delete, to_keep;
         for (auto* e : m_op_cache) {            
-            if (e->m_result != -1) {
+            if (e->m_result != null_bdd) {
                 to_delete.push_back(e);
             }
             else {

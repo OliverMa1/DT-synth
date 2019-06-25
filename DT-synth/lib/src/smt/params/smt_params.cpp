@@ -27,6 +27,7 @@ void smt_params::updt_local_params(params_ref const & _p) {
     m_random_seed = p.random_seed();
     m_relevancy_lvl = p.relevancy();
     m_ematching   = p.ematching();
+    m_clause_proof = p.clause_proof();
     m_phase_selection = static_cast<phase_selection>(p.phase_selection());
     m_restart_strategy = static_cast<restart_strategy>(p.restart_strategy());
     m_restart_factor = p.restart_factor();
@@ -36,8 +37,6 @@ void smt_params::updt_local_params(params_ref const & _p) {
     m_delay_units = p.delay_units();
     m_delay_units_threshold = p.delay_units_threshold();
     m_preprocess = _p.get_bool("preprocess", true); // hidden parameter
-    m_timeout = p.timeout();
-    m_rlimit  = p.rlimit();
     m_max_conflicts = p.max_conflicts();
     m_restart_max   = p.restart_max();
     m_core_validate = p.core_validate();
@@ -63,6 +62,7 @@ void smt_params::updt_params(params_ref const & p) {
     theory_bv_params::updt_params(p);
     theory_pb_params::updt_params(p);
     // theory_array_params::updt_params(p);
+    theory_datatype_params::updt_params(p);
     updt_local_params(p);
 }
 
@@ -106,6 +106,7 @@ void smt_params::display(std::ostream & out) const {
     DISPLAY_PARAM(m_display_features);
     DISPLAY_PARAM(m_new_core2th_eq);
     DISPLAY_PARAM(m_ematching);
+    DISPLAY_PARAM(m_clause_proof);
 
     DISPLAY_PARAM(m_case_split_strategy);
     DISPLAY_PARAM(m_rel_case_split_order);
@@ -156,8 +157,6 @@ void smt_params::display(std::ostream & out) const {
     DISPLAY_PARAM(m_preprocess);
     DISPLAY_PARAM(m_user_theory_preprocess_axioms);
     DISPLAY_PARAM(m_user_theory_persist_axioms);
-    DISPLAY_PARAM(m_timeout);
-    DISPLAY_PARAM(m_rlimit);
     DISPLAY_PARAM(m_at_labels_cex);
     DISPLAY_PARAM(m_check_at_labels);
     DISPLAY_PARAM(m_dump_goal_as_smt);

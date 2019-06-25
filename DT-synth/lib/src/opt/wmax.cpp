@@ -49,9 +49,9 @@ namespace opt {
             m_trail(m),
             m_defs(m) {}
 
-        virtual ~wmax() {}
+        ~wmax() override {}
 
-        lbool operator()() {
+        lbool operator()() override {
             TRACE("opt", tout << "weighted maxsat\n";);
             scoped_ensure_theory wth(*this);
             obj_map<expr, rational> soft;            
@@ -75,11 +75,9 @@ namespace opt {
             trace_bounds("wmax");
             
             TRACE("opt", 
-                  s().display(tout); tout << "\n";
+                  s().display(tout)<< "\n";
                   tout << "lower: " << m_lower << " upper: " << m_upper << "\n";);
             while (!m.canceled() && m_lower < m_upper) {
-                //mk_assumptions(asms);
-                //is_sat = s().preferred_sat(asms, cores);
                 is_sat = s().check_sat(0, nullptr);
                 if (m.canceled()) {
                     is_sat = l_undef;
@@ -120,15 +118,11 @@ namespace opt {
         }
 
         bool is_true(expr* e) {
-            expr_ref tmp(m);
-            return m_model->eval(e, tmp) && m.is_true(tmp);
+            return m_model->is_true(e);
         }
 
         void update_assignment() {
-            m_assignment.reset();
-            for (unsigned i = 0; i < m_soft.size(); ++i) {
-                m_assignment.push_back(is_true(m_soft[i]));
-            }
+            for (soft& s : m_soft) s.set_value(is_true(s.s));
         }
 
         struct compare_asm {
@@ -307,9 +301,8 @@ namespace opt {
         }
 
         void update_model(expr* def, expr* value) {
-            expr_ref val(m);
-            if (m_model && m_model->eval(value, val, true)) {
-                m_model->register_decl(to_app(def)->get_decl(), val);
+            if (m_model) {
+                m_model->register_decl(to_app(def)->get_decl(), (*m_model)(value));
             }
         }
                 

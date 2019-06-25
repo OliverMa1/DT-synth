@@ -3,7 +3,7 @@ Copyright (c) 2011 Microsoft Corporation
 
 Module Name:
 
-    solver.h
+    solver.cpp
 
 Abstract:
 
@@ -21,30 +21,30 @@ Notes:
 #include "ast/ast_util.h"
 #include "ast/ast_pp.h"
 #include "ast/ast_pp_util.h"
+#include "ast/display_dimacs.h"
 #include "tactic/model_converter.h"
 #include "solver/solver.h"
+#include "solver/solver_params.hpp"
 #include "model/model_evaluator.h"
 
 
 unsigned solver::get_num_assertions() const {
-    NOT_IMPLEMENTED_YET();
+    UNREACHABLE();
     return 0;
 }
 
 expr * solver::get_assertion(unsigned idx) const {
-    NOT_IMPLEMENTED_YET();
+    UNREACHABLE();
     return nullptr;
 }
 
 std::ostream& solver::display(std::ostream & out, unsigned n, expr* const* assumptions) const {
     expr_ref_vector fmls(get_manager());
-    stopwatch sw;
-    sw.start();
     get_assertions(fmls);    
     ast_pp_util visitor(get_manager());
     model_converter_ref mc = get_model_converter();
     if (mc.get()) { 
-        mc->collect(visitor); 
+        mc->set_env(&visitor); 
     }
     visitor.collect(fmls);
     visitor.collect(n, assumptions);
@@ -52,8 +52,15 @@ std::ostream& solver::display(std::ostream & out, unsigned n, expr* const* assum
     visitor.display_asserts(out, fmls, true);
     if (mc.get()) {
         mc->display(out);
+        mc->set_env(nullptr);
     }
     return out;
+}
+
+std::ostream& solver::display_dimacs(std::ostream& out) const {
+    expr_ref_vector fmls(get_manager());
+    get_assertions(fmls);    
+    return ::display_dimacs(out, fmls);
 }
 
 void solver::get_assertions(expr_ref_vector& fmls) const {
@@ -62,6 +69,13 @@ void solver::get_assertions(expr_ref_vector& fmls) const {
         fmls.push_back(get_assertion(i));
     }
 }
+
+expr_ref_vector solver::get_assertions() const {
+    expr_ref_vector result(get_manager());
+    get_assertions(result);
+    return result;
+}
+
 
 struct scoped_assumption_push {
     expr_ref_vector& m_vec;
@@ -170,10 +184,19 @@ lbool solver::preferred_sat(expr_ref_vector const& asms, vector<expr_ref_vector>
     return check_sat(0, nullptr);
 }
 
-bool solver::is_literal(ast_manager& m, expr* e) {
-    return is_uninterp_const(e) || (m.is_not(e, e) && is_uninterp_const(e));
+
+static bool is_m_atom(ast_manager& m, expr* f) {
+    if (!is_app(f)) return true;
+    app* _f = to_app(f);
+    family_id bfid = m.get_basic_family_id();
+    if (_f->get_family_id() != bfid) return true;
+    if (_f->get_num_args() > 0 && m.is_bool(_f->get_arg(0))) return false;    
+    return m.is_eq(f) || m.is_distinct(f);
 }
 
+bool solver::is_literal(ast_manager& m, expr* e) {
+    return is_m_atom(m, e) || (m.is_not(e, e) && is_m_atom(m, e));
+}
 
 void solver::assert_expr(expr* f) {
     expr_ref fml(f, get_manager());
@@ -191,8 +214,6 @@ void solver::assert_expr(expr* f, expr* t) {
     expr_ref fml(f, m);    
     expr_ref a(t, m);
     if (m_enforce_model_conversion) {
-        IF_VERBOSE(0, verbose_stream() << "enforce model conversion\n";);
-        exit(0);
         model_converter_ref mc = get_model_converter();
         if (mc) {
             (*mc)(fml);        
@@ -202,17 +223,33 @@ void solver::assert_expr(expr* f, expr* t) {
     assert_expr_core2(fml, a);    
 }
 
+
+
 void solver::collect_param_descrs(param_descrs & r) {
     r.insert("solver.enforce_model_conversion", CPK_BOOL, "(default: false) enforce model conversion when asserting formulas");
+    insert_timeout(r);
+    insert_rlimit(r);
+    insert_max_memory(r);
+    insert_ctrl_c(r);
 }
 
-void solver::updt_params(params_ref const & p) { 
-    m_params.copy(p); 
-    m_enforce_model_conversion = m_params.get_bool("solver.enforce_model_conversion", false);
+void solver::reset_params(params_ref const & p) {
+    m_params = p;
+    solver_params sp(m_params);
+    m_enforce_model_conversion = sp.enforce_model_conversion();
+    m_cancel_backup_file = sp.cancel_backup_file();
+}
+
+void solver::updt_params(params_ref const & p) {
+    m_params.copy(p);
+    solver_params sp(m_params);
+    m_enforce_model_conversion = sp.enforce_model_conversion();
+    m_cancel_backup_file = sp.cancel_backup_file();
 }
 
 
-expr_ref_vector solver::get_units(ast_manager& m) {
+expr_ref_vector solver::get_units() {
+    ast_manager& m = get_manager();
     expr_ref_vector fmls(m), result(m), tmp(m);
     get_assertions(fmls);
     obj_map<expr, bool> units;
@@ -242,4 +279,71 @@ expr_ref_vector solver::get_units(ast_manager& m) {
     }
 
     return result;
+}
+
+
+expr_ref_vector solver::get_non_units() {
+    ast_manager& m = get_manager();
+    expr_ref_vector result(m), fmls(m);
+    get_assertions(fmls);
+    family_id bfid = m.get_basic_family_id();
+    expr_mark marked;
+    unsigned sz0 = fmls.size();
+    for (unsigned i = 0; i < fmls.size(); ++i) {
+        expr* f = fmls.get(i);
+        if (marked.is_marked(f)) continue;
+        marked.mark(f);
+        if (!is_app(f)) {
+            if (i >= sz0) result.push_back(f);
+            continue;
+        }
+        app* _f = to_app(f);
+        if (_f->get_family_id() == bfid) {
+            // basic objects are true/false/and/or/not/=/distinct 
+            // and proof objects (that are not Boolean).
+            if (i < sz0 && m.is_not(f) && is_m_atom(m, _f->get_arg(0))) {
+                marked.mark(_f->get_arg(0));
+            }
+            else if (_f->get_num_args() > 0 && m.is_bool(_f->get_arg(0))) {
+                fmls.append(_f->get_num_args(), _f->get_args());
+            }
+            else if (i >= sz0 && is_m_atom(m, f)) {
+                result.push_back(f);
+            }
+        }
+        
+        else {
+            if (i >= sz0) result.push_back(f);
+        }
+    }
+    return result;
+}
+
+
+lbool solver::check_sat(unsigned num_assumptions, expr * const * assumptions) {
+    lbool r = l_undef;
+    try {
+        r = check_sat_core(num_assumptions, assumptions);
+    }
+    catch (...) {
+        if (!get_manager().limit().inc(0)) {
+            dump_state(num_assumptions, assumptions);
+        }
+        throw;
+    }
+    if (r == l_undef && get_manager().canceled()) {
+        dump_state(num_assumptions, assumptions);        
+    }
+    return r;
+}
+
+void solver::dump_state(unsigned sz, expr* const* assumptions) {
+    if ((symbol::null != m_cancel_backup_file) &&
+        !m_cancel_backup_file.is_numerical() && 
+        m_cancel_backup_file.c_ptr() &&
+        m_cancel_backup_file.bare_str()[0]) {
+        std::string file = m_cancel_backup_file.str();
+        std::ofstream ous(file);
+        display(ous, sz, assumptions);
+    }
 }

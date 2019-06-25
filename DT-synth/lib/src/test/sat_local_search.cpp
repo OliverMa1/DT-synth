@@ -7,7 +7,7 @@
 static bool build_instance(char const * filename, sat::solver& s, sat::local_search& local_search)
 {
     char  line[16383];
-    // for temperally storage
+    // for temporary storage
 
     std::ifstream infile(filename);
     //if (infile == NULL) //linux
@@ -28,7 +28,7 @@ static bool build_instance(char const * filename, sat::solver& s, sat::local_sea
     sat::literal_vector lits;
 
     // process objective function:
-    // read coefficents
+    // read coefficients
     infile >> cur_term;
     while (cur_term != 0) {
         coefficients.push_back(cur_term);
@@ -43,12 +43,8 @@ static bool build_instance(char const * filename, sat::solver& s, sat::local_sea
     }
 
     if (lits.size() != coefficients.size()) {
-        std::cout << "Objective function format error. They have different lenghts.\n";
+        std::cout << "Objective function format error. They have different lengths.\n";
         return false;
-    }
-
-    for (unsigned i = 0; i < lits.size(); ++i) {
-        local_search.add_soft(lits[i].var(), coefficients[i]);
     }
     
     // read the constraints, one at a time
@@ -127,6 +123,6 @@ void tst_sat_local_search(char ** argv, int argc, int& i) {
     cancel_eh<reslimit> eh(local_search.rlimit());
     scoped_ctrl_c ctrlc(eh, false, true);
     scoped_timer timer(cutoff_time*1000, &eh);        
-    local_search.check();    
+    local_search.check(0, nullptr, nullptr);    
 
 }

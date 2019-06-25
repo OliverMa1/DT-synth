@@ -15,7 +15,8 @@ struct parallel_params {
     d.insert("conquer.restart.max", CPK_UINT, "maximal number of restarts during conquer phase", "5","parallel");
     d.insert("conquer.delay", CPK_UINT, "delay of cubes until applying conquer", "10","parallel");
     d.insert("conquer.backtrack_frequency", CPK_UINT, "frequency to apply core minimization during conquer", "10","parallel");
-    d.insert("simplify.exp", CPK_DOUBLE, "restart and inprocess max is multipled by simplify.exp ^ depth", "1","parallel");
+    d.insert("simplify.exp", CPK_DOUBLE, "restart and inprocess max is multiplied by simplify.exp ^ depth", "1","parallel");
+    d.insert("simplify.max_conflicts", CPK_UINT, "maximal number of conflicts during simplifcation phase", "4294967295","parallel");
     d.insert("simplify.restart.max", CPK_UINT, "maximal number of restarts during simplification phase", "5000","parallel");
     d.insert("simplify.inprocess.max", CPK_UINT, "maximal number of inprocessing steps during simplification", "2","parallel");
   }
@@ -30,6 +31,7 @@ struct parallel_params {
   unsigned conquer_delay() const { return p.get_uint("conquer.delay", g, 10u); }
   unsigned conquer_backtrack_frequency() const { return p.get_uint("conquer.backtrack_frequency", g, 10u); }
   double simplify_exp() const { return p.get_double("simplify.exp", g, 1); }
+  unsigned simplify_max_conflicts() const { return p.get_uint("simplify.max_conflicts", g, 4294967295u); }
   unsigned simplify_restart_max() const { return p.get_uint("simplify.restart.max", g, 5000u); }
   unsigned simplify_inprocess_max() const { return p.get_uint("simplify.inprocess.max", g, 2u); }
 };

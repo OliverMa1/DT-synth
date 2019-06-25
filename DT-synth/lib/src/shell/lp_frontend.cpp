@@ -17,9 +17,13 @@ Author:
 #include "util/gparams.h"
 #include <signal.h>
 
+namespace {
+static std::mutex *display_stats_mux = new std::mutex;
+
 static lp::lp_solver<double, double>* g_solver = nullptr;
 
 static void display_statistics() {
+    std::lock_guard<std::mutex> lock(*display_stats_mux);
     if (g_solver && g_solver->settings().print_statistics) {
         // TBD display relevant information about statistics
     }
@@ -27,19 +31,13 @@ static void display_statistics() {
 
 static void STD_CALL on_ctrl_c(int) {
     signal (SIGINT, SIG_DFL);
-    #pragma omp critical (g_display_stats)
-    {
-        display_statistics();
-    }
+    display_statistics();
     raise(SIGINT);
 }
 
 static void on_timeout() {
-    #pragma omp critical (g_display_stats)
-    {
-        display_statistics();
-        exit(0);
-    }
+    display_statistics();
+    exit(0);    
 }
 
 struct front_end_resource_limit : public lp::lp_resource_limit {
@@ -85,20 +83,18 @@ void run_solver(lp_params & params, char const * mps_file_name) {
     solver->find_maximal_solution();
 
     *(solver->settings().get_message_ostream()) << "status is " << lp_status_to_string(solver->get_status()) << std::endl;
-    if (solver->get_status() == lp::OPTIMAL) {
+    if (solver->get_status() == lp::lp_status::OPTIMAL) {
         if (params.min()) {
             solver->flip_costs();
         }
         solver->print_model(std::cout);
     }
 
-//    #pragma omp critical (g_display_stats)
-    {
-        display_statistics();
-        register_on_timeout_proc(nullptr);
-        g_solver = nullptr;
-    }
+    display_statistics();
+    register_on_timeout_proc(nullptr);
+    g_solver = nullptr;
     delete solver;
+}
 }
 
 unsigned read_mps_file(char const * mps_file_name) {

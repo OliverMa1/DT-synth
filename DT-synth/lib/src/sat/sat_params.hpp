@@ -10,10 +10,11 @@ struct sat_params {
      p(_p), g(gparams::get_module("sat")) {}
   static void collect_param_descrs(param_descrs & d) {
     d.insert("max_memory", CPK_UINT, "maximum amount of memory in megabytes", "4294967295","sat");
-    d.insert("phase", CPK_SYMBOL, "phase selection strategy: always_false, always_true, caching, random", "caching","sat");
-    d.insert("phase.caching.on", CPK_UINT, "phase caching on period (in number of conflicts)", "400","sat");
-    d.insert("phase.caching.off", CPK_UINT, "phase caching off period (in number of conflicts)", "100","sat");
-    d.insert("phase.sticky", CPK_BOOL, "use sticky phase caching for local search", "false","sat");
+    d.insert("phase", CPK_SYMBOL, "phase selection strategy: always_false, always_true, basic_caching, random, caching", "caching","sat");
+    d.insert("phase.sticky", CPK_BOOL, "use sticky phase caching", "true","sat");
+    d.insert("search.unsat.conflicts", CPK_UINT, "period for solving for unsat (in number of conflicts)", "400","sat");
+    d.insert("search.sat.conflicts", CPK_UINT, "period for solving for sat (in number of conflicts)", "400","sat");
+    d.insert("rephase.base", CPK_UINT, "number of conflicts per rephase ", "1000","sat");
     d.insert("propagate.prefetch", CPK_BOOL, "prefetch watch lists for assigned literals", "true","sat");
     d.insert("restart", CPK_SYMBOL, "restart strategy: static, luby, ema or geometric", "ema","sat");
     d.insert("restart.initial", CPK_UINT, "initial restart (number of conflicts)", "2","sat");
@@ -23,7 +24,7 @@ struct sat_params {
     d.insert("restart.margin", CPK_DOUBLE, "margin between fast and slow restart factors. For ema", "1.1","sat");
     d.insert("restart.emafastglue", CPK_DOUBLE, "ema alpha factor for fast moving average", "0.03","sat");
     d.insert("restart.emaslowglue", CPK_DOUBLE, "ema alpha factor for slow moving average", "1e-05","sat");
-    d.insert("variable_decay", CPK_UINT, "multiplier (divided by 100) for the VSIDS activity increement", "110","sat");
+    d.insert("variable_decay", CPK_UINT, "multiplier (divided by 100) for the VSIDS activity increment", "110","sat");
     d.insert("inprocess.max", CPK_UINT, "maximal number of inprocessing passes", "4294967295","sat");
     d.insert("branching.heuristic", CPK_SYMBOL, "branching heuristic vsids, lrb or chb", "vsids","sat");
     d.insert("branching.anti_exploration", CPK_BOOL, "apply anti-exploration heuristic for branch selection", "false","sat");
@@ -39,37 +40,54 @@ struct sat_params {
     d.insert("gc.burst", CPK_BOOL, "perform eager garbage collection during initialization", "false","sat");
     d.insert("gc.defrag", CPK_BOOL, "defragment clauses when garbage collecting", "true","sat");
     d.insert("simplify.delay", CPK_UINT, "set initial delay of simplification by a conflict count", "0","sat");
+    d.insert("force_cleanup", CPK_BOOL, "force cleanup to remove tautologies and simplify clauses", "false","sat");
     d.insert("minimize_lemmas", CPK_BOOL, "minimize learned clauses", "true","sat");
     d.insert("dyn_sub_res", CPK_BOOL, "dynamic subsumption resolution for minimizing learned clauses", "true","sat");
     d.insert("core.minimize", CPK_BOOL, "minimize computed core", "false","sat");
     d.insert("core.minimize_partial", CPK_BOOL, "apply partial (cheap) core minimization", "false","sat");
+    d.insert("backtrack.scopes", CPK_UINT, "number of scopes to enable chronological backtracking", "100","sat");
+    d.insert("backtrack.conflicts", CPK_UINT, "number of conflicts before enabling chronological backtracking", "4000","sat");
     d.insert("threads", CPK_UINT, "number of parallel threads to use", "1","sat");
     d.insert("dimacs.core", CPK_BOOL, "extract core from DIMACS benchmarks", "false","sat");
     d.insert("drat.file", CPK_SYMBOL, "file to dump DRAT proofs", "","sat");
+    d.insert("drat.binary", CPK_BOOL, "use Binary DRAT output format", "false","sat");
     d.insert("drat.check_unsat", CPK_BOOL, "build up internal proof and check", "false","sat");
     d.insert("drat.check_sat", CPK_BOOL, "build up internal trace, check satisfying model", "false","sat");
     d.insert("cardinality.solver", CPK_BOOL, "use cardinality solver", "true","sat");
-    d.insert("pb.solver", CPK_SYMBOL, "method for handling Pseudo-Boolean constraints: circuit (arithmetical circuit), sorting (sorting circuit), totalizer (use totalizer encoding), solver (use native solver)", "solver","sat");
+    d.insert("pb.solver", CPK_SYMBOL, "method for handling Pseudo-Boolean constraints: circuit (arithmetical circuit), sorting (sorting circuit), totalizer (use totalizer encoding), binary_merge, segmented, solver (use native solver)", "solver","sat");
     d.insert("xor.solver", CPK_BOOL, "use xor solver", "false","sat");
-    d.insert("atmost1_encoding", CPK_SYMBOL, "encoding used for at-most-1 constraints grouped, bimander, ordered", "grouped","sat");
+    d.insert("cardinality.encoding", CPK_SYMBOL, "encoding used for at-most-k constraints: grouped, bimander, ordered, unate, circuit", "grouped","sat");
+    d.insert("pb.resolve", CPK_SYMBOL, "resolution strategy for boolean algebra solver: cardinality, rounding", "cardinality","sat");
+    d.insert("pb.lemma_format", CPK_SYMBOL, "generate either cardinality or pb lemmas", "cardinality","sat");
+    d.insert("ddfw_search", CPK_BOOL, "use ddfw local search instead of CDCL", "false","sat");
+    d.insert("ddfw.init_clause_weight", CPK_UINT, "initial clause weight for DDFW local search", "8","sat");
+    d.insert("ddfw.use_reward_pct", CPK_UINT, "percentage to pick highest reward variable when it has reward 0", "15","sat");
+    d.insert("ddfw.restart_base", CPK_UINT, "number of flips used a starting point for hessitant restart backoff", "100000","sat");
+    d.insert("ddfw.reinit_base", CPK_UINT, "increment basis for geometric backoff scheme of re-initialization of weights", "10000","sat");
+    d.insert("ddfw.threads", CPK_UINT, "number of ddfw threads to run in parallel with sat solver", "0","sat");
+    d.insert("prob_search", CPK_BOOL, "use probsat local search instead of CDCL", "false","sat");
     d.insert("local_search", CPK_BOOL, "use local search instead of CDCL", "false","sat");
     d.insert("local_search_threads", CPK_UINT, "number of local search threads to find satisfiable solution", "0","sat");
     d.insert("local_search_mode", CPK_SYMBOL, "local search algorithm, either default wsat or qsat", "wsat","sat");
+    d.insert("local_search_dbg_flips", CPK_BOOL, "write debug information for number of flips", "false","sat");
     d.insert("unit_walk", CPK_BOOL, "use unit-walk search instead of CDCL", "false","sat");
     d.insert("unit_walk_threads", CPK_UINT, "number of unit-walk search threads to find satisfiable solution", "0","sat");
+    d.insert("binspr", CPK_BOOL, "enable SPR inferences of binary propagation redundant clauses. This inprocessing step eliminates models", "false","sat");
     d.insert("lookahead.cube.cutoff", CPK_SYMBOL, "cutoff type used to create lookahead cubes: depth, freevars, psat, adaptive_freevars, adaptive_psat", "depth","sat");
     d.insert("lookahead.cube.fraction", CPK_DOUBLE, "adaptive fraction to create lookahead cubes. Used when lookahead.cube.cutoff is adaptive_freevars or adaptive_psat", "0.4","sat");
     d.insert("lookahead.cube.depth", CPK_UINT, "cut-off depth to create cubes. Used when lookahead.cube.cutoff is depth.", "1","sat");
-    d.insert("lookahead.cube.freevars", CPK_DOUBLE, "cube free fariable fraction. Used when lookahead.cube.cutoff is freevars", "0.8","sat");
+    d.insert("lookahead.cube.freevars", CPK_DOUBLE, "cube free variable fraction. Used when lookahead.cube.cutoff is freevars", "0.8","sat");
     d.insert("lookahead.cube.psat.var_exp", CPK_DOUBLE, "free variable exponent for PSAT cutoff", "1","sat");
     d.insert("lookahead.cube.psat.clause_base", CPK_DOUBLE, "clause base for PSAT cutoff", "2","sat");
     d.insert("lookahead.cube.psat.trigger", CPK_DOUBLE, "trigger value to create lookahead cubes for PSAT cutoff. Used when lookahead.cube.cutoff is psat", "5","sat");
-    d.insert("lookahead_search", CPK_BOOL, "use lookahead solver", "false","sat");
     d.insert("lookahead.preselect", CPK_BOOL, "use pre-selection of subset of variables for branching", "false","sat");
     d.insert("lookahead_simplify", CPK_BOOL, "use lookahead solver during simplification", "false","sat");
+    d.insert("lookahead_scores", CPK_BOOL, "extract lookahead scores. A utility that can only be used from the DIMACS front-end", "false","sat");
+    d.insert("lookahead.double", CPK_BOOL, "enable doubld lookahead", "true","sat");
     d.insert("lookahead.use_learned", CPK_BOOL, "use learned clauses when selecting lookahead literal", "false","sat");
     d.insert("lookahead_simplify.bca", CPK_BOOL, "add learned binary clauses as part of lookahead simplification", "true","sat");
     d.insert("lookahead.global_autarky", CPK_BOOL, "prefer to branch on variables that occur in clauses that are reduced", "false","sat");
+    d.insert("lookahead.delta_fraction", CPK_DOUBLE, "number between 0 and 1, the smaller the more literals are selected for double lookahead", "1.0","sat");
     d.insert("lookahead.reward", CPK_SYMBOL, "select lookahead heuristic: ternary, heule_schur (Heule Schur), heuleu (Heule Unit), unit, or march_cu", "march_cu","sat");
   }
   /*
@@ -78,9 +96,10 @@ struct sat_params {
   */
   unsigned max_memory() const { return p.get_uint("max_memory", g, 4294967295u); }
   symbol phase() const { return p.get_sym("phase", g, symbol("caching")); }
-  unsigned phase_caching_on() const { return p.get_uint("phase.caching.on", g, 400u); }
-  unsigned phase_caching_off() const { return p.get_uint("phase.caching.off", g, 100u); }
-  bool phase_sticky() const { return p.get_bool("phase.sticky", g, false); }
+  bool phase_sticky() const { return p.get_bool("phase.sticky", g, true); }
+  unsigned search_unsat_conflicts() const { return p.get_uint("search.unsat.conflicts", g, 400u); }
+  unsigned search_sat_conflicts() const { return p.get_uint("search.sat.conflicts", g, 400u); }
+  unsigned rephase_base() const { return p.get_uint("rephase.base", g, 1000u); }
   bool propagate_prefetch() const { return p.get_bool("propagate.prefetch", g, true); }
   symbol restart() const { return p.get_sym("restart", g, symbol("ema")); }
   unsigned restart_initial() const { return p.get_uint("restart.initial", g, 2u); }
@@ -106,24 +125,39 @@ struct sat_params {
   bool gc_burst() const { return p.get_bool("gc.burst", g, false); }
   bool gc_defrag() const { return p.get_bool("gc.defrag", g, true); }
   unsigned simplify_delay() const { return p.get_uint("simplify.delay", g, 0u); }
+  bool force_cleanup() const { return p.get_bool("force_cleanup", g, false); }
   bool minimize_lemmas() const { return p.get_bool("minimize_lemmas", g, true); }
   bool dyn_sub_res() const { return p.get_bool("dyn_sub_res", g, true); }
   bool core_minimize() const { return p.get_bool("core.minimize", g, false); }
   bool core_minimize_partial() const { return p.get_bool("core.minimize_partial", g, false); }
+  unsigned backtrack_scopes() const { return p.get_uint("backtrack.scopes", g, 100u); }
+  unsigned backtrack_conflicts() const { return p.get_uint("backtrack.conflicts", g, 4000u); }
   unsigned threads() const { return p.get_uint("threads", g, 1u); }
   bool dimacs_core() const { return p.get_bool("dimacs.core", g, false); }
   symbol drat_file() const { return p.get_sym("drat.file", g, symbol("")); }
+  bool drat_binary() const { return p.get_bool("drat.binary", g, false); }
   bool drat_check_unsat() const { return p.get_bool("drat.check_unsat", g, false); }
   bool drat_check_sat() const { return p.get_bool("drat.check_sat", g, false); }
   bool cardinality_solver() const { return p.get_bool("cardinality.solver", g, true); }
   symbol pb_solver() const { return p.get_sym("pb.solver", g, symbol("solver")); }
   bool xor_solver() const { return p.get_bool("xor.solver", g, false); }
-  symbol atmost1_encoding() const { return p.get_sym("atmost1_encoding", g, symbol("grouped")); }
+  symbol cardinality_encoding() const { return p.get_sym("cardinality.encoding", g, symbol("grouped")); }
+  symbol pb_resolve() const { return p.get_sym("pb.resolve", g, symbol("cardinality")); }
+  symbol pb_lemma_format() const { return p.get_sym("pb.lemma_format", g, symbol("cardinality")); }
+  bool ddfw_search() const { return p.get_bool("ddfw_search", g, false); }
+  unsigned ddfw_init_clause_weight() const { return p.get_uint("ddfw.init_clause_weight", g, 8u); }
+  unsigned ddfw_use_reward_pct() const { return p.get_uint("ddfw.use_reward_pct", g, 15u); }
+  unsigned ddfw_restart_base() const { return p.get_uint("ddfw.restart_base", g, 100000u); }
+  unsigned ddfw_reinit_base() const { return p.get_uint("ddfw.reinit_base", g, 10000u); }
+  unsigned ddfw_threads() const { return p.get_uint("ddfw.threads", g, 0u); }
+  bool prob_search() const { return p.get_bool("prob_search", g, false); }
   bool local_search() const { return p.get_bool("local_search", g, false); }
   unsigned local_search_threads() const { return p.get_uint("local_search_threads", g, 0u); }
   symbol local_search_mode() const { return p.get_sym("local_search_mode", g, symbol("wsat")); }
+  bool local_search_dbg_flips() const { return p.get_bool("local_search_dbg_flips", g, false); }
   bool unit_walk() const { return p.get_bool("unit_walk", g, false); }
   unsigned unit_walk_threads() const { return p.get_uint("unit_walk_threads", g, 0u); }
+  bool binspr() const { return p.get_bool("binspr", g, false); }
   symbol lookahead_cube_cutoff() const { return p.get_sym("lookahead.cube.cutoff", g, symbol("depth")); }
   double lookahead_cube_fraction() const { return p.get_double("lookahead.cube.fraction", g, 0.4); }
   unsigned lookahead_cube_depth() const { return p.get_uint("lookahead.cube.depth", g, 1u); }
@@ -131,12 +165,14 @@ struct sat_params {
   double lookahead_cube_psat_var_exp() const { return p.get_double("lookahead.cube.psat.var_exp", g, 1); }
   double lookahead_cube_psat_clause_base() const { return p.get_double("lookahead.cube.psat.clause_base", g, 2); }
   double lookahead_cube_psat_trigger() const { return p.get_double("lookahead.cube.psat.trigger", g, 5); }
-  bool lookahead_search() const { return p.get_bool("lookahead_search", g, false); }
   bool lookahead_preselect() const { return p.get_bool("lookahead.preselect", g, false); }
   bool lookahead_simplify() const { return p.get_bool("lookahead_simplify", g, false); }
+  bool lookahead_scores() const { return p.get_bool("lookahead_scores", g, false); }
+  bool lookahead_double() const { return p.get_bool("lookahead.double", g, true); }
   bool lookahead_use_learned() const { return p.get_bool("lookahead.use_learned", g, false); }
   bool lookahead_simplify_bca() const { return p.get_bool("lookahead_simplify.bca", g, true); }
   bool lookahead_global_autarky() const { return p.get_bool("lookahead.global_autarky", g, false); }
+  double lookahead_delta_fraction() const { return p.get_double("lookahead.delta_fraction", g, 1.0); }
   symbol lookahead_reward() const { return p.get_sym("lookahead.reward", g, symbol("march_cu")); }
 };
 #endif

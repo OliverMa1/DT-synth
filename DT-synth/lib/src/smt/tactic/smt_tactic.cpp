@@ -39,7 +39,6 @@ class smt_tactic : public tactic {
     smt_params                   m_params;
     params_ref                   m_params_ref;
     statistics                   m_stats;
-    std::string                  m_failure;
     smt::kernel *                m_ctx;
     symbol                       m_logic;
     progress_callback *          m_callback;
@@ -60,7 +59,7 @@ public:
     }
 
     ~smt_tactic() override {
-        SASSERT(m_ctx == 0);
+        SASSERT(m_ctx == nullptr);
     }
 
     smt_params & fparams() {
@@ -133,7 +132,6 @@ public:
                 new_ctx->set_progress_callback(o.m_callback);
             }
             o.m_ctx = new_ctx;
-
         }
 
         ~scoped_init_ctx() {
@@ -145,6 +143,9 @@ public:
         }
     };
 
+    void handle_canceled(goal_ref const & in,
+                         goal_ref_buffer & result) {
+    }
 
     void operator()(goal_ref const & in,
                     goal_ref_buffer & result) override {
@@ -190,7 +191,7 @@ public:
                     m_ctx->assert_expr(in->form(i));
                 }
             }
-            if (m_ctx->canceled()) {
+            if (m_ctx->canceled()) {                
                 throw tactic_exception(Z3_CANCELED_MSG);
             }
 
@@ -202,10 +203,14 @@ public:
                     r = m_ctx->check(assumptions.size(), assumptions.c_ptr());
             }
             catch(...) {
+                TRACE("smt_tactic", tout << "exception\n";);
                 m_ctx->collect_statistics(m_stats);
                 throw;
             }
+            SASSERT(m_ctx);
             m_ctx->collect_statistics(m_stats);
+            proof * pr = m_ctx->get_proof();
+            TRACE("smt_tactic", tout << r << " " << pr << "\n";);
             switch (r) {
             case l_true: {
                 if (m_fail_if_inconclusive && !in->sat_preserved())
@@ -218,7 +223,7 @@ public:
                     model_ref md;
                     m_ctx->get_model(md);
                     buffer<symbol> r;
-                    m_ctx->get_relevant_labels(0, r);
+                    m_ctx->get_relevant_labels(nullptr, r);
                     labels_vec rv;
                     rv.append(r.size(), r.c_ptr());
                     model_converter_ref mc;
@@ -235,10 +240,7 @@ public:
                 }
                 // formula is unsat, reset the goal, and store false there.
                 in->reset();
-                proof * pr              = nullptr;
                 expr_dependency * lcore = nullptr;
-                if (in->proofs_enabled())
-                    pr = m_ctx->get_proof();
                 if (in->unsat_core_enabled()) {
                     unsigned sz = m_ctx->get_unsat_core_size();
                     for (unsigned i = 0; i < sz; i++) {
@@ -253,15 +255,21 @@ public:
                 return;
             }
             case l_undef:
-                if (m_ctx->canceled()) {
+
+                if (m_ctx->canceled() && !pr) {
                     throw tactic_exception(Z3_CANCELED_MSG);
                 }
-                if (m_fail_if_inconclusive && !m_candidate_models) {
+
+                if (m_fail_if_inconclusive && !m_candidate_models && !pr) {
                     std::stringstream strm;
                     strm << "smt tactic failed to show goal to be sat/unsat " << m_ctx->last_failure_as_string();
-                    throw tactic_exception(strm.str().c_str());
+                    throw tactic_exception(strm.str());
                 }
                 result.push_back(in.get());
+                if (pr) {
+                    in->reset();
+                    in->assert_expr(m.mk_const(symbol("trail"), m.mk_bool_sort()), pr, nullptr);
+                }
                 if (m_candidate_models) {
                     switch (m_ctx->last_failure()) {
                     case smt::NUM_CONFLICTS:
@@ -271,7 +279,7 @@ public:
                             model_ref md;
                             m_ctx->get_model(md);
                             buffer<symbol> r;
-                            m_ctx->get_relevant_labels(0, r);
+                            m_ctx->get_relevant_labels(nullptr, r);
                             labels_vec rv;
                             rv.append(r.size(), r.c_ptr());
                             in->add(model_and_labels2model_converter(md.get(), rv));
@@ -281,8 +289,10 @@ public:
                         break;
                     }
                 }
-                m_failure = m_ctx->last_failure_as_string();
-                throw tactic_exception(m_failure.c_str());
+                if (pr) {
+                    return;
+                }
+                throw tactic_exception(m_ctx->last_failure_as_string());
             }
         }
         catch (rewriter_exception & ex) {
@@ -291,30 +301,24 @@ public:
     }
 };
 
-tactic * mk_smt_tactic(params_ref const & p) {
+static tactic * mk_seq_smt_tactic(params_ref const & p) {
     return alloc(smt_tactic, p);
 }
 
-tactic * mk_smt_tactic_using(bool auto_config, params_ref const & _p) {
-    params_ref p = _p;
-    p.set_bool("auto_config", auto_config);
-    tactic * r = mk_smt_tactic(p);
-    TRACE("smt_tactic", tout << "auto_config: " << auto_config << "\nr: " << r << "\np: " << p << "\n";);
-    return using_params(r, p);
-}
-
-tactic * mk_psmt_tactic(ast_manager& m, params_ref const& p, symbol const& logic) {
-    parallel_params pp(p);
-    return pp.enable() ? mk_parallel_tactic(mk_smt_solver(m, p, logic), p) : mk_smt_tactic(p);
-}
-
-tactic * mk_psmt_tactic_using(ast_manager& m, bool auto_config, params_ref const& _p, symbol const& logic) {
-    parallel_params pp(_p);
-    params_ref p = _p;
-    p.set_bool("auto_config", auto_config);
-    return using_params(pp.enable() ? mk_parallel_tactic(mk_smt_solver(m, p, logic), p) : mk_smt_tactic(p), p);
-}
 
 tactic * mk_parallel_smt_tactic(ast_manager& m, params_ref const& p) {
     return mk_parallel_tactic(mk_smt_solver(m, p, symbol::null), p);
 }
+
+tactic * mk_smt_tactic(ast_manager& m, params_ref const& p, symbol const& logic) {
+    parallel_params pp(p);
+    return pp.enable() ? mk_parallel_tactic(mk_smt_solver(m, p, logic), p) : mk_seq_smt_tactic(p);
+}
+
+tactic * mk_smt_tactic_using(ast_manager& m, bool auto_config, params_ref const& _p) {
+    parallel_params pp(_p);
+    params_ref p = _p;
+    p.set_bool("auto_config", auto_config);
+    return using_params(pp.enable() ? mk_parallel_smt_tactic(m, p) : mk_seq_smt_tactic(p), p);
+}
+

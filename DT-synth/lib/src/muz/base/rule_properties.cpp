@@ -146,12 +146,10 @@ void rule_properties::check_existential_tail() {
         else if (is_quantifier(e)) {
             tocheck.push_back(to_quantifier(e)->get_expr());
         }
-        else if ((m.is_eq(e, e1, e2) || m.is_iff(e, e1, e2)) && 
-                 m.is_true(e1)) {
+        else if (m.is_eq(e, e1, e2) && m.is_true(e1)) {
             todo.push_back(e2);
         }
-        else if ((m.is_eq(e, e1, e2) || m.is_iff(e, e1, e2)) &&
-                 m.is_true(e2)) {
+        else if (m.is_eq(e, e1, e2) && m.is_true(e2)) {
             todo.push_back(e1);
         }
         else {
@@ -192,10 +190,20 @@ void rule_properties::operator()(app* n) {
         sort* s = m.get_sort(n->get_arg(0));
         SASSERT(m_dt.is_datatype(s));
         if (m_dt.get_datatype_constructors(s)->size() > 1) {
-            m_uninterp_funs.insert(n->get_decl(), m_rule);
+            bool found = false;
+            func_decl * c = m_dt.get_accessor_constructor(n->get_decl());
+            unsigned ut_size = m_rule->get_uninterpreted_tail_size();
+            unsigned t_size  = m_rule->get_tail_size();  
+            for (unsigned i = ut_size; !found && i < t_size; ++i) {
+                app* t = m_rule->get_tail(i);
+                if (m_dt.is_recognizer(t) && t->get_arg(0) == n->get_arg(0) && m_dt.get_recognizer_constructor(t->get_decl()) == c) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                m_uninterp_funs.insert(n->get_decl(), m_rule);
+            }
         }
-    }
-    else {
     }
 
 }

@@ -27,7 +27,6 @@ Notes:
 #include "ast/bv_decl_plugin.h"
 #include "ast/rewriter/rewriter_def.h"
 #include "ast/for_each_expr.h"
-#include "util/cooperate.h"
 #include "ast/rewriter/bv_rewriter.h"
 
 class bv1_blaster_tactic : public tactic {
@@ -73,7 +72,6 @@ class bv1_blaster_tactic : public tactic {
         bool rewrite_patterns() const { UNREACHABLE(); return false; }
         
         bool max_steps_exceeded(unsigned num_steps) const { 
-            cooperate("bv1 blaster");
             if (memory::get_allocation_size() > m_max_memory)
                 throw tactic_exception(TACTIC_MAX_MEMORY_MSG);
             return num_steps > m_max_steps;
@@ -371,7 +369,7 @@ class bv1_blaster_tactic : public tactic {
                     for_each_expr_core<visitor, expr_fast_mark1, false, true>(proc, visited, f);
                 }
             }
-            catch (not_target) {
+            catch (const not_target &) {
                 return false;
             }
             return true;

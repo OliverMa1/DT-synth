@@ -42,7 +42,7 @@ namespace smt {
             expr_ref cube() {
                 switch (m_round) {
                 case 0:
-                    m_result = m_solver.m_context.next_decision();
+                    m_result = m_solver.m_context.next_cube();
                     break;
                 case 1:
                     m_result = m_solver.get_manager().mk_not(m_result);
@@ -110,12 +110,26 @@ namespace smt {
 
         void updt_params(params_ref const & p) override {
             solver::updt_params(p);
-            m_smt_params.updt_params(p);
-            m_context.updt_params(p);
-            smt_params_helper smth(p);
+            m_smt_params.updt_params(solver::get_params());
+            m_context.updt_params(solver::get_params());
+            smt_params_helper smth(solver::get_params());
             m_core_extend_patterns = smth.core_extend_patterns();
             m_core_extend_patterns_max_distance = smth.core_extend_patterns_max_distance();
             m_core_extend_nonlocal_patterns = smth.core_extend_nonlocal_patterns();
+        }
+
+        params_ref m_params_save;
+        smt_params m_smt_params_save;
+
+        void push_params() override {
+            m_params_save = params_ref();
+            m_params_save.copy(solver::get_params());
+            m_smt_params_save = m_smt_params;
+        }
+
+        void pop_params() override {
+            m_smt_params = m_smt_params_save;
+            solver::reset_params(m_params_save);
         }
 
         void collect_param_descrs(param_descrs & r) override {
@@ -171,9 +185,22 @@ namespace smt {
             m_context.pop(n);
         }
 
-        lbool check_sat_core(unsigned num_assumptions, expr * const * assumptions) override {
+        lbool check_sat_core2(unsigned num_assumptions, expr * const * assumptions) override {
             TRACE("solver_na2as", tout << "smt_solver::check_sat_core: " << num_assumptions << "\n";);
             return m_context.check(num_assumptions, assumptions);
+        }
+
+
+        lbool check_sat_cc_core(expr_ref_vector const& cube, vector<expr_ref_vector> const& clauses) override {
+            return m_context.check(cube, clauses);
+        }
+
+        void get_levels(ptr_vector<expr> const& vars, unsigned_vector& depth) override {
+            m_context.get_levels(vars, depth);
+        }
+
+        expr_ref_vector get_trail() override {
+            return m_context.get_trail();
         }
 
         struct scoped_minimize_core {
@@ -190,17 +217,17 @@ namespace smt {
             }
         };
 
-        void get_unsat_core(ptr_vector<expr> & r) override {
+        void get_unsat_core(expr_ref_vector & r) override {
             unsigned sz = m_context.get_unsat_core_size();
             for (unsigned i = 0; i < sz; i++) {
                 r.push_back(m_context.get_unsat_core_expr(i));
             }
 
-            if (m_minimizing_core && smt_params_helper(get_params()).core_minimize()) {
+            if (!m_minimizing_core && smt_params_helper(get_params()).core_minimize()) {
                 scoped_minimize_core scm(*this);
                 mus mus(*this);
                 mus.add_soft(r.size(), r.c_ptr());
-                ptr_vector<expr> r2;
+                expr_ref_vector r2(m);
                 if (l_true == mus.get_mus(r2)) {
                     r.reset();
                     r.append(r2);
@@ -314,7 +341,7 @@ namespace smt {
             for_each_expr(p, visited, e);
         }
 
-        void compute_assrtn_fds(ptr_vector<expr> & core, vector<func_decl_set> & assrtn_fds) {
+        void compute_assrtn_fds(expr_ref_vector & core, vector<func_decl_set> & assrtn_fds) {
             assrtn_fds.resize(m_name2assertion.size());            
             unsigned i = 0;
             for (auto & kv : m_name2assertion) {
@@ -335,7 +362,7 @@ namespace smt {
             return false;
         }
 
-        void add_pattern_literals_to_core(ptr_vector<expr> & core) {
+        void add_pattern_literals_to_core(expr_ref_vector & core) {
             ast_manager & m = get_manager();
             expr_ref_vector new_core_literals(m);
 
@@ -394,7 +421,7 @@ namespace smt {
             for_each_expr(p, visited, e);
         }
 
-        void add_nonlocal_pattern_literals_to_core(ptr_vector<expr> & core) {
+        void add_nonlocal_pattern_literals_to_core(expr_ref_vector & core) {
             ast_manager & m = get_manager();
             for (auto const& kv : m_name2assertion) {
                 expr_ref name(kv.m_key, m);
@@ -406,8 +433,8 @@ namespace smt {
                     collect_body_func_decls(assrtn, body_fds);
 
                     for (func_decl *fd : pattern_fds) {
-                        if (!body_fds.contains(fd)) {
-                            core.insert(name);
+                        if (!body_fds.contains(fd) && !core.contains(name)) {
+                            core.push_back(name);
                             break;
                         }
                     }

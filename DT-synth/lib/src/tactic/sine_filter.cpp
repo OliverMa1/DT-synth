@@ -54,7 +54,7 @@ public:
         TRACE("sine", tout << new_forms.size(););
         g->reset();
         for (unsigned i = 0; i < new_forms.size(); i++) {
-            g->assert_expr(new_forms.get(i), 0, 0);
+            g->assert_expr(new_forms.get(i), nullptr, nullptr);
         }
         g->inc_depth();
         g->updt_prec(goal::OVER);
@@ -93,11 +93,8 @@ private:
                             obj_hashtable<func_decl> const & consts,
                             ptr_vector<func_decl> & next_consts) {
         TRACE("sine",
-            tout << "size of consts is "; tout << consts.size(); tout << "\n";
-            obj_hashtable<func_decl>::iterator it = consts.begin();
-            obj_hashtable<func_decl>::iterator end = consts.end();
-            for (; it != end; it++)
-                tout << *it << "\n"; );
+              tout << "size of consts is "; tout << consts.size(); tout << "\n";
+              for (func_decl* f : consts) tout << f->get_name() << "\n";);
 
         bool matched = false;
         for (unsigned i = 0; i < q->get_num_patterns(); i++) {
@@ -156,10 +153,8 @@ private:
                 if (!consts.contains(f)) {
                     consts.insert(f);
                     if (const2quantifier.contains(f)) {
-                        obj_pair_hashtable<expr, expr>::iterator it = const2quantifier[f].begin();
-                        obj_pair_hashtable<expr, expr>::iterator end = const2quantifier[f].end();
-                        for (; it != end; it++)
-                            stack.push_back(*it);
+                        for (auto const& p : const2quantifier[f]) 
+                            stack.push_back(p);
                         const2quantifier.remove(f);
                     }
                 }
@@ -182,7 +177,7 @@ private:
             }
             else if (is_quantifier(curr.first)) {
                 quantifier *q = to_quantifier(curr.first);
-                if (q->is_forall()) {
+                if (is_forall(q)) {
                     if (q->has_patterns()) {
                         ptr_vector<func_decl> next_consts;
                         if (quantifier_matches(q, consts, next_consts)) {
@@ -204,7 +199,7 @@ private:
                         stack.push_back(work_item(q->get_expr(), curr.second));
                     }
                 }
-                else if (q->is_exists()) {
+                else if (is_exists(q)) {
                     stack.push_back(work_item(q->get_expr(), curr.second));
                 }
             }
@@ -220,16 +215,11 @@ private:
             visiting = to_visit.back();
             to_visit.pop_back();
             visited.insert(visiting);
-            obj_hashtable<func_decl>::iterator it = exp2const[visiting].begin();
-            obj_hashtable<func_decl>::iterator end = exp2const[visiting].end();
-            for (; it != end; it++) {
-                obj_hashtable<expr>::iterator exprit = const2exp[*it].begin();
-                obj_hashtable<expr>::iterator exprend = const2exp[*it].end();
-                for (; exprit != exprend; exprit++) {
-                    if (!visited.contains(*exprit))
-                        to_visit.push_back(*exprit);
+            for (func_decl* f : exp2const[visiting]) 
+                for (expr* e : const2exp[f]) {
+                    if (!visited.contains(e))
+                        to_visit.push_back(e);
                 }
-            }
         }
 
         for (unsigned i = 0; i < g->size(); i++) {

@@ -13,6 +13,7 @@ struct opt_params {
     d.insert("maxsat_engine", CPK_SYMBOL, "select engine for maxsat: 'core_maxsat', 'wmax', 'maxres', 'pd-maxres'", "maxres","opt");
     d.insert("priority", CPK_SYMBOL, "select how to priortize objectives: 'lex' (lexicographic), 'pareto', 'box'", "lex","opt");
     d.insert("dump_benchmarks", CPK_BOOL, "dump benchmarks for profiling", "false","opt");
+    d.insert("dump_models", CPK_BOOL, "display intermediary models to stdout", "false","opt");
     d.insert("solution_prefix", CPK_SYMBOL, "path prefix to dump intermediary, but non-optimal, solutions", "","opt");
     d.insert("timeout", CPK_UINT, "timeout (in milliseconds) (UINT_MAX and 0 mean no timeout)", "4294967295","opt");
     d.insert("rlimit", CPK_UINT, "resource limit (0 means no limit)", "0","opt");
@@ -21,6 +22,7 @@ struct opt_params {
     d.insert("elim_01", CPK_BOOL, "eliminate 01 variables", "true","opt");
     d.insert("pp.neat", CPK_BOOL, "use neat (as opposed to less readable, but faster) pretty printer when displaying context", "true","opt");
     d.insert("pb.compile_equality", CPK_BOOL, "compile arithmetical equalities into pseudo-Boolean equality (instead of two inequalites)", "false","opt");
+    d.insert("maxlex.enable", CPK_BOOL, "enable maxlex heuristic for lexicographic MaxSAT problems", "true","opt");
     d.insert("maxres.hill_climb", CPK_BOOL, "give preference for large weight cores", "true","opt");
     d.insert("maxres.add_upper_bound_block", CPK_BOOL, "restict upper bound with constraint", "false","opt");
     d.insert("maxres.max_num_cores", CPK_UINT, "maximal number of cores per round", "4294967295","opt");
@@ -38,6 +40,7 @@ struct opt_params {
   symbol maxsat_engine() const { return p.get_sym("maxsat_engine", g, symbol("maxres")); }
   symbol priority() const { return p.get_sym("priority", g, symbol("lex")); }
   bool dump_benchmarks() const { return p.get_bool("dump_benchmarks", g, false); }
+  bool dump_models() const { return p.get_bool("dump_models", g, false); }
   symbol solution_prefix() const { return p.get_sym("solution_prefix", g, symbol("")); }
   unsigned timeout() const { return p.get_uint("timeout", g, 4294967295u); }
   unsigned rlimit() const { return p.get_uint("rlimit", g, 0u); }
@@ -46,6 +49,7 @@ struct opt_params {
   bool elim_01() const { return p.get_bool("elim_01", g, true); }
   bool pp_neat() const { return p.get_bool("pp.neat", g, true); }
   bool pb_compile_equality() const { return p.get_bool("pb.compile_equality", g, false); }
+  bool maxlex_enable() const { return p.get_bool("maxlex.enable", g, true); }
   bool maxres_hill_climb() const { return p.get_bool("maxres.hill_climb", g, true); }
   bool maxres_add_upper_bound_block() const { return p.get_bool("maxres.add_upper_bound_block", g, false); }
   unsigned maxres_max_num_cores() const { return p.get_uint("maxres.max_num_cores", g, 4294967295u); }

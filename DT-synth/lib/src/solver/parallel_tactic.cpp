@@ -213,7 +213,7 @@ class parallel_tactic : public tactic {
         solver_state* clone() {
             SASSERT(!m_cubes.empty());
             ast_manager& m = m_solver->get_manager();
-            ast_manager* new_m = alloc(ast_manager, m, m.proof_mode());
+            ast_manager* new_m = alloc(ast_manager, m, true);
             ast_translation tr(m, *new_m);
             solver* s = m_solver.get()->translate(*new_m, m_params);
             solver_state* st = alloc(solver_state, new_m, s, m_params);
@@ -297,6 +297,7 @@ class parallel_tactic : public tactic {
             p.set_uint("restart.max", pp.simplify_restart_max() * mult);
             p.set_bool("lookahead_simplify", true);
             p.set_bool("retain_blocked_clauses", retain_blocked);
+            p.set_uint("max_conflicts", pp.simplify_max_conflicts());
             if (m_depth > 1) p.set_uint("bce_delay", 0);
             get_solver().updt_params(p);
         }
@@ -330,17 +331,19 @@ private:
     volatile bool m_has_undef;
     bool          m_allsat;
     unsigned      m_num_unsat;
+    unsigned      m_last_depth;
     int           m_exn_code;
     std::string   m_exn_msg;
 
     void init() {
         parallel_params pp(m_params);
-        m_num_threads = std::min((unsigned)omp_get_num_procs(), pp.threads_max());
+        m_num_threads = std::min((unsigned) std::thread::hardware_concurrency(), pp.threads_max());
         m_progress = 0;
         m_has_undef = false;
         m_allsat = false;
         m_branches = 0;    
-        m_num_unsat = 0;    
+        m_num_unsat = 0;
+        m_last_depth = 0;
         m_backtrack_frequency = pp.conquer_backtrack_frequency();
         m_conquer_delay = pp.conquer_delay();
         m_exn_code = 0;
@@ -349,10 +352,11 @@ private:
     }
 
     void log_branches(lbool status) {
-        IF_VERBOSE(0, verbose_stream() << "(tactic.parallel :progress " << m_progress << "% ";
-                   if (status == l_true)  verbose_stream() << ":status sat ";
-                   if (status == l_undef) verbose_stream() << ":status unknown ";
-                   verbose_stream() << ":closed " << m_num_unsat << " :open " << m_branches << ")\n";);
+        IF_VERBOSE(1, verbose_stream() << "(tactic.parallel :progress " << m_progress << "% ";
+                   if (status == l_true)  verbose_stream() << ":status sat";
+                   if (status == l_undef) verbose_stream() << ":status unknown";
+                   if (m_num_unsat > 0) verbose_stream() << " :closed " << m_num_unsat << "@" << m_last_depth;
+                   verbose_stream() << " :open " << m_branches << ")\n";);
     }
 
     void add_branches(unsigned b) {
@@ -388,10 +392,15 @@ private:
         log_branches(status);
     }
 
-    void report_sat(solver_state& s) {
+    void report_sat(solver_state& s, solver* conquer) {
         close_branch(s, l_true);
         model_ref mdl;
-        s.get_solver().get_model(mdl);
+        if (conquer) {
+            conquer->get_model(mdl);
+        }
+        else {
+            s.get_solver().get_model(mdl);
+        }
         if (mdl) {
             std::lock_guard<std::mutex> lock(m_mutex);
             if (&s.m() != &m_manager) {
@@ -405,13 +414,14 @@ private:
         }
     }
 
-    void inc_unsat() {
+    void inc_unsat(solver_state& s) {
         std::lock_guard<std::mutex> lock(m_mutex);
         ++m_num_unsat;
+        m_last_depth = s.get_depth();
     }
 
     void report_unsat(solver_state& s) {        
-        inc_unsat();
+        inc_unsat(s);
         close_branch(s, l_false);
         if (s.has_assumptions()) {
             expr_ref_vector core(s.m());
@@ -449,7 +459,7 @@ private:
         if (canceled(s)) return;
         switch (s.simplify()) {
         case l_undef: break;
-        case l_true:  report_sat(s); return;
+        case l_true:  report_sat(s, nullptr); return;
         case l_false: report_unsat(s); return;                
         }
         if (canceled(s)) return;
@@ -489,12 +499,12 @@ private:
                     IF_VERBOSE(0, verbose_stream() << "(tactic.parallel :backtrack " << cutoff << " -> " << c.size() << ")\n");
                     cutoff = c.size();
                 }
-                inc_unsat();
+                inc_unsat(s);
                 log_branches(l_false);
                 break;
 
             case l_true:
-                report_sat(s);
+                report_sat(s, conquer.get());
                 if (conquer) {
                     collect_statistics(*conquer.get());
                 }
@@ -635,7 +645,7 @@ private:
             t.join();
         m_manager.limit().reset_cancel();
         if (m_exn_code == -1) 
-            throw default_exception(m_exn_msg);
+            throw default_exception(std::move(m_exn_msg));
         if (m_exn_code != 0) 
             throw z3_error(m_exn_code);            
         if (!m_models.empty()) {
@@ -672,11 +682,11 @@ public:
         init();
     }
 
-    void operator ()(const goal_ref & g,goal_ref_buffer & result) {
+    void operator ()(const goal_ref & g,goal_ref_buffer & result) override {
         fail_if_proof_generation("parallel-tactic", g);
         ast_manager& m = g->m();        
         solver* s = m_solver->translate(m, m_params);
-        solver_state* st = alloc(solver_state, 0, s, m_params);
+        solver_state* st = alloc(solver_state, nullptr, s, m_params);
         m_queue.add_task(st);
         expr_ref_vector clauses(m);
         ptr_vector<expr> assumptions;
@@ -719,29 +729,29 @@ public:
         return pp.conquer_batch_size();
     }
 
-    void cleanup() {
+    void cleanup() override {
         m_queue.reset();
     }
 
-    tactic* translate(ast_manager& m) {
+    tactic* translate(ast_manager& m) override {
         solver* s = m_solver->translate(m, m_params);
         return alloc(parallel_tactic, s, m_params);
     }
 
-    virtual void updt_params(params_ref const & p) {
+    void updt_params(params_ref const & p) override {
         m_params.copy(p);
         parallel_params pp(p);
         m_conquer_delay = pp.conquer_delay();
     }
 
-    virtual void collect_statistics(statistics & st) const {
+    void collect_statistics(statistics & st) const override {
         st.copy(m_stats);
         st.update("par unsat", m_num_unsat);
         st.update("par models", m_models.size());
         st.update("par progress", m_progress);
     }
 
-    virtual void reset_statistics() {
+    void reset_statistics() override {
         m_stats.reset();
     }
 };

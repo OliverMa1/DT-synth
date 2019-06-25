@@ -16,7 +16,6 @@ Author:
 Notes:
 
 --*/
-#include "util/cooperate.h"
 #include "ast/ast_pp.h"
 #include "ast/pb_decl_plugin.h"
 #include "ast/arith_decl_plugin.h"
@@ -36,7 +35,7 @@ class lia2card_tactic : public tactic {
         expr*    m_expr;
         bound(unsigned lo, unsigned hi, expr* b):
             m_lo(lo), m_hi(hi), m_expr(b) {}
-        bound(): m_lo(0), m_hi(0), m_expr(0) {}
+        bound(): m_lo(0), m_hi(0), m_expr(nullptr) {}
     };
 
     struct lia_rewriter_cfg : public default_rewriter_cfg {
@@ -143,7 +142,9 @@ public:
         expr_ref last_v(m);
         if (!m_mc) m_mc = alloc(generic_model_converter, m, "lia2card");
         if (hi == 0) {
-            return expr_ref(a.mk_int(0), m);
+            expr* r = a.mk_int(0);
+            m_mc->add(x->get_decl(), r);
+            return expr_ref(r, m);
         }
         if (lo > 0) {
             xs.push_back(a.mk_int(lo));
@@ -167,7 +168,8 @@ public:
         m_mc.reset();
         expr_ref_vector axioms(m);
         expr_safe_replace rep(m);
-        
+
+        TRACE("pb", g->display(tout););        
         tactic_report report("lia2card", *g);
         
         bound_manager bounds(m);

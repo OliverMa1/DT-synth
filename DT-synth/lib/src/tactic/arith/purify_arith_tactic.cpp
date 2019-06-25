@@ -401,15 +401,18 @@ struct purify_arith_proc {
                 return BR_DONE;
 
             bool is_int = u().is_int(args[0]);
+            expr * x = args[0];
+            rational xr;
+            if (u().is_numeral(x, xr) && xr.is_zero())
+                return BR_FAILED;
 
             expr * k = mk_fresh_var(is_int);
             result = k;
             mk_def_proof(k, t, result_pr);
             cache_result(t, result, result_pr);
             
-            expr * x = args[0];
-            expr * zero = u().mk_numeral(rational(0), is_int);
-            expr * one  = u().mk_numeral(rational(1), is_int);
+            expr_ref zero(u().mk_numeral(rational(0), is_int), m());
+            expr_ref one(u().mk_numeral(rational(1), is_int), m());
             if (y.is_zero()) {
                 // (^ x 0) --> k  |  x != 0 implies k = 1,   x = 0 implies k = 0^0 
                 push_cnstr(OR(EQ(x, zero), EQ(k, one)));
@@ -509,6 +512,9 @@ struct purify_arith_proc {
                 return BR_DONE;
             }
             else {
+                expr_ref s(u().mk_sin(theta), m());
+                expr_ref c(u().mk_cos(theta), m());
+                push_cnstr(EQ(mk_real_one(), u().mk_add(u().mk_mul(s, s), u().mk_mul(c, c))));
                 return BR_FAILED;
             }
         }
@@ -777,11 +783,10 @@ struct purify_arith_proc {
         if (produce_models && !m_sin_cos.empty()) {
             generic_model_converter* emc = alloc(generic_model_converter, m(), "purify_sin_cos");
             mc = concat(mc.get(), emc);
-            obj_map<app, std::pair<expr*,expr*> >::iterator it = m_sin_cos.begin(), end = m_sin_cos.end();
-            for (; it != end; ++it) {
-                emc->add(it->m_key->get_decl(), 
-                            m().mk_ite(u().mk_ge(it->m_value.first, mk_real_zero()), u().mk_acos(it->m_value.second), 
-                                       u().mk_add(u().mk_acos(u().mk_uminus(it->m_value.second)), u().mk_pi())));
+            for (auto const& kv : m_sin_cos) {
+                emc->add(kv.m_key->get_decl(), 
+                            m().mk_ite(u().mk_ge(kv.m_value.first, mk_real_zero()), u().mk_acos(kv.m_value.second), 
+                                       u().mk_add(u().mk_acos(u().mk_uminus(kv.m_value.second)), u().mk_pi())));
             }
 
         }

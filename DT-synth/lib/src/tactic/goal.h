@@ -77,7 +77,7 @@ protected:
     unsigned get_not_idx(expr * f) const;
     void shrink(unsigned j);
     void reset_core();
-
+    bool is_literal(expr* f) const;
     
 public:
     goal(ast_manager & m, bool models_enabled = true, bool core_enabled = false);
@@ -121,13 +121,13 @@ public:
     unsigned num_exprs() const;
   
     expr * form(unsigned i) const { return m().get(m_forms, i); }
-    proof * pr(unsigned i) const { return proofs_enabled() ? static_cast<proof*>(m().get(m_proofs, i)) : nullptr; }
+    proof * pr(unsigned i) const { return m().size(m_proofs) > i ? static_cast<proof*>(m().get(m_proofs, i)) : nullptr; }
     expr_dependency * dep(unsigned i) const { return unsat_core_enabled() ? m().get(m_dependencies, i) : nullptr; }
 
     void update(unsigned i, expr * f, proof * pr = nullptr, expr_dependency * dep = nullptr);
 
-    void get_formulas(ptr_vector<expr> & result);
-    void get_formulas(expr_ref_vector & result);
+    void get_formulas(ptr_vector<expr> & result) const;
+    void get_formulas(expr_ref_vector & result) const;
     
     void elim_true();
     void elim_redundancies();
@@ -158,6 +158,8 @@ public:
     void set(dependency_converter* d) { m_dc = d; }
     void set(model_converter* m) { m_mc = m; }
     void set(proof_converter* p) { m_pc = p; }
+
+    bool is_cnf() const;
 
     goal * translate(ast_translation & translator) const;
 };
@@ -193,7 +195,7 @@ bool test(goal const & g, Predicate & proc) {
         for (unsigned i = 0; i < sz; i++)
             quick_for_each_expr(proc, visited, g.form(i));
     }
-    catch (typename Predicate::found) {
+    catch (const typename Predicate::found &) {
         return true;
     }
     return false;

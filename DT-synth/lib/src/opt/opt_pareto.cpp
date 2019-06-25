@@ -40,6 +40,7 @@ namespace opt {
                     }
                     m_solver->get_model(m_model);
                     m_solver->get_labels(m_labels);
+                    m_model->set_model_completion(true);
                     IF_VERBOSE(1,
                                model_ref mdl(m_model);
                                cb.fix_model(mdl); 
@@ -70,7 +71,7 @@ namespace opt {
         fmls.push_back(mk_or(gt));
         fml = mk_and(fmls);
         IF_VERBOSE(10, verbose_stream() << "dominates: " << fml << "\n";);
-        TRACE("opt", tout << fml << "\n"; model_smt2_pp(tout, m, *m_model, 0););
+        TRACE("opt", model_smt2_pp(tout << fml << "\n", m, *m_model, 0););
         m_solver->assert_expr(fml);        
     }
 
@@ -99,6 +100,7 @@ namespace opt {
         if (is_sat == l_true) {
             m_solver->get_model(m_model);
             m_solver->get_labels(m_labels);
+            m_model->set_model_completion(true);
             mk_not_dominated_by();
         }
         return is_sat;

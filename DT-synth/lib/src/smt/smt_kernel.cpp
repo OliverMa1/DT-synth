@@ -18,6 +18,7 @@ Revision History:
 --*/
 #include "smt/smt_kernel.h"
 #include "smt/smt_context.h"
+#include "smt/smt_lookahead.h"
 #include "ast/ast_smt2_pp.h"
 #include "smt/params/smt_params_helper.hpp"
 
@@ -115,6 +116,10 @@ namespace smt {
             return m_kernel.check(num_assumptions, assumptions);
         }
 
+        lbool check(expr_ref_vector const& cube, vector<expr_ref_vector> const& clause) {
+            return m_kernel.check(cube, clause);
+        }        
+
         lbool get_consequences(expr_ref_vector const& assumptions, expr_ref_vector const& vars, expr_ref_vector& conseq, expr_ref_vector& unfixed) {
             return m_kernel.get_consequences(assumptions, vars, conseq, unfixed);
         }
@@ -141,6 +146,14 @@ namespace smt {
         
         expr * get_unsat_core_expr(unsigned idx) const {
             return m_kernel.get_unsat_core_expr(idx);
+        }
+
+        void get_levels(ptr_vector<expr> const& vars, unsigned_vector& depth) {
+            m_kernel.get_levels(vars, depth);
+        }
+
+        expr_ref_vector get_trail() {
+            return m_kernel.get_trail();
         }
         
         failure last_failure() const {
@@ -175,8 +188,9 @@ namespace smt {
             m_kernel.get_guessed_literals(result);
         }
 
-        expr* next_decision() {
-            return m_kernel.next_decision();
+        expr_ref next_cube() {
+            lookahead lh(m_kernel);
+            return lh.choose();
         }
                 
         void collect_statistics(::statistics & st) const {
@@ -266,11 +280,8 @@ namespace smt {
         ast_manager & _m = m();
         smt_params & fps = m_imp->fparams();
         params_ref ps    = m_imp->params();
-        #pragma omp critical (smt_kernel)
-        {
-            m_imp->~imp();
-            m_imp = new (m_imp) imp(_m, fps, ps);
-        }
+        m_imp->~imp();
+        m_imp = new (m_imp) imp(_m, fps, ps);        
     }
 
     bool kernel::inconsistent() {
@@ -286,6 +297,11 @@ namespace smt {
         TRACE("smt_kernel", tout << "check result: " << r << "\n";);
         return r;
     }
+
+    lbool kernel::check(expr_ref_vector const& cube, vector<expr_ref_vector> const& clauses) {
+        return m_imp->check(cube, clauses);
+    }
+
 
     lbool kernel::get_consequences(expr_ref_vector const& assumptions, expr_ref_vector const& vars, expr_ref_vector& conseq, expr_ref_vector& unfixed) {
         return m_imp->get_consequences(assumptions, vars, conseq, unfixed);
@@ -347,12 +363,13 @@ namespace smt {
         m_imp->get_guessed_literals(result);
     }
 
-    expr* kernel::next_decision() {
-        return m_imp->next_decision();
+    expr_ref kernel::next_cube() {
+        return m_imp->next_cube();
     }        
 
-    void kernel::display(std::ostream & out) const {
+    std::ostream& kernel::display(std::ostream & out) const {
         m_imp->display(out);
+        return out;
     }
 
     void kernel::collect_statistics(::statistics & st) const {
@@ -386,5 +403,14 @@ namespace smt {
     context & kernel::get_context() {
         return m_imp->m_kernel;
     }
+
+    void kernel::get_levels(ptr_vector<expr> const& vars, unsigned_vector& depth) {
+        m_imp->get_levels(vars, depth);
+    }
+
+    expr_ref_vector kernel::get_trail() {
+        return m_imp->get_trail();
+    }
+
 
 };

@@ -12,8 +12,8 @@ struct model_evaluator_params {
     d.insert("max_memory", CPK_UINT, "maximum amount of memory in megabytes", "4294967295","model_evaluator");
     d.insert("max_steps", CPK_UINT, "maximum number of steps", "4294967295","model_evaluator");
     d.insert("completion", CPK_BOOL, "assigns an interptetation to symbols that do not have one in the current model, when evaluating expressions in the current model", "false","model_evaluator");
-    d.insert("cache", CPK_BOOL, "cache intermediate results in the model evaluator", "true","model_evaluator");
     d.insert("array_equalities", CPK_BOOL, "evaluate array equalities", "true","model_evaluator");
+    d.insert("array_as_stores", CPK_BOOL, "return array as a set of stores", "true","model_evaluator");
   }
   /*
      REG_MODULE_PARAMS('model_evaluator', 'model_evaluator_params::collect_param_descrs')
@@ -21,7 +21,7 @@ struct model_evaluator_params {
   unsigned max_memory() const { return p.get_uint("max_memory", g, 4294967295u); }
   unsigned max_steps() const { return p.get_uint("max_steps", g, 4294967295u); }
   bool completion() const { return p.get_bool("completion", g, false); }
-  bool cache() const { return p.get_bool("cache", g, true); }
   bool array_equalities() const { return p.get_bool("array_equalities", g, true); }
+  bool array_as_stores() const { return p.get_bool("array_as_stores", g, true); }
 };
 #endif

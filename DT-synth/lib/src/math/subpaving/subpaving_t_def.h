@@ -19,7 +19,6 @@ Revision History:
 #include "math/subpaving/subpaving_t.h"
 #include "math/interval/interval_def.h"
 #include "util/buffer.h"
-#include "util/cooperate.h"
 #include "util/z3_exception.h"
 #include "util/common_msgs.h"
 
@@ -248,7 +247,7 @@ public:
 
 
 /**
-   \brief Auxiliary static method used to diplay a bound specified by (x, k, lower, open).
+   \brief Auxiliary static method used to display a bound specified by (x, k, lower, open).
 */
 template<typename C>
 void context_t<C>::display(std::ostream & out, numeral_manager & nm, display_var_proc const & proc, var x, numeral & k, bool lower, bool open) {
@@ -463,7 +462,6 @@ void context_t<C>::checkpoint() {
         throw default_exception(Z3_CANCELED_MSG);
     if (memory::get_allocation_size() > m_max_memory)
         throw default_exception(Z3_MAX_MEMORY_MSG);
-    cooperate("subpaving");
 }
 
 template<typename C>

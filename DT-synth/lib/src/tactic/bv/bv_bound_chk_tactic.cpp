@@ -21,7 +21,6 @@
 #include "ast/rewriter/bv_bounds.h"
 #include "ast/rewriter/rewriter_params.hpp"
 #include "ast/rewriter/bool_rewriter.h"
-#include "util/cooperate.h"
 
 struct bv_bound_chk_stats {
     unsigned            m_unsats;
@@ -74,13 +73,12 @@ struct bv_bound_chk_rewriter_cfg : public default_rewriter_cfg {
         bv_bounds bvb(m());
         const br_status rv = bvb.rewrite(m_bv_ineq_consistency_test_max, f, num, args, result);
         if (rv != BR_FAILED && (m_m.is_false(result) || m_m.is_true(result))) m_stats.m_unsats++;
-        else if (rv != BR_FAILED && bvb.singletons().size()) m_stats.m_singletons++;
+        else if (rv != BR_FAILED && !bvb.singletons().empty()) m_stats.m_singletons++;
         else if (rv != BR_FAILED && is_app(result) && to_app(result)->get_num_args() < num) m_stats.m_reduces++;
         return rv;
     }
 
     bool max_steps_exceeded(unsigned long long num_steps) const {
-        cooperate("bv-bound-chk");
         if (num_steps > m_max_steps)
             return true;
         if (memory::get_allocation_size() > m_max_memory)

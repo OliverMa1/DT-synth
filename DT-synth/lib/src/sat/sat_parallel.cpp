@@ -16,10 +16,9 @@ Author:
 Revision History:
 
 --*/
-#include "sat_parallel.h"
-#include "sat_clause.h"
-#include "sat_solver.h"
-
+#include "sat/sat_parallel.h"
+#include "sat/sat_clause.h"
+#include "sat/sat_solver.h"
 
 namespace sat {
 
@@ -113,7 +112,7 @@ namespace sat {
                 s.m_params.set_sym("phase", symbol("random"));
             }                        
             m_solvers[i] = alloc(sat::solver, s.m_params, m_limits[i]);
-            m_solvers[i]->copy(s);
+            m_solvers[i]->copy(s, true);
             m_solvers[i]->set_par(this, i);
             push_child(m_solvers[i]->rlimit());            
         }
@@ -129,8 +128,8 @@ namespace sat {
     void parallel::exchange(solver& s, literal_vector const& in, unsigned& limit, literal_vector& out) {
         if (s.get_config().m_num_threads == 1 || s.m_par_syncing_clauses) return;
         flet<bool> _disable_sync_clause(s.m_par_syncing_clauses, true);
-        #pragma omp critical (par_solver)
         {
+            std::lock_guard<std::mutex> lock(m_mux);
             if (limit < m_units.size()) {
                 // this might repeat some literals.
                 out.append(m_units.size() - limit, m_units.c_ptr() + limit);
@@ -150,8 +149,8 @@ namespace sat {
         if (s.get_config().m_num_threads == 1 || s.m_par_syncing_clauses) return;
         flet<bool> _disable_sync_clause(s.m_par_syncing_clauses, true);
         IF_VERBOSE(3, verbose_stream() << s.m_par_id << ": share " <<  l1 << " " << l2 << "\n";);
-        #pragma omp critical (par_solver)
         {
+            std::lock_guard<std::mutex> lock(m_mux);
             m_pool.begin_add_vector(s.m_par_id, 2);
             m_pool.add_vector_elem(l1.index());
             m_pool.add_vector_elem(l2.index());            
@@ -165,23 +164,19 @@ namespace sat {
         unsigned n = c.size();
         unsigned owner = s.m_par_id;
         IF_VERBOSE(3, verbose_stream() << owner << ": share " <<  c << "\n";);
-        #pragma omp critical (par_solver)
-        {
-            m_pool.begin_add_vector(owner, n);                
-            for (unsigned i = 0; i < n; ++i) {
-                m_pool.add_vector_elem(c[i].index());
-            }
-            m_pool.end_add_vector();
+        std::lock_guard<std::mutex> lock(m_mux);
+        m_pool.begin_add_vector(owner, n);                
+        for (unsigned i = 0; i < n; ++i) {
+            m_pool.add_vector_elem(c[i].index());
         }
+        m_pool.end_add_vector();        
     }
 
     void parallel::get_clauses(solver& s) {
         if (s.m_par_syncing_clauses) return;
         flet<bool> _disable_sync_clause(s.m_par_syncing_clauses, true);
-        #pragma omp critical (par_solver)
-        {
-            _get_clauses(s);
-        }
+        std::lock_guard<std::mutex> lock(m_mux);
+        _get_clauses(s);        
     }
 
     void parallel::_get_clauses(solver& s) {
@@ -209,101 +204,72 @@ namespace sat {
         return (c.size() <= 40 && c.glue() <= 8) || c.glue() <= 2;
     }
 
-    void parallel::_set_phase(solver& s) {
-        if (!m_phase.empty()) {
-            m_phase.reserve(s.num_vars(), l_undef);
-            for (unsigned i = 0; i < s.num_vars(); ++i) {
-                if (s.value(i) != l_undef) {
-                    m_phase[i] = s.value(i);
-                    continue;
-                }
-                switch (s.m_phase[i]) {
-                case POS_PHASE:
-                    m_phase[i] = l_true;
-                    break;
-                case NEG_PHASE:
-                    m_phase[i] = l_false;
-                    break;
-                default:
-                    m_phase[i] = l_undef;
-                    break;
-                }
-            }
-        }
+    void parallel::_from_solver(solver& s) {
         if (m_consumer_ready && (m_num_clauses == 0 || (m_num_clauses > s.m_clauses.size()))) {
             // time to update local search with new clauses.
-            // there could be multiple local search engines runing at the same time.
+            // there could be multiple local search engines running at the same time.
             IF_VERBOSE(1, verbose_stream() << "(sat-parallel refresh :from " << m_num_clauses << " :to " << s.m_clauses.size() << ")\n";);
             m_solver_copy = alloc(solver, s.m_params, s.rlimit());
-            m_solver_copy->copy(s);
+            m_solver_copy->copy(s, true);
             m_num_clauses = s.m_clauses.size();
         }
     }
 
-    void parallel::set_phase(solver& s) {
-        #pragma omp critical (par_solver)
-        {
-            _set_phase(s);
+
+    bool parallel::_to_solver(solver& s) {
+        if (m_priorities.empty()) {
+            return false;
+        }
+        for (bool_var v = 0; v < m_priorities.size(); ++v) {
+            s.update_activity(v, m_priorities[v]);
+        }
+        return true;
+    }
+
+    void parallel::from_solver(solver& s) {
+        std::lock_guard<std::mutex> lock(m_mux);
+        _from_solver(s);        
+    }
+
+    bool parallel::to_solver(solver& s) {
+        std::lock_guard<std::mutex> lock(m_mux);
+        return _to_solver(s);
+    }
+
+    void parallel::_to_solver(i_local_search& s) {        
+        m_priorities.reset();
+        for (bool_var v = 0; m_solver_copy && v < m_solver_copy->num_vars(); ++v) {
+            m_priorities.push_back(s.get_priority(v));
         }
     }
 
-    void parallel::get_phase(solver& s) {
-        #pragma omp critical (par_solver)
-        {
-            _get_phase(s);
-        }
-    }
-
-    void parallel::_get_phase(solver& s) {
-        if (!m_phase.empty()) {
-            m_phase.reserve(s.num_vars(), l_undef);
-            for (unsigned i = 0; i < s.num_vars(); ++i) {
-                switch (m_phase[i]) {
-                case l_false: s.m_phase[i] = NEG_PHASE; break;
-                case l_true: s.m_phase[i] = POS_PHASE; break;
-                default: break;
-                }
-            }
-        }
-    }
-
-    bool parallel::get_phase(local_search& s) {
+    bool parallel::_from_solver(i_local_search& s) {
         bool copied = false;
-        #pragma omp critical (par_solver)
-        {
-            m_consumer_ready = true;
-            if (m_solver_copy && s.num_non_binary_clauses() > m_solver_copy->m_clauses.size()) {
-                copied = true;
-                s.import(*m_solver_copy.get(), true);
-            }
-            for (unsigned i = 0; i < m_phase.size(); ++i) {
-                s.set_phase(i, m_phase[i]);
-                m_phase[i] = l_undef;
-            }
-            m_phase.reserve(s.num_vars(), l_undef);
+        m_consumer_ready = true;
+        if (m_solver_copy) {
+            copied = true;
+            s.reinit(*m_solver_copy.get());
         }
         return copied;
     }
 
-    void parallel::set_phase(local_search& s) {
-        #pragma omp critical (par_solver)
-        {
-            m_consumer_ready = true;
-            m_phase.reserve(s.num_vars(), l_undef);
-            for (unsigned i = 0; i < s.num_vars(); ++i) {
-                m_phase[i] = s.get_phase(i) ? l_true : l_false;
-            }
-            m_num_clauses = s.num_non_binary_clauses();
-        }
+    bool parallel::from_solver(i_local_search& s) {
+        std::lock_guard<std::mutex> lock(m_mux);
+        return _from_solver(s);
+    }
+
+    void parallel::to_solver(i_local_search& s) {
+        std::lock_guard<std::mutex> lock(m_mux);
+        _to_solver(s);               
     }
 
     bool parallel::copy_solver(solver& s) {
         bool copied = false;
-        #pragma omp critical (par_solver)
         {
+            std::lock_guard<std::mutex> lock(m_mux);
             m_consumer_ready = true;
             if (m_solver_copy && s.m_clauses.size() > m_solver_copy->m_clauses.size()) {
-                s.copy(*m_solver_copy);
+                s.copy(*m_solver_copy, true);
                 copied = true;
                 m_num_clauses = s.m_clauses.size();
             }

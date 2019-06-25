@@ -62,7 +62,7 @@ public:
        \warning conversion throws a tactic_exception, if it is interrupted (by set_cancel),
        an unsupported operator is found, or memory consumption limit is reached (set with param :max-memory).
     */
-    void operator()(goal const & g, params_ref const & p, sat::solver & t, atom2bool_var & m, dep2asm_map& dep2asm, bool default_external = false, bool is_lemma = false);
+    void operator()(goal const & g, params_ref const & p, sat::solver_core & t, atom2bool_var & m, dep2asm_map& dep2asm, bool default_external = false, bool is_lemma = false);
 
     void get_interpreted_atoms(expr_ref_vector& atoms);
 
@@ -86,13 +86,13 @@ public:
         
     public:
         mc(ast_manager& m);
-        virtual ~mc() {}
+        ~mc() override {}
         // flush model converter from SAT solver to this structure.
-        void flush_smc(sat::solver& s, atom2bool_var const& map);         
+        void flush_smc(sat::solver_core& s, atom2bool_var const& map);                 
         void operator()(model_ref& md) override;
         void operator()(expr_ref& fml) override; 
         model_converter* translate(ast_translation& translator) override;
-        void collect(ast_pp_util& visitor) override;
+        void set_env(ast_pp_util* visitor) override;
         void display(std::ostream& out) override;
         void get_units(obj_map<expr, bool>& units) override;
         app* var2expr(sat::bool_var v) const { return m_var2expr.get(v, nullptr); }
@@ -113,7 +113,7 @@ public:
        \warning conversion throws a tactic_exception, if it is interrupted (by set_cancel),
        or memory consumption limit is reached (set with param :max-memory).
     */
-    void operator()(sat::solver & t, atom2bool_var const & m, params_ref const & p, goal & s, ref<mc> & mc);
+    void operator()(sat::solver_core & t, atom2bool_var const & m, params_ref const & p, goal & s, ref<mc> & mc);
     
 };
 

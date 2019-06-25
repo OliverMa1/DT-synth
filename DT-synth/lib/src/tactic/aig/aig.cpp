@@ -19,7 +19,6 @@ Notes:
 #include "tactic/aig/aig.h"
 #include "tactic/goal.h"
 #include "ast/ast_smt2_pp.h"
-#include "util/cooperate.h"
 
 #define USE_TWO_LEVEL_RULES
 #define FIRST_NODE_ID (UINT_MAX/2)
@@ -129,7 +128,6 @@ struct aig_manager::imp {
             throw aig_exception(TACTIC_MAX_MEMORY_MSG);
         if (m().canceled())
             throw aig_exception(m().limit().get_cancel_msg());
-        cooperate("aig");
     }
 
     void dec_ref_core(aig_lit const & r) { dec_ref_core(r.ptr()); }
@@ -490,7 +488,6 @@ struct aig_manager::imp {
                     case OP_NOT:
                     case OP_OR:      
                     case OP_AND:
-                    case OP_IFF:
                     case OP_XOR:
                     case OP_IMPLIES:
                     case OP_ITE:
@@ -580,9 +577,6 @@ struct aig_manager::imp {
                 break;
             case OP_EQ:
                 SASSERT(m.m().is_bool(fr.m_t->get_arg(0)));
-                mk_iff(fr.m_spos);
-                break;
-            case OP_IFF:
                 mk_iff(fr.m_spos);
                 break;
             case OP_XOR:

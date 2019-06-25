@@ -49,7 +49,6 @@ Revision History:
 #include "ast/ast.h"
 #include "ast/func_decl_dependencies.h"
 #include "smt/proto_model/proto_model.h"
-#include "util/cooperate.h"
 #include "tactic/tactic_exception.h"
 
 namespace smt {
@@ -74,7 +73,7 @@ namespace smt {
         typedef mf::non_auf_macro_solver       non_auf_macro_solver;
         typedef mf::instantiation_set          instantiation_set;
 
-        ast_manager &                          m_manager;
+        ast_manager &                          m;
         context *                              m_context;
         scoped_ptr<quantifier_analyzer>        m_analyzer;
         scoped_ptr<auf_solver>                 m_auf_solver;

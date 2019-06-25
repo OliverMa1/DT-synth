@@ -14,7 +14,7 @@ struct rcf_params {
     d.insert("initial_precision", CPK_UINT, "a value k that is the initial interval size (as 1/2^k) when creating transcendentals and approximated division", "24","rcf");
     d.insert("inf_precision", CPK_UINT, "a value k that is the initial interval size (i.e., (0, 1/2^l)) used as an approximation for infinitesimal values", "24","rcf");
     d.insert("max_precision", CPK_UINT, "during sign determination we switch from interval arithmetic to complete methods when the interval size is less than 1/2^k, where k is the max_precision", "128","rcf");
-    d.insert("lazy_algebraic_normalization", CPK_BOOL, "during sturm-seq and square-free polynomial computations, only normalize algebraic polynomial expressions when the definining polynomial is monic", "true","rcf");
+    d.insert("lazy_algebraic_normalization", CPK_BOOL, "during sturm-seq and square-free polynomial computations, only normalize algebraic polynomial expressions when the defining polynomial is monic", "true","rcf");
   }
   /*
      REG_MODULE_PARAMS('rcf', 'rcf_params::collect_param_descrs')

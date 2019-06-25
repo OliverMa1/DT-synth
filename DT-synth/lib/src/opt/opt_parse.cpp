@@ -323,6 +323,15 @@ struct asymbol {
     asymbol(rational const& r, unsigned l): m_is_num(true), m_num(r), m_line(l) {}
 };
 
+std::ostream& operator<<(std::ostream& out, asymbol const& c) {
+    if (c.m_is_num) {
+        return out << c.m_num;
+    }
+    else {
+        return out << c.m_sym;
+    }
+}
+
 class lp_tokenizer {
     vector<asymbol>    m_tokens;
     unsigned           m_pos;
@@ -402,13 +411,14 @@ private:
                     }
                     m_buffer.push_back(0);
                     m_tokens.push_back(asymbol(symbol(m_buffer.c_ptr()), in.line()));
+                    IF_VERBOSE(10, verbose_stream() << "tok: " << m_tokens.back() << "\n");
                     continue;
                 }
             }
 
             if (is_num(c)) {
                 rational n(0);
-                unsigned div = 1;
+                rational div(1);
                 while (is_num(c) && !in.eof()) {
                     n = n*rational(10) + rational(c - '0');
                     in.next();
@@ -416,16 +426,18 @@ private:
                 }
                 if (c == '.') {
                     in.next();
+                    c = in.ch();
                     while (is_num(c) && !in.eof()) {
                         n = n*rational(10) + rational(c - '0');
                         in.next();
-                        div *= 10;
+                        div *= rational(10);
                         c = in.ch();
                     }
                 }
-                if (div > 1) n = n / rational(div);
+                if (div > rational(1)) n = n / div;
                 if (neg) n.neg();
                 m_tokens.push_back(asymbol(n, in.line()));
+                IF_VERBOSE(10, verbose_stream() << "num: " << m_tokens.back() << "\n");
                 continue;
             }
             m_buffer.reset();
@@ -445,6 +457,7 @@ private:
             }
             m_buffer.push_back(0);
             m_tokens.push_back(asymbol(symbol(m_buffer.c_ptr()), in.line()));
+            IF_VERBOSE(10, verbose_stream() << "tok: " << m_tokens.back() << "\n");
         }
     }
 
@@ -466,6 +479,7 @@ private:
             is_num(c) ||
             c == '!' ||
             c == '"' ||
+            c == '-' ||
             c == '#' ||
             c == '$' ||
             c == '%' ||
@@ -612,6 +626,7 @@ private:
             name = peek(0);
             tok.next(2);
         }
+        IF_VERBOSE(10, verbose_stream() << name << "\n");
         rational val(0);
         symbol var;
         parse_indicator(var, val);
@@ -624,6 +639,9 @@ private:
     }
 
     void parse_expr(lin_term& terms) {
+        if (is_relation()) {
+            return;
+        }
         bool pos = true;
         if (peek(0) == "-") {
             pos = false;
@@ -669,12 +687,20 @@ private:
         return peek(pos) == "<=" || peek(pos) == "=<";
     }
 
-    bool peek_minus_infty(unsigned pos) {
+    bool peek_minus_infty_long(unsigned pos) {
         return peek(pos) == "-" && (peek(pos+1) == "inf" || peek(pos+1) == "infinity");
     }
 
-    bool peek_plus_infty(unsigned pos) {
+    bool peek_minus_infty_short(unsigned pos) {
+        return peek(pos) == "-inf" || peek(pos) == "-infinity";
+    }
+
+    bool peek_plus_infty_long(unsigned pos) {
         return peek(pos) == "+" && (peek(pos+1) == "inf" || peek(pos+1) == "infinity");
+    }
+
+    bool peek_plus_infty_short(unsigned pos) {
+        return peek(pos) == "+inf" || peek(pos) == "+infinity";
     }
 
     void parse_indicator(symbol& var, rational& val) {
@@ -693,6 +719,7 @@ private:
         return false;
     }
 
+    bool is_relation() { return peek(0) == "=" || peek(0) == "=<" || peek(0) == ">=" || peek(0) == "=>" || peek(0) == "<="; }
     bool is_section() { return is_general() || is_binary() || is_bounds() || is_end();}
     bool is_bounds() { return peek(0) == "bounds"; }
     bool is_general() { return peek(0) == "general" || peek(0) == "gen" || peek(0) == "generals"; }
@@ -712,13 +739,21 @@ private:
             tok.next(3);
             parse_upper(v);
         }
-        else if (peek_minus_infty(0) && peek_le(2)) {
+        else if (peek_minus_infty_long(0) && peek_le(2)) {
             v = peek(3);
             tok.next(4);
             parse_upper(v);
         }
-        else if (peek_plus_infty(2) && peek_le(1)) {
+        else if (peek_minus_infty_short(0) && peek_le(1)) {
+            v = peek(2);
+            tok.next(3);
+            parse_upper(v);
+        }
+        else if (peek_plus_infty_long(2) && peek_le(1)) {
             tok.next(4);            
+        }
+        else if (peek_plus_infty_short(2) && peek_le(1)) {
+            tok.next(3);
         }
         else if (peek_le(1) && tok.peek_num(2)) {
             v = peek(0);
@@ -738,9 +773,11 @@ private:
             update_upper(v, rhs);
             tok.next(2);
         }
-        else if (peek_le(0) && peek_plus_infty(1)) {
+        else if (peek_le(0) && peek_plus_infty_long(1)) {
             tok.next(3);            
         }
+        else if (peek_le(0) && peek_plus_infty_short(1)) {
+            tok.next(2);        }
 
     }
 
@@ -770,6 +807,11 @@ private:
     }
 
     void parse_general() {
+        if (peek(1) == ":" && peek(3) == "=") {
+            symbol const& v = peek(2);        
+            std::cout << "TBD: " << v << "\n";
+            return;
+        }
         symbol const& v = peek(0);        
         bound b;
         m_bounds.find(v, b);        

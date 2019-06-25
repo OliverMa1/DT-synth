@@ -1,4 +1,5 @@
 add_subdirectory(fuzzing)
+add_subdirectory(lp)
 ################################################################################
 # z3-test executable
 ################################################################################
@@ -24,6 +25,7 @@ add_executable(test-z3
   chashtable.cpp
   check_assumptions.cpp
   cnf_backbones.cpp
+  cube_clause.cpp
   datalog_parser.cpp
   ddnf.cpp
   diff_logic.cpp
@@ -80,7 +82,6 @@ add_executable(test-z3
   optional.cpp
   parray.cpp
   pb2bv.cpp
-  pdr.cpp
   permutation.cpp
   polynomial.cpp
   polynorm.cpp
@@ -102,6 +103,7 @@ add_executable(test-z3
   small_object_allocator.cpp
   smt2print_parse.cpp
   smt_context.cpp
+  solver_pool.cpp
   sorting_network.cpp
   stack.cpp
   string_buffer.cpp
@@ -119,6 +121,7 @@ add_executable(test-z3
   upolynomial.cpp
   var_subst.cpp
   vector.cpp
+  lp/lp.cpp
   ${z3_test_extra_object_files}
 )
 z3_add_install_tactic_rule(${z3_test_deps})

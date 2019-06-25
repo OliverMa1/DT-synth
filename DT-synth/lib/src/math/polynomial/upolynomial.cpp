@@ -25,7 +25,6 @@ Notes:
 #include "math/polynomial/upolynomial_factorization.h"
 #include "math/polynomial/polynomial_primes.h"
 #include "util/buffer.h"
-#include "util/cooperate.h"
 #include "util/common_msgs.h"
 
 namespace upolynomial {
@@ -96,7 +95,7 @@ namespace upolynomial {
 
     void core_manager::factors::display(std::ostream & out) const {
         out << nm().to_string(m_constant);
-        if (m_factors.size() > 0) {
+        if (!m_factors.empty()) {
             for (unsigned i = 0; i < m_factors.size(); ++ i) {
                 out << " * (";
                 m_upm.display(out, m_factors[i]);
@@ -157,7 +156,6 @@ namespace upolynomial {
     void core_manager::checkpoint() {
         if (!m_limit.inc())
             throw upolynomial_exception(Z3_CANCELED_MSG);
-        cooperate("upolynomial");
     }
 
     // Eliminate leading zeros from buffer.
@@ -362,7 +360,7 @@ namespace upolynomial {
         set_size(sz-1, buffer);
     }
 
-    // Divide coeffients of p by their GCD
+    // Divide coefficients of p by their GCD
     void core_manager::normalize(unsigned sz, numeral * p) {
         if (sz == 0)
             return;
@@ -395,7 +393,7 @@ namespace upolynomial {
         }
     }
 
-    // Divide coeffients of p by their GCD
+    // Divide coefficients of p by their GCD
     void core_manager::normalize(numeral_vector & p) {
         normalize(p.size(), p.c_ptr());
     }
@@ -524,11 +522,11 @@ namespace upolynomial {
         set(sz1, p1, buffer);
         if (sz1 <= 1)
             return;
+		
         numeral const & b_n = p2[sz2-1];
         SASSERT(!m().is_zero(b_n));
         scoped_numeral a_m(m());
-        while (true) {
-            checkpoint();
+        while (m_limit.inc()) {			
             TRACE("rem_bug", tout << "rem loop, p2:\n"; display(tout, sz2, p2); tout << "\nbuffer:\n"; display(tout, buffer); tout << "\n";);
             sz1 = buffer.size();
             if (sz1 < sz2) {
@@ -568,7 +566,7 @@ namespace upolynomial {
         SASSERT(!is_alias(p1, buffer)); SASSERT(!is_alias(p2, buffer));
         unsigned d;
         rem(sz1, p1, sz2, p2, d, buffer);
-        // We don't ned to flip the sign if d is odd and leading coefficient of p2 is negative
+        // We don't need to flip the sign if d is odd and leading coefficient of p2 is negative
         if (d % 2 == 0 || (sz2 > 0 && m().is_pos(p2[sz2-1])))
             neg(buffer.size(), buffer.c_ptr());
     }
@@ -832,7 +830,7 @@ namespace upolynomial {
         set(sz2, p2, B);
         TRACE("upolynomial", tout << "sz1: " << sz1 << ", p1: " << p1 << ", sz2: " << sz2 << ", p2: " << p2 << "\nB.size(): " << B.size() <<
               ", B.c_ptr(): " << B.c_ptr() << "\n";);
-        while (true) {
+        while (m_limit.inc()) {
             TRACE("upolynomial", tout << "A: "; display(tout, A); tout <<"\nB: "; display(tout, B); tout << "\n";);
             if (B.empty()) {
                 normalize(A);
@@ -853,6 +851,7 @@ namespace upolynomial {
             A.swap(B);
             B.swap(R);
         }
+        throw upolynomial_exception(Z3_CANCELED_MSG);
     }
 
     void core_manager::gcd(unsigned sz1, numeral const * p1, unsigned sz2, numeral const * p2, numeral_vector & buffer) {
@@ -1106,7 +1105,7 @@ namespace upolynomial {
     }
 
     // Display p
-    void core_manager::display(std::ostream & out, unsigned sz, numeral const * p, char const * var_name, bool use_star) const {
+    std::ostream& core_manager::display(std::ostream & out, unsigned sz, numeral const * p, char const * var_name, bool use_star) const {
         bool displayed = false;
         unsigned i = sz;
         scoped_numeral a(m());
@@ -1142,6 +1141,7 @@ namespace upolynomial {
         }
         if (!displayed)
             out << "0";
+        return out;
     }
 
     static void display_smt2_mumeral(std::ostream & out, numeral_manager & m, mpz const & n) {
@@ -1183,15 +1183,15 @@ namespace upolynomial {
     }
 
     // Display p as an s-expression
-    void core_manager::display_smt2(std::ostream & out, unsigned sz, numeral const * p, char const * var_name) const {
+    std::ostream& core_manager::display_smt2(std::ostream & out, unsigned sz, numeral const * p, char const * var_name) const {
         if (sz == 0) {
             out << "0";
-            return;
+            return out;
         }
 
         if (sz == 1) {
             display_smt2_mumeral(out, m(), p[0]);
-            return;
+            return out;
         }
 
         unsigned non_zero_idx  = UINT_MAX;
@@ -1217,7 +1217,7 @@ namespace upolynomial {
                 display_smt2_monomial(out, m(), p[i], i, var_name);
             }
         }
-        out << ")";
+        return out << ")";
     }
 
     bool core_manager::eq(unsigned sz1, numeral const * p1, unsigned sz2, numeral const * p2) {
@@ -1339,12 +1339,10 @@ namespace upolynomial {
     // Return the number of sign changes in the coefficients of p
     unsigned manager::sign_changes(unsigned sz, numeral const * p) {
         unsigned r = 0;
-        int sign, prev_sign;
-        sign = 0;
-        prev_sign = 0;
+        int prev_sign = 0;
         unsigned i = 0;
         for (; i < sz; i++) {
-            sign = sign_of(p[i]);
+            int sign = sign_of(p[i]);
             if (sign == 0)
                 continue;
             if (sign != prev_sign && prev_sign != 0)
@@ -2005,7 +2003,7 @@ namespace upolynomial {
                 continue;
             bool pos_a_n_k = m().is_pos(a_n_k);
             if (pos_a_n_k == pos_a_n)
-                continue; // must have oposite signs
+                continue; // must have opposite signs
             unsigned log2_a_n_k = pos_a_n_k ? m().log2(a_n_k) : m().mlog2(a_n_k);
             if (log2_a_n > log2_a_n_k)
                 continue;
@@ -2103,7 +2101,7 @@ namespace upolynomial {
         frame_stack.pop_back();
     }
 
-    // Auxiliar method for isolating the roots of p in the interval (0, 1).
+    // Auxiliary method for isolating the roots of p in the interval (0, 1).
     // The basic idea is to split the interval in: (0, 1/2) and (1/2, 1).
     // This is accomplished by analyzing the roots in the interval (0, 1) of the following polynomials.
     //   p1(x) := 2^n * p(x/2)   where n = sz-1
@@ -2519,7 +2517,7 @@ namespace upolynomial {
     // Keep expanding the Sturm sequence starting at seq
     void manager::sturm_seq_core(upolynomial_sequence & seq) {
         scoped_numeral_vector r(m());
-        while (true) {
+        while (m_limit.inc()) {
             unsigned sz = seq.size();
             srem(seq.size(sz-2), seq.coeffs(sz-2), seq.size(sz-1), seq.coeffs(sz-1), r);
             if (is_zero(r))
@@ -2574,10 +2572,10 @@ namespace upolynomial {
        We say an interval (a, b) of a polynomial p is ISOLATING if p has only one root in the
        interval (a, b).
 
-       We say an isolating interval (a, b) of a square free polynomial p is REFINEABLE if
+       We say an isolating interval (a, b) of a square free polynomial p is REFINABLE if
          sign(p(a)) = -sign(p(b))
 
-       Not every isolating interval (a, b) of a square free polynomial p is refineable, because
+       Not every isolating interval (a, b) of a square free polynomial p is refinable, because
        sign(p(a)) or sign(p(b)) may be zero.
 
        Refinable intervals of square free polynomials are useful, because we can increase precision
@@ -3117,11 +3115,12 @@ namespace upolynomial {
         return result;
     }
 
-    void manager::display(std::ostream & out, upolynomial_sequence const & seq, char const * var_name) const {
+    std::ostream& manager::display(std::ostream & out, upolynomial_sequence const & seq, char const * var_name) const {
         for (unsigned i = 0; i < seq.size(); i++) {
             display(out, seq.size(i), seq.coeffs(i), var_name);
             out << "\n";
         }
+        return out;
     }
 };
 

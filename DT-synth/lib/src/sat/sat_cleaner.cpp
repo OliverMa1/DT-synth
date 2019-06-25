@@ -53,6 +53,10 @@ namespace sat {
             for (; it2 != end2; ++it2) {
                 switch (it2->get_kind()) {
                 case watched::BINARY:
+                    TRACE("cleanup_bug", 
+                          tout << ~to_literal(l_idx) << " " << it2->get_literal() << "\n";
+                          tout << s.value(~to_literal(l_idx)) << " " << s.value(it2->get_literal()) << "\n";
+                          tout << s.was_eliminated(it2->get_literal()) << " " << s.inconsistent() << "\n";);
                     SASSERT(s.value(it2->get_literal()) == l_true || s.value(it2->get_literal()) == l_undef);
                     if (s.value(it2->get_literal()) == l_undef) {
                         *it_prev = *it2;
@@ -88,12 +92,10 @@ namespace sat {
             CTRACE("sat_cleaner_frozen", c.frozen(), tout << c << "\n";);
             unsigned sz = c.size();
             unsigned i = 0, j = 0;
-            bool sat = false;
             m_cleanup_counter += sz;
             for (; i < sz; i++) {
                 switch (s.value(c[i])) {
                 case l_true:
-                    sat = true;
                     goto end_loop;
                 case l_false:
                     m_elim_literals++;
@@ -108,9 +110,9 @@ namespace sat {
             }
         end_loop:
             CTRACE("sat_cleaner_frozen", c.frozen(),
-                   tout << "sat: " << sat << ", new_size: " << j << "\n";
+                   tout << "sat: " << (i < sz) << ", new_size: " << j << "\n";
                    tout << mk_lits_pp(j, c.begin()) << "\n";);
-            if (sat) {
+            if (i < sz) {
                 m_elim_clauses++;
                 s.del_clause(c);
             }
@@ -119,34 +121,29 @@ namespace sat {
                 CTRACE("sat_cleaner_bug", new_sz < 2, tout << "new_sz: " << new_sz << "\n";
                        if (c.size() > 0) tout << "unit: " << c[0] << "\n";
                        s.display_watches(tout););
-                if (new_sz == 0) {
-                    s.set_conflict(justification());
+                switch (new_sz) {
+                case 0:
+                    s.set_conflict();
                     s.del_clause(c);
-                }
-                else if (new_sz == 1) {
-                    s.assign(c[0], justification());
+                    break;
+                case 1:
+                    s.assign_unit(c[0]);
                     s.del_clause(c);
-                }
-                else {
+                    break;
+                case 2:
                     SASSERT(s.value(c[0]) == l_undef && s.value(c[1]) == l_undef);
-                    if (new_sz == 2) {
-                        TRACE("cleanup_bug", tout << "clause became binary: " << c[0] << " " << c[1] << "\n";);
-                        s.mk_bin_clause(c[0], c[1], c.is_learned());
-                        s.del_clause(c);
+                    TRACE("cleanup_bug", tout << "clause became binary: " << c[0] << " " << c[1] << "\n";);
+                    s.mk_bin_clause(c[0], c[1], c.is_learned());
+                    s.del_clause(c);
+                    break;
+                default:
+                    s.shrink(c, sz, new_sz);
+                    *it2 = *it;
+                    it2++;
+                    if (!c.frozen()) {                            
+                        s.attach_clause(c);
                     }
-                    else {
-                        c.shrink(new_sz);
-                        *it2 = *it;
-                        it2++;
-                        if (!c.frozen()) {                            
-                            s.attach_clause(c);
-                        }
-                        if (s.m_config.m_drat) {
-                            // for optimization, could also report deletion 
-                            // of previous version of clause.
-                            s.m_drat.add(c, true);
-                        }
-                    }
+                    break;
                 }
             }
         }
@@ -166,14 +163,33 @@ namespace sat {
         }
         ~report() {
             m_watch.stop();
-            IF_VERBOSE(SAT_VB_LVL, 
-                       verbose_stream() << " (sat-cleaner :elim-literals " << (m_cleaner.m_elim_literals - m_elim_literals)
-                       << " :elim-clauses " << (m_cleaner.m_elim_clauses - m_elim_clauses)
-                       << " :cost " << m_cleaner.m_cleanup_counter
-                       << mk_stat(m_cleaner.s)
-                       << " :time " << std::fixed << std::setprecision(2) << m_watch.get_seconds() << ")\n";);
+            IF_VERBOSE(2,
+                       verbose_stream() << " (sat-cleaner";
+                       verbose_stream() << " :elim-literals " << (m_cleaner.m_elim_literals - m_elim_literals);
+                       verbose_stream() << " :elim-clauses " << (m_cleaner.m_elim_clauses - m_elim_clauses);
+                       verbose_stream() << " :cost " << m_cleaner.m_cleanup_counter << m_watch << ")\n";);
         }
     };
+
+    bool cleaner::is_clean() const {
+        for (clause* cp : s.m_clauses) {
+            for (literal lit : *cp) {
+                if (s.value(lit) != l_undef && s.lvl(lit) == 0) return false;
+            }
+        }
+        for (clause* cp : s.m_learned) {
+            for (literal lit : *cp) {
+                if (s.value(lit) != l_undef && s.lvl(lit) == 0) return false;
+            }
+        }
+        unsigned idx = 0;
+        for (auto& wlist : s.m_watches) {
+            literal lit = to_literal(idx);
+            if (s.value(lit) != l_undef && s.lvl(lit) == 0 && !wlist.empty()) return false;
+            ++idx;
+        }
+        return true;
+    }
 
     /**
        \brief Return true if cleaner executed.
@@ -181,6 +197,7 @@ namespace sat {
     bool cleaner::operator()(bool force) {
         CASSERT("cleaner_bug", s.check_invariant());
         unsigned trail_sz = s.m_trail.size();
+
         s.propagate(false); // make sure that everything was propagated.
         TRACE("sat_cleaner_bug", s.display(tout); s.display_watches(tout););
         if (s.m_inconsistent)
@@ -192,10 +209,14 @@ namespace sat {
         report rpt(*this);
         m_last_num_units = trail_sz;
         m_cleanup_counter = 0;
-        cleanup_watches();
-        cleanup_clauses(s.m_clauses);
-        cleanup_clauses(s.m_learned);
-        s.propagate(false);
+        do {
+            trail_sz = s.m_trail.size();
+            cleanup_watches();
+            cleanup_clauses(s.m_clauses);
+            cleanup_clauses(s.m_learned);
+            s.propagate(false);
+        }
+        while (trail_sz < s.m_trail.size() && !s.inconsistent());
         CASSERT("cleaner_bug", s.check_invariant());
         return true;
     }
@@ -206,8 +227,8 @@ namespace sat {
     }
     
     void cleaner::collect_statistics(statistics & st) const {
-        st.update("elim clauses", m_elim_clauses);
-        st.update("elim literals", m_elim_literals);
+        st.update("sat elim clauses", m_elim_clauses);
+        st.update("sat elim literals", m_elim_literals);
     }
 
 };

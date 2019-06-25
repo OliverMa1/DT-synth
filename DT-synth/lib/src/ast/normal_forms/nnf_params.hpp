@@ -13,7 +13,6 @@ struct nnf_params {
     d.insert("sk_hack", CPK_BOOL, "hack for VCC", "false","nnf");
     d.insert("mode", CPK_SYMBOL, "NNF translation mode: skolem (skolem normal form), quantifiers (skolem normal form + quantifiers in NNF), full", "skolem","nnf");
     d.insert("ignore_labels", CPK_BOOL, "remove/ignore labels in the input formula, this option is ignored if proofs are enabled", "false","nnf");
-    d.insert("skolemize", CPK_BOOL, "skolemize (existential force) quantifiers", "true","nnf");
   }
   /*
      REG_MODULE_PARAMS('nnf', 'nnf_params::collect_param_descrs')
@@ -23,6 +22,5 @@ struct nnf_params {
   bool sk_hack() const { return p.get_bool("sk_hack", g, false); }
   symbol mode() const { return p.get_sym("mode", g, symbol("skolem")); }
   bool ignore_labels() const { return p.get_bool("ignore_labels", g, false); }
-  bool skolemize() const { return p.get_bool("skolemize", g, true); }
 };
 #endif

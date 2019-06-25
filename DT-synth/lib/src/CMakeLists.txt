@@ -81,7 +81,6 @@ add_subdirectory(muz/base)
 add_subdirectory(muz/dataflow)
 add_subdirectory(muz/transforms)
 add_subdirectory(muz/rel)
-add_subdirectory(muz/pdr)
 add_subdirectory(muz/clp)
 add_subdirectory(muz/tab)
 add_subdirectory(muz/bmc)
@@ -92,6 +91,7 @@ add_subdirectory(tactic/ufbv)
 add_subdirectory(sat/sat_solver)
 add_subdirectory(tactic/smtlogics)
 add_subdirectory(tactic/fpa)
+add_subdirectory(tactic/fd_solver)
 add_subdirectory(tactic/portfolio)
 add_subdirectory(opt)
 add_subdirectory(api)
@@ -164,8 +164,10 @@ set (libz3_public_headers
 )
 foreach (header ${libz3_public_headers})
   set_property(TARGET libz3 APPEND PROPERTY
-    PUBLIC_HEADER "${CMAKE_SOURCE_DIR}/src/api/${header}")
+    PUBLIC_HEADER "${PROJECT_SOURCE_DIR}/src/api/${header}")
 endforeach()
+set_property(TARGET libz3 APPEND PROPERTY
+    PUBLIC_HEADER "${CMAKE_CURRENT_BINARY_DIR}/util/z3_version.h")
 
 install(TARGETS libz3
   EXPORT Z3_EXPORTED_TARGETS
@@ -185,12 +187,12 @@ if (MSVC)
   add_custom_command(OUTPUT "${dll_module_exports_file}"
     COMMAND
       "${PYTHON_EXECUTABLE}"
-      "${CMAKE_SOURCE_DIR}/scripts/mk_def_file.py"
+      "${PROJECT_SOURCE_DIR}/scripts/mk_def_file.py"
       "${dll_module_exports_file}"
       "libz3"
       ${Z3_FULL_PATH_API_HEADER_FILES_TO_SCAN}
     DEPENDS
-      "${CMAKE_SOURCE_DIR}/scripts/mk_def_file.py"
+      "${PROJECT_SOURCE_DIR}/scripts/mk_def_file.py"
       ${Z3_GENERATED_FILE_EXTRA_DEPENDENCIES}
       ${Z3_FULL_PATH_API_HEADER_FILES_TO_SCAN}
     COMMENT "Generating \"${dll_module_exports_file}\""

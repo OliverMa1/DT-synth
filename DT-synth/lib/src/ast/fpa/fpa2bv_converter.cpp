@@ -21,6 +21,8 @@ Notes:
 #include "ast/ast_smt2_pp.h"
 #include "ast/well_sorted.h"
 #include "ast/rewriter/th_rewriter.h"
+#include "ast/used_vars.h"
+#include "ast/rewriter/var_subst.h"
 
 #include "ast/fpa/fpa2bv_converter.h"
 #include "ast/rewriter/fpa_rewriter.h"
@@ -230,6 +232,42 @@ void fpa2bv_converter::mk_var(unsigned base_inx, sort * srt, expr_ref & result) 
     result = m_util.mk_fp(sgn, e, s);
 }
 
+expr_ref fpa2bv_converter::extra_quantify(expr * e)
+{
+    used_vars uv;
+    unsigned nv;
+
+    ptr_buffer<sort> new_decl_sorts;
+    sbuffer<symbol> new_decl_names;
+    expr_ref_buffer subst_map(m);
+
+    uv(e);
+    nv = uv.get_num_vars();
+    subst_map.resize(uv.get_max_found_var_idx_plus_1());
+
+    if (nv == 0)
+        return expr_ref(e, m);
+
+    for (unsigned i = 0; i < nv; i++)
+    {
+        if (uv.contains(i)) {
+            TRACE("fpa2bv", tout << "uv[" << i << "] = " << mk_ismt2_pp(uv.get(i), m) << std::endl; );
+            sort * s = uv.get(i);
+            var * v = m.mk_var(i, s);
+            new_decl_sorts.push_back(s);
+            new_decl_names.push_back(symbol(i));
+            subst_map.set(i, v);
+        }
+    }
+
+    expr_ref res(m);
+    var_subst vsubst(m);
+    res = vsubst.operator()(e, nv, subst_map.c_ptr());
+    TRACE("fpa2bv", tout << "subst'd = " << mk_ismt2_pp(res, m) << std::endl; );
+    res = m.mk_forall(nv, new_decl_sorts.c_ptr(), new_decl_names.c_ptr(), res);
+    return res;
+}
+
 void fpa2bv_converter::mk_uf(func_decl * f, unsigned num, expr * const * args, expr_ref & result)
 {
     TRACE("fpa2bv", tout << "UF: " << mk_ismt2_pp(f, m) << std::endl; );
@@ -252,7 +290,7 @@ void fpa2bv_converter::mk_uf(func_decl * f, unsigned num, expr * const * args, e
                                m_bv_util.mk_extract(sbits+ebits-2, sbits-1, bv_app),
                                m_bv_util.mk_extract(sbits-2, 0, bv_app));
         new_eq = m.mk_eq(fapp, flt_app);
-        m_extra_assertions.push_back(new_eq);
+        m_extra_assertions.push_back(extra_quantify(new_eq));
         result = flt_app;
     }
     else if (m_util.is_rm(rng)) {
@@ -263,7 +301,7 @@ void fpa2bv_converter::mk_uf(func_decl * f, unsigned num, expr * const * args, e
         bv_app = m.mk_app(bv_f, num, args);
         flt_app = m_util.mk_bv2rm(bv_app);
         new_eq = m.mk_eq(fapp, flt_app);
-        m_extra_assertions.push_back(new_eq);
+        m_extra_assertions.push_back(extra_quantify(new_eq));
         result = flt_app;
     }
     else
@@ -1115,7 +1153,7 @@ void fpa2bv_converter::mk_rem(sort * s, expr_ref & x, expr_ref & y, expr_ref & r
 
     expr_ref y_half(m), ny_half(m), zero_e(m), two_e(m);
     expr_ref y_half_is_zero(m), y_half_is_nz(m);
-    expr_ref r_ge_y_half(m), r_gt_ny_half(m), r_le_y_half(m), r_lt_ny_half(m);
+    expr_ref r_gt_y_half(m), r_gt_ny_half(m), r_lt_y_half(m), r_lt_ny_half(m);
     expr_ref r_ge_zero(m), r_le_zero(m);
     expr_ref rounded_sub_y(m), rounded_add_y(m);
     mpf zero, two;
@@ -1128,9 +1166,9 @@ void fpa2bv_converter::mk_rem(sort * s, expr_ref & x, expr_ref & y, expr_ref & r
     mk_is_zero(y_half, y_half_is_zero);
     y_half_is_nz = m.mk_not(y_half_is_zero);
 
-    mk_float_ge(s, rndd, y_half, r_ge_y_half);
+    mk_float_gt(s, rndd, y_half, r_gt_y_half);
     mk_float_gt(s, rndd, ny_half, r_gt_ny_half);
-    mk_float_le(s, rndd, y_half, r_le_y_half);
+    mk_float_lt(s, rndd, y_half, r_lt_y_half);
     mk_float_lt(s, rndd, ny_half, r_lt_ny_half);
 
     mk_sub(s, rne_bv, rndd, y, rounded_sub_y);
@@ -1138,11 +1176,11 @@ void fpa2bv_converter::mk_rem(sort * s, expr_ref & x, expr_ref & y, expr_ref & r
 
     expr_ref sub_cnd(m), add_cnd(m);
     sub_cnd = m.mk_and(y_half_is_nz,
-                m.mk_or(m.mk_and(y_is_pos, r_ge_y_half),
-                        m.mk_and(y_is_neg, r_le_y_half)));
+                m.mk_or(m.mk_and(y_is_pos, r_gt_y_half),
+                        m.mk_and(y_is_neg, r_lt_y_half)));
     add_cnd = m.mk_and(y_half_is_nz,
                 m.mk_or(m.mk_and(y_is_pos, r_lt_ny_half),
-                    m.mk_and(y_is_neg, r_gt_ny_half)));
+                        m.mk_and(y_is_neg, r_gt_ny_half)));
 
     mk_ite(add_cnd, rounded_add_y, rndd, v7);
     mk_ite(sub_cnd, rounded_sub_y, v7, v7);
@@ -1948,15 +1986,17 @@ void fpa2bv_converter::mk_round_to_integral(sort * s, expr_ref & rm, expr_ref & 
 
     SASSERT(is_well_sorted(m, v4));
 
-    // exponent >= sbits-1
+    // exponent >= sbits-1 -> x
     expr_ref exp_is_large(m);
-    exp_is_large = m_bv_util.mk_sle(m_bv_util.mk_numeral(sbits-1, ebits), a_exp);
+    exp_is_large = log2(sbits-1)+1 <= ebits-1 ?
+                        m_bv_util.mk_sle(m_bv_util.mk_numeral(sbits-1, ebits), a_exp) :
+                        m.mk_false();
     dbg_decouple("fpa2bv_r2i_exp_is_large", exp_is_large);
     c5 = exp_is_large;
     v5 = x;
 
     // Actual conversion with rounding.
-    // x.exponent >= 0 && x.exponent < x.sbits - 1
+    // exponent >= 0 && exponent < sbits - 1
 
     expr_ref res_sgn(m), res_sig(m), res_exp(m);
     res_sgn = a_sgn;
@@ -2032,7 +2072,6 @@ void fpa2bv_converter::mk_round_to_integral(sort * s, expr_ref & rm, expr_ref & 
     m_simp.mk_ite(c53, v53, res_sig, res_sig);
     m_simp.mk_ite(c52, v52, res_sig, res_sig);
     m_simp.mk_ite(c51, v51, res_sig, res_sig);
-    res_sig = m_bv_util.mk_zero_extend(1, m_bv_util.mk_concat(res_sig, m_bv_util.mk_numeral(0, 3))); // rounding bits are all 0.
 
     SASSERT(m_bv_util.get_bv_size(res_exp) == ebits);
     SASSERT(m_bv_util.get_bv_size(shift) == sbits);
@@ -2044,11 +2083,37 @@ void fpa2bv_converter::mk_round_to_integral(sort * s, expr_ref & rm, expr_ref & 
     res_exp = m_bv_util.mk_bv_add(m_bv_util.mk_zero_extend(2, res_exp), e_shift);
 
     SASSERT(m_bv_util.get_bv_size(res_sgn) == 1);
-    SASSERT(m_bv_util.get_bv_size(res_sig) == sbits + 4);
+    SASSERT(m_bv_util.get_bv_size(res_sig) == sbits);
     SASSERT(m_bv_util.get_bv_size(res_exp) == ebits + 2);
 
-    // CMW: We use the rounder for normalization.
-    round(s, rm, res_sgn, res_sig, res_exp, v6);
+    // Renormalize
+    expr_ref zero_e2(m), min_exp(m), sig_lz(m), max_exp_delta(m), sig_lz_capped(m), renorm_delta(m);
+    zero_e2 = m_bv_util.mk_numeral(0, ebits+2);
+    mk_min_exp(ebits, min_exp);
+    min_exp = m_bv_util.mk_sign_extend(2, min_exp);
+    mk_leading_zeros(res_sig, ebits+2, sig_lz);
+    max_exp_delta = m_bv_util.mk_bv_sub(res_exp, min_exp);
+    sig_lz_capped = m.mk_ite(m_bv_util.mk_sle(sig_lz, max_exp_delta), sig_lz, max_exp_delta);
+    renorm_delta = m.mk_ite(m_bv_util.mk_sle(zero_e2, sig_lz_capped), sig_lz_capped, zero_e2);
+    SASSERT(m_bv_util.get_bv_size(renorm_delta) == ebits + 2);
+    res_exp = m_bv_util.mk_bv_sub(res_exp, renorm_delta);
+    res_sig = m_bv_util.mk_bv_shl(res_sig, m_bv_util.mk_zero_extend(sbits-ebits-2, renorm_delta));
+    dbg_decouple("fpa2bv_r2i_renorm_delta", renorm_delta);
+
+    res_exp = m_bv_util.mk_extract(ebits-1, 0, res_exp);
+    mk_bias(res_exp, res_exp);
+    res_sig = m_bv_util.mk_extract(sbits-2, 0, res_sig);
+    v6 = m_util.mk_fp(res_sgn, res_exp, res_sig);
+
+    dbg_decouple("fpa2bv_r2i_res_sgn", res_sgn);
+    dbg_decouple("fpa2bv_r2i_res_sig", res_sig);
+    dbg_decouple("fpa2bv_r2i_res_exp", res_exp);
+
+    dbg_decouple("fpa2bv_r2i_c1", c1);
+    dbg_decouple("fpa2bv_r2i_c2", c2);
+    dbg_decouple("fpa2bv_r2i_c3", c3);
+    dbg_decouple("fpa2bv_r2i_c4", c4);
+    dbg_decouple("fpa2bv_r2i_c5", c5);
 
     // And finally, we tie them together.
     mk_ite(c5, v5, v6, result);
@@ -3108,12 +3173,12 @@ void fpa2bv_converter::mk_to_ieee_bv_unspecified(func_decl * f, unsigned num, ex
         expr_ref exp_bv(m), exp_all_ones(m);
         exp_bv = m_bv_util.mk_extract(ebits+sbits-2, sbits-1, result);
         exp_all_ones = m.mk_eq(exp_bv, m_bv_util.mk_bv_neg(m_bv_util.mk_numeral(1, ebits)));
-        m_extra_assertions.push_back(exp_all_ones);
+        m_extra_assertions.push_back(std::move(exp_all_ones));
 
         expr_ref sig_bv(m), sig_is_non_zero(m);
         sig_bv = m_bv_util.mk_extract(sbits-2, 0, result);
         sig_is_non_zero = m.mk_not(m.mk_eq(sig_bv, m_bv_util.mk_numeral(0, sbits-1)));
-        m_extra_assertions.push_back(sig_is_non_zero);
+        m_extra_assertions.push_back(std::move(sig_is_non_zero));
     }
 
     TRACE("fpa2bv_to_ieee_bv_unspecified", tout << "result=" << mk_ismt2_pp(result, m) << std::endl;);
@@ -3262,11 +3327,11 @@ void fpa2bv_converter::mk_to_bv(func_decl * f, unsigned num, expr * const * args
         ll = m_bv_util.mk_sign_extend(3, m_bv_util.mk_concat(bv1, m_bv_util.mk_numeral(0, bv_sz-1)));
         ul = m_bv_util.mk_zero_extend(4, m_bv_util.mk_bv_neg(m_bv_util.mk_numeral(1, bv_sz-1)));
         ovfl = m.mk_or(ovfl, m_bv_util.mk_sle(pre_rounded, m_bv_util.mk_bv_neg(m_bv_util.mk_numeral(1, bv_sz + 3))));
+        pre_rounded = m.mk_ite(x_is_neg, m_bv_util.mk_bv_neg(pre_rounded), pre_rounded);
         in_range = m.mk_and(m.mk_not(ovfl),
                             m_bv_util.mk_sle(ll, pre_rounded),
                             m_bv_util.mk_sle(pre_rounded, ul));
         dbg_decouple("fpa2bv_to_bv_in_range_ll", ll);
-        pre_rounded = m.mk_ite(x_is_neg, m_bv_util.mk_bv_neg(pre_rounded), pre_rounded);
     }
     dbg_decouple("fpa2bv_to_bv_in_range_ovfl", ovfl);
     dbg_decouple("fpa2bv_to_bv_in_range_ul", ul);

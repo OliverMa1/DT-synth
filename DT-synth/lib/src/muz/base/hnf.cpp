@@ -50,7 +50,6 @@ Notes:
 #include "ast/rewriter/var_subst.h"
 #include "ast/normal_forms/name_exprs.h"
 #include "ast/act_cache.h"
-#include "util/cooperate.h"
 #include "ast/ast_pp.h"
 #include "ast/rewriter/quant_hoist.h"
 #include "ast/ast_util.h"
@@ -219,7 +218,7 @@ private:
             quick_for_each_expr(m_proc, m_mark1, fml);
             m_mark1.reset();
         }
-        catch (contains_predicate_proc::found) {
+        catch (const contains_predicate_proc::found &) {
             m_mark1.reset();
             return true;
         }
