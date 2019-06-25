@@ -245,7 +245,7 @@ namespace smt {
         void mk_var_eh(bool_var v) override {
             expr * n = m_context.bool_var2expr(v);
             double act;
-            if (n && m_cache.find(n, act))
+            if (m_cache.find(n, act))
                 m_context.set_activity(v, act);
             act_case_split_queue::mk_var_eh(v);
         }
@@ -255,10 +255,8 @@ namespace smt {
                 double act = m_context.get_activity(v);
                 if (act > 0.0) {
                     expr * n = m_context.bool_var2expr(v);
-                    if (n) {
-                        m_cache.insert(n, act);
-                        m_cache_domain.push_back(n);
-                    }
+                    m_cache.insert(n, act);
+                    m_cache_domain.push_back(n);
                 }
             }
             act_case_split_queue::del_var_eh(v);

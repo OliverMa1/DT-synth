@@ -21,6 +21,7 @@ Notes:
 #include "ast/normal_forms/defined_names.h"
 #include "ast/rewriter/rewriter_def.h"
 #include "tactic/generic_model_converter.h"
+#include "util/cooperate.h"
 
 class elim_term_ite_tactic : public tactic {
 
@@ -34,6 +35,7 @@ class elim_term_ite_tactic : public tactic {
         unsigned                    m_num_fresh;
 
         bool max_steps_exceeded(unsigned num_steps) const { 
+            cooperate("elim term ite");
             if (memory::get_allocation_size() > m_max_memory)
                 throw tactic_exception(TACTIC_MAX_MEMORY_MSG);
             return false;

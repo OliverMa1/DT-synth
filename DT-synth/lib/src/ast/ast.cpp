@@ -169,7 +169,6 @@ bool family_manager::has_family(symbol const & s) const {
     return m_families.contains(s);
 }
 
-
 // -----------------------------------
 //
 // decl_info
@@ -739,13 +738,13 @@ basic_decl_plugin::basic_decl_plugin():
     m_iff_oeq_decl(nullptr),
     m_skolemize_decl(nullptr),
     m_mp_oeq_decl(nullptr),
+    m_hyper_res_decl0(nullptr),
     m_assumption_add_decl(nullptr),
     m_lemma_add_decl(nullptr),
     m_th_assumption_add_decl(nullptr),
     m_th_lemma_add_decl(nullptr),
     m_redundant_del_decl(nullptr),
-    m_clause_trail_decl(nullptr),
-    m_hyper_res_decl0(nullptr) {
+    m_clause_trail_decl(nullptr) {
 }
 
 bool basic_decl_plugin::check_proof_sorts(basic_op_kind k, unsigned arity, sort * const * domain) const {
@@ -1815,6 +1814,7 @@ ast * ast_manager::register_node_core(ast * n) {
 
 
     n->m_id   = is_decl(n) ? m_decl_id_gen.mk() : m_expr_id_gen.mk();
+    
 
     TRACE("ast", tout << "Object " << n->m_id << " was created.\n";);
     TRACE("mk_var_bug", tout << "mk_ast: " << n->m_id << "\n";);
@@ -1911,7 +1911,7 @@ void ast_manager::delete_node(ast * n) {
     while ((n = m_ast_table.pop_erase())) {
 
         CTRACE("del_quantifier", is_quantifier(n), tout << "deleting quantifier " << n->m_id << " " << n << "\n";);
-        TRACE("mk_var_bug", tout << "del_ast: " << " " << n->m_ref_count << "\n";);
+        TRACE("mk_var_bug", tout << "del_ast: " << n->m_id << "\n";);
         TRACE("ast_delete_node", tout << mk_bounded_pp(n, *this) << "\n";);
 
         SASSERT(!m_debug_ref_count || !m_debug_free_indices.contains(n->m_id));

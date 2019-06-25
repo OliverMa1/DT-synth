@@ -28,6 +28,7 @@ Notes:
 #include "util/obj_ref.h"
 #include "util/ref_vector.h"
 #include "util/ref_buffer.h"
+#include "util/cooperate.h"
 #include "util/common_msgs.h"
 
 #ifndef REALCLOSURE_INI_BUFFER_SIZE
@@ -549,6 +550,7 @@ namespace realclosure {
         void checkpoint() {
             if (!m_limit.inc())
                 throw exception(Z3_CANCELED_MSG);
+            cooperate("rcf");
         }
 
         value * one() const {

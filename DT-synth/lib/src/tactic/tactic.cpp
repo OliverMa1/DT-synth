@@ -154,6 +154,7 @@ void exec(tactic & t, goal_ref const & in, goal_ref_buffer & result) {
 
 lbool check_sat(tactic & t, goal_ref & g, model_ref & md, labels_vec & labels, proof_ref & pr, expr_dependency_ref & core, std::string & reason_unknown) {
     bool models_enabled = g->models_enabled();
+    bool proofs_enabled = g->proofs_enabled();
     bool cores_enabled  = g->unsat_core_enabled();
     md   = nullptr;
     pr   = nullptr;
@@ -165,18 +166,11 @@ lbool check_sat(tactic & t, goal_ref & g, model_ref & md, labels_vec & labels, p
     }
     catch (tactic_exception & ex) {
         reason_unknown = ex.msg();
-        if (r.size() > 0) pr = r[0]->pr(0);
         return l_undef;
     }
-    TRACE("tactic",
+    TRACE("tactic_check_sat",
           tout << "r.size(): " << r.size() << "\n";
-          for (unsigned i = 0; i < r.size(); i++) r[i]->display_with_dependencies(tout););
-
-    if (r.size() > 0) {
-        pr = r[0]->pr(0);
-        TRACE("tactic", tout << pr << "\n";);
-    }
-    
+          for (unsigned i = 0; i < r.size(); i++) r[i]->display(tout););
 
     if (is_decided_sat(r)) {
         model_converter_ref mc = r[0]->mc();            
@@ -199,7 +193,7 @@ lbool check_sat(tactic & t, goal_ref & g, model_ref & md, labels_vec & labels, p
     }
     else {
         if (models_enabled && !r.empty()) {
-            model_converter_ref mc = r[0]->mc();            
+        model_converter_ref mc = r[0]->mc();            
             model_converter2model(m, mc.get(), md);
             if (mc)
                 (*mc)(labels);

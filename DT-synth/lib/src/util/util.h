@@ -16,10 +16,12 @@ Author:
 Revision History:
 
 --*/
-#pragma once
+#ifndef UTIL_H_
+#define UTIL_H_
 
 #include "util/debug.h"
 #include "util/memory_manager.h"
+#include "util/z3_omp.h"
 #include<iostream>
 #include<climits>
 #include<limits>
@@ -45,10 +47,14 @@ static_assert(sizeof(int64_t) == 8, "64 bits");
 #endif
 
 #ifdef _WINDOWS
+#define SSCANF sscanf_s
+// #define SPRINTF sprintf_s
 #define SPRINTF_D(_buffer_, _i_) sprintf_s(_buffer_, Z3_ARRAYSIZE(_buffer_), "%d", _i_)
 #define SPRINTF_U(_buffer_, _u_) sprintf_s(_buffer_, Z3_ARRAYSIZE(_buffer_), "%u", _u_)
 #define _Exit exit
 #else
+#define SSCANF sscanf
+// #define SPRINTF sprintf
 #define SPRINTF_D(_buffer_, _i_) sprintf(_buffer_, "%d", _i_)
 #define SPRINTF_U(_buffer_, _u_) sprintf(_buffer_, "%u", _u_)
 #endif
@@ -168,7 +174,7 @@ void set_verbosity_level(unsigned lvl);
 unsigned get_verbosity_level();
 std::ostream& verbose_stream();
 void set_verbose_stream(std::ostream& str);
-#ifdef SINGLE_THREAD
+#ifdef _NO_OMP_
 # define is_threaded() false
 #else
 bool is_threaded();
@@ -185,19 +191,24 @@ bool is_threaded();
         }                                                       \
     } } ((void) 0)              
 
+#ifdef _MSC_VER
+#define DO_PRAGMA(x) __pragma(x)
+#define PRAGMA_LOCK __pragma(omp critical (verbose_lock))
+#else
+#define DO_PRAGMA(x) _Pragma(#x)
+#define PRAGMA_LOCK _Pragma("omp critical (verbose_lock)")
+#endif
 
-#ifdef SINGLE_THREAD
+#ifdef _NO_OMP_
 #define LOCK_CODE(CODE) CODE;
 #else
-void verbose_lock();
-void verbose_unlock();
-
-#define LOCK_CODE(CODE)                                         \
-    {                                                           \
-        verbose_lock();                                         \
-        CODE;                                                   \
-        verbose_unlock();                                       \
-    }
+#define LOCK_CODE(CODE)                         \
+    {                                           \
+        PRAGMA_LOCK   \
+            {                                   \
+                CODE;                           \
+            }                                   \
+    }                      
 #endif
 
 template<typename T>
@@ -281,6 +292,20 @@ inline std::ostream & operator<<(std::ostream & out, std::pair<T1, T2> const & p
     return out;
 }
 
+template<typename IT>
+bool has_duplicates(const IT & begin, const IT & end) {
+    for (IT it1 = begin; it1 != end; ++it1) {
+        IT it2 = it1;
+        ++it2;
+        for (; it2 != end; ++it2) {
+            if (*it1 == *it2) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 #ifndef _WINDOWS
 #ifndef __declspec
 #define __declspec(X)
@@ -351,6 +376,12 @@ void shuffle(unsigned sz, T * array, random_gen & gen) {
     }
 }
 
+#ifdef _EXTERNAL_RELEASE
+#define INTERNAL_CODE(CODE) ((void) 0)
+#else
+#define INTERNAL_CODE(CODE) { CODE } ((void) 0)
+#endif
+
 void fatal_error(int error_code);
 
 void set_fatal_error_handler(void (*pfn)(int error_code));
@@ -389,3 +420,7 @@ inline size_t megabytes_to_bytes(unsigned mb) {
         r = SIZE_MAX;    
     return r;
 }
+
+
+#endif /* UTIL_H_ */
+

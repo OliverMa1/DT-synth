@@ -18,14 +18,6 @@ Revision History:
 --*/
 #include "util/rlimit.h"
 #include "util/common_msgs.h"
-#include "util/mutex.h"
-
-
-static DECLARE_MUTEX(g_rlimit_mux);
-
-void finalize_rlimit() {
-    delete g_rlimit_mux;
-}
 
 reslimit::reslimit():
     m_cancel(0),
@@ -40,14 +32,12 @@ uint64_t reslimit::count() const {
 
 bool reslimit::inc() {
     ++m_count;
-    bool r = (m_cancel == 0 && (m_limit == 0 || m_count <= m_limit)) || m_suspend;
-    return r;
+    return (m_cancel == 0 && (m_limit == 0 || m_count <= m_limit)) || m_suspend;
 }
 
 bool reslimit::inc(unsigned offset) {
     m_count += offset;
-    bool r = (m_cancel == 0 && (m_limit == 0 || m_count <= m_limit)) || m_suspend;
-    return r;
+    return (m_cancel == 0 && (m_limit == 0 || m_count <= m_limit)) || m_suspend;
 }
 
 void reslimit::push(unsigned delta_limit) {
@@ -79,34 +69,48 @@ char const* reslimit::get_cancel_msg() const {
 }
 
 void reslimit::push_child(reslimit* r) {
-    lock_guard lock(*g_rlimit_mux);
-    m_children.push_back(r);    
+    #pragma omp critical (reslimit_cancel)
+    {
+        m_children.push_back(r);
+    }
 }
 
 void reslimit::pop_child() {
-    lock_guard lock(*g_rlimit_mux);
-    m_children.pop_back();    
+    #pragma omp critical (reslimit_cancel)
+    {
+        m_children.pop_back();
+    }
 }
 
 void reslimit::cancel() {
-    lock_guard lock(*g_rlimit_mux);
-    set_cancel(m_cancel+1);    
+    #pragma omp critical (reslimit_cancel)
+    {
+        set_cancel(m_cancel+1);
+    }
 }
 
+
 void reslimit::reset_cancel() {
-    lock_guard lock(*g_rlimit_mux);
-    set_cancel(0);    
+    #pragma omp critical (reslimit_cancel)
+    {
+        set_cancel(0);
+    }
 }
 
 void reslimit::inc_cancel() {
-    lock_guard lock(*g_rlimit_mux);
-    set_cancel(m_cancel+1);    
+    #pragma omp critical (reslimit_cancel)
+    {
+        set_cancel(m_cancel+1);
+    }
 }
 
+
 void reslimit::dec_cancel() {
-    lock_guard lock(*g_rlimit_mux);
-    if (m_cancel > 0) {
-        set_cancel(m_cancel-1);
+    #pragma omp critical (reslimit_cancel)
+    {
+        if (m_cancel > 0) {
+            set_cancel(m_cancel-1);
+        }
     }
 }
 

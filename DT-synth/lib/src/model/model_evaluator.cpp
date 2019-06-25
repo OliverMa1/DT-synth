@@ -16,6 +16,7 @@ Author:
 Revision History:
 
 --*/
+#include "util/cooperate.h"
 #include "model/model.h"
 #include "model/model_evaluator_params.hpp"
 #include "model/model_evaluator.h"
@@ -341,6 +342,7 @@ struct evaluator_cfg : public default_rewriter_cfg {
 
 
     bool max_steps_exceeded(unsigned num_steps) const {
+        cooperate("model evaluator");
         if (memory::get_allocation_size() > m_max_memory)
             throw rewriter_exception(Z3_MAX_MEMORY_MSG);
         return num_steps > m_max_steps;
@@ -669,15 +671,6 @@ bool model_evaluator::is_false(expr* t) {
 bool model_evaluator::is_true(expr_ref_vector const& ts) {
     for (expr* t : ts) if (!is_true(t)) return false;
     return true;
-}
-
-bool model_evaluator::are_equal(expr* s, expr* t) {
-    if (m().are_equal(s, t)) return true;
-    if (m().are_distinct(s, t)) return false;
-    expr_ref t1(m()), t2(m());
-    eval(t, t1, true);
-    eval(s, t2, true);
-    return m().are_equal(t1, t2);
 }
 
 bool model_evaluator::eval(expr* t, expr_ref& r, bool model_completion) {

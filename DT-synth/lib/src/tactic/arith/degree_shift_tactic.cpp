@@ -21,6 +21,7 @@ Revision History:
 --*/
 #include "tactic/tactical.h"
 #include "tactic/generic_model_converter.h"
+#include "util/cooperate.h"
 #include "ast/arith_decl_plugin.h"
 #include "tactic/core/simplify_tactic.h"
 #include "ast/ast_smt2_pp.h"
@@ -99,6 +100,7 @@ class degree_shift_tactic : public tactic {
         void checkpoint() {
             if (m.canceled())
                 throw tactic_exception(m.limit().get_cancel_msg());
+            cooperate("degree_shift");
         }
 
         void visit(expr * t, expr_fast_mark1 & visited) {

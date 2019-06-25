@@ -20,6 +20,7 @@ Notes:
 #include "math/polynomial/upolynomial.h"
 #include "util/mpbq.h"
 #include "util/basic_interval.h"
+#include "util/cooperate.h"
 #include "math/polynomial/sexpr2upolynomial.h"
 #include "util/scoped_ptr_vector.h"
 #include "util/mpbqi.h"
@@ -127,6 +128,7 @@ namespace algebraic_numbers {
         void checkpoint() {
             if (!m_limit.inc())
                 throw algebraic_exception(Z3_CANCELED_MSG);
+            cooperate("algebraic");
         }
 
         void reset_statistics() {

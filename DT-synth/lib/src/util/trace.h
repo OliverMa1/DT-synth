@@ -17,8 +17,13 @@ Revision History:
 
 --*/
 
-#pragma once
+#ifndef TRACE_H_
+#define TRACE_H_
 
+#ifdef _CYGWIN
+#undef max
+#undef min
+#endif
 #include<fstream>
 
 #ifdef _TRACE
@@ -53,3 +58,5 @@ static inline void finalize_trace() {}
 #define STRACE(TAG, CODE) TRACE_CODE(if (is_trace_enabled(TAG)) { CODE tout.flush(); })
 
 #define CTRACE(TAG, COND, CODE) TRACE_CODE(if (is_trace_enabled(TAG) && (COND)) { tout << "-------- [" << TAG << "] " << __FUNCTION__ << " " << __FILE__ << ":" << __LINE__ << " ---------\n"; CODE tout << "------------------------------------------------\n"; tout.flush(); })
+
+#endif /* TRACE_H_ */

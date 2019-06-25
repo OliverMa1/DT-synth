@@ -232,7 +232,6 @@ namespace smt {
 
     context::~context() {
         flush();
-        m_asserted_formulas.finalize();
     }
 
     void context::copy_plugins(context& src, context& dst) {
@@ -2849,7 +2848,7 @@ namespace smt {
     }
 
     void context::push() {
-        TRACE("unit_subsumption_bug", display(tout << "context::push()\n"););
+        TRACE("trigger_bug", tout << "context::push()\n";);
         scoped_suspend_rlimit _suspend_cancel(m_manager.limit());
         pop_to_base_lvl();
         setup_context(false);

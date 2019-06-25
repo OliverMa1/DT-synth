@@ -288,9 +288,9 @@ namespace datalog {
     bool context::compile_with_widening() const { return m_params->datalog_compile_with_widening(); }
     bool context::unbound_compressor() const { return m_unbound_compressor; }
     void context::set_unbound_compressor(bool f) { m_unbound_compressor = f; }
-    unsigned context::soft_timeout() const { return m_params->datalog_timeout(); }
     bool context::similarity_compressor() const { return m_params->datalog_similarity_compressor(); }
     unsigned context::similarity_compressor_threshold() const { return m_params->datalog_similarity_compressor_threshold(); }
+    unsigned context::soft_timeout() const { return m_fparams.m_timeout; }
     unsigned context::initial_restart_timeout() const { return m_params->datalog_initial_restart_timeout(); }
     bool context::generate_explanations() const { return m_params->datalog_generate_explanations(); }
     bool context::explanations_on_relation_level() const { return m_params->datalog_explanations_on_relation_level(); }
@@ -773,19 +773,19 @@ namespace datalog {
         DL_ENGINE get_engine() const { return m_engine_type; }
 
         void operator()(expr* e) {
-            if (a.is_int_real(e)) {
-                m_engine_type = SPACER_ENGINE;
-            }
-            else if (is_var(e) && m.is_bool(e)) {
-                m_engine_type = SPACER_ENGINE;
-            }
-            else if (dt.is_datatype(m.get_sort(e))) {
-                m_engine_type = SPACER_ENGINE;
+                if (a.is_int_real(e)) {
+                   m_engine_type = SPACER_ENGINE;
+                }
+                else if (is_var(e) && m.is_bool(e)) {
+                    m_engine_type = SPACER_ENGINE;
+                }
+                else if (dt.is_datatype(m.get_sort(e))) {
+                     m_engine_type = SPACER_ENGINE;
             }
         }
     };
 
-    void context::configure_engine(expr* q) {
+    void context::configure_engine() {
         if (m_engine_type != LAST_ENGINE) {
             return;
         }
@@ -817,11 +817,6 @@ namespace datalog {
             expr_fast_mark1 mark;
             engine_type_proc proc(m);
             m_engine_type = DATALOG_ENGINE;
-            if (q) {
-                quick_for_each_expr(proc, mark, q);
-                m_engine_type = proc.get_engine();
-            }
-
             for (unsigned i = 0; m_engine_type == DATALOG_ENGINE && i < m_rule_set.get_num_rules(); ++i) {
                 rule * r = m_rule_set.get_rule(i);
                 quick_for_each_expr(proc, mark, r->get_head());
@@ -842,12 +837,11 @@ namespace datalog {
     }
 
     lbool context::query(expr* query) {
-        expr_ref _query(query, m);
         m_mc = mk_skip_model_converter();
         m_last_status = OK;
         m_last_answer = nullptr;
         m_last_ground_answer = nullptr;
-        switch (get_engine(query)) {
+        switch (get_engine()) {
         case DATALOG_ENGINE:
         case SPACER_ENGINE:
         case BMC_ENGINE:
@@ -860,7 +854,7 @@ namespace datalog {
         default:
             UNREACHABLE();
         }
-        ensure_engine(query);
+        ensure_engine();
         lbool r = m_engine->query(query);
         if (r != l_undef && get_params().print_certificate()) {
             display_certificate(std::cout) << "\n";
@@ -898,9 +892,9 @@ namespace datalog {
         return m_engine->get_proof();
     }
 
-    void context::ensure_engine(expr* e) {
+    void context::ensure_engine() {
         if (!m_engine.get()) {
-            m_engine = m_register_engine.mk_engine(get_engine(e));
+            m_engine = m_register_engine.mk_engine(get_engine());
             m_engine->updt_params();
 
             // break abstraction.

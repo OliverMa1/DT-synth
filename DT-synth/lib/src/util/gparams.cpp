@@ -19,9 +19,6 @@ Notes:
 #include "util/gparams.h"
 #include "util/dictionary.h"
 #include "util/trace.h"
-#include "util/mutex.h"
-
-static DECLARE_MUTEX(gparams_mux);
 
 extern void gparams_register_modules();
 
@@ -113,12 +110,14 @@ public:
     }
 
     void reset() {
-        lock_guard lock(*gparams_mux);
-        m_params.reset();
-        for (auto & kv : m_module_params) {
-            dealloc(kv.m_value);
+        #pragma omp critical (gparams)
+        {
+            m_params.reset();
+            for (auto & kv : m_module_params) {
+                dealloc(kv.m_value);
+            }
+            m_module_params.reset();
         }
-        m_module_params.reset();        
     }
 
     // -----------------------------------------------
@@ -328,8 +327,8 @@ public:
     void set(char const * name, char const * value) {
         bool error = false;
         std::string error_msg;
+        #pragma omp critical (gparams)
         {
-            lock_guard lock(*gparams_mux);
             try {
                 symbol m, p;
                 normalize(name, m, p);
@@ -380,8 +379,8 @@ public:
         std::string r;
         bool error = false;
         std::string error_msg;
+        #pragma omp critical (gparams)
         {
-            lock_guard lock(*gparams_mux);
             try {
                 symbol m, p;
                 normalize(name, m, p);
@@ -427,8 +426,8 @@ public:
     params_ref get_module(symbol const & module_name) {
         params_ref result;
         params_ref * ps = nullptr;
+        #pragma omp critical (gparams)
         {
-            lock_guard lock(*gparams_mux);
             if (m_module_params.find(module_name, ps)) {
                 result.copy(*ps);
             }
@@ -447,61 +446,67 @@ public:
     // -----------------------------------------------
 
     void display(std::ostream & out, unsigned indent, bool smt2_style, bool include_descr) {
-        lock_guard lock(*gparams_mux);
-        out << "Global parameters\n";
-        get_param_descrs().display(out, indent + 4, smt2_style, include_descr);
-        out << "\n";
-        if (!smt2_style) {
-            out << "To set a module parameter, use <module-name>.<parameter-name>=value\n";
-            out << "Example:  pp.decimal=true\n";
+        #pragma omp critical (gparams)
+        {
+            out << "Global parameters\n";
+            get_param_descrs().display(out, indent + 4, smt2_style, include_descr);
             out << "\n";
-        }
-        for (auto & kv : get_module_param_descrs()) {
-            out << "[module] " << kv.m_key;
-            char const * descr = nullptr;
-            if (get_module_descrs().find(kv.m_key, descr)) {
-                out << ", description: " << descr;
+            if (!smt2_style) {
+                out << "To set a module parameter, use <module-name>.<parameter-name>=value\n";
+                out << "Example:  pp.decimal=true\n";
+                out << "\n";
             }
-            out << "\n";
-            kv.m_value->display(out, indent + 4, smt2_style, include_descr);
+            for (auto & kv : get_module_param_descrs()) {
+                out << "[module] " << kv.m_key;
+                char const * descr = nullptr;
+                if (get_module_descrs().find(kv.m_key, descr)) {
+                    out << ", description: " << descr;
+                }
+                out << "\n";
+                kv.m_value->display(out, indent + 4, smt2_style, include_descr);
+            }
         }
     }
 
     void display_modules(std::ostream & out) {
-        lock_guard lock(*gparams_mux);
-        for (auto & kv : get_module_param_descrs()) {
-            out << "[module] " << kv.m_key;
-            char const * descr = nullptr;
-            if (get_module_descrs().find(kv.m_key, descr)) {
-                out << ", description: " << descr;
+        #pragma omp critical (gparams)
+        {
+            for (auto & kv : get_module_param_descrs()) {
+                out << "[module] " << kv.m_key;
+                char const * descr = nullptr;
+                if (get_module_descrs().find(kv.m_key, descr)) {
+                    out << ", description: " << descr;
+                }
+                out << "\n";
             }
-            out << "\n";
         }
     }
 
     void display_module(std::ostream & out, symbol const & module_name) {
         bool error = false;
         std::string error_msg;
-        lock_guard lock(*gparams_mux);
-        try {
-            param_descrs * d = nullptr;
-            if (!get_module_param_descrs().find(module_name, d)) {
-                std::stringstream strm;
-                strm << "unknown module '" << module_name << "'";                    
-                throw exception(strm.str());
+        #pragma omp critical (gparams)
+        {
+            try {
+                param_descrs * d = nullptr;
+                if (!get_module_param_descrs().find(module_name, d)) {
+                    std::stringstream strm;
+                    strm << "unknown module '" << module_name << "'";                    
+                    throw exception(strm.str());
+                }
+                out << "[module] " << module_name;
+                char const * descr = nullptr;
+                if (get_module_descrs().find(module_name, descr)) {
+                    out << ", description: " << descr;
+                }
+                out << "\n";
+                d->display(out, 4, false);
             }
-            out << "[module] " << module_name;
-            char const * descr = nullptr;
-            if (get_module_descrs().find(module_name, descr)) {
-                out << ", description: " << descr;
+            catch (z3_exception & ex) {
+                // Exception cannot cross critical section boundaries.
+                error = true;
+                error_msg = ex.msg();
             }
-            out << "\n";
-            d->display(out, 4, false);
-        }
-        catch (z3_exception & ex) {
-            // Exception cannot cross critical section boundaries.
-            error = true;
-            error_msg = ex.msg();
         }
         if (error)
             throw exception(std::move(error_msg));
@@ -510,8 +515,8 @@ public:
     void display_parameter(std::ostream & out, char const * name) {
         bool error = false;
         std::string error_msg;
+        #pragma omp critical (gparams)
         {
-            lock_guard lock(*gparams_mux);
             try {
                 symbol m, p;
                 normalize(name, m, p);
@@ -634,8 +639,10 @@ void gparams::init() {
 
 void gparams::finalize() {
     TRACE("gparams", tout << "gparams::finalize()\n";);
-    dealloc(g_imp);
-    delete gparams_mux;
+    if (g_imp != nullptr) {
+        dealloc(g_imp);
+        g_imp = nullptr;
+    }
 }
 
 

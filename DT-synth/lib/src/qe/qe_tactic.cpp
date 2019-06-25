@@ -17,6 +17,7 @@ Revision History:
 
 --*/
 #include "tactic/tactical.h"
+#include "util/cooperate.h"
 #include "qe/qe.h"
 
 class qe_tactic : public tactic {
@@ -45,6 +46,7 @@ class qe_tactic : public tactic {
         void checkpoint() {
             if (m.canceled()) 
                 throw tactic_exception(m.limit().get_cancel_msg());
+            cooperate("qe");
         }
 
         void operator()(goal_ref const & g, 

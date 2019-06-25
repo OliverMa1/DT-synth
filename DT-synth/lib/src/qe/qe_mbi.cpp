@@ -38,7 +38,7 @@ Notes:
 #include "qe/qe_mbi.h"
 #include "qe/qe_term_graph.h"
 #include "qe/qe_arith.h"
-#include "qe/qe_arrays.h"
+// include "opt/opt_context.h"
 
 
 namespace qe {
@@ -263,9 +263,6 @@ namespace qe {
         TRACE("qe", tout << lits << "\n" << *mdl << "\n";);
         TRACE("qe", tout << m_solver->get_assertions() << "\n";);
 
-        // 0. saturation
-        array_project_plugin arp(m);
-        arp.saturate(*mdl, m_shared, lits);
 
         // . arithmetical variables - atomic and in purified positions
         app_ref_vector proxies(m);

@@ -16,6 +16,7 @@ Author:
 Notes:
 
 --*/
+#include "util/cooperate.h"
 #include "ast/normal_forms/defined_names.h"
 #include "ast/rewriter/rewriter_def.h"
 #include "ast/scoped_proof.h"
@@ -59,6 +60,7 @@ class blast_term_ite_tactic : public tactic {
         
 
         bool max_steps_exceeded(unsigned num_steps) const { 
+            cooperate("blast term ite");
             // if (memory::get_allocation_size() > m_max_memory) 
             //    throw tactic_exception(TACTIC_MAX_MEMORY_MSG);
             return num_steps >= m_max_steps;

@@ -16,6 +16,7 @@ Author:
 Notes:
 
 --*/
+#include "util/cooperate.h"
 #include "ast/ast_pp.h"
 #include "ast/pb_decl_plugin.h"
 #include "ast/arith_decl_plugin.h"

@@ -321,6 +321,7 @@ namespace smt {
                 sz_info& i = *kv.m_value;
                 if (is_leaf(&i) && (i.m_literal == null_literal || !is_true(i.m_literal))) {
                     rational value;
+                    expr* set = k->get_arg(0);
                     expr* sz  = k->get_arg(1);
                     if (!m_arith_value.get_value(sz, value)) {
                         return l_undef;
@@ -347,6 +348,7 @@ namespace smt {
                     expr_ref le(m_arith.mk_le(set_sz->get_arg(1), m_arith.mk_int(0)), m);
                     literal le_lit = mk_literal(le);
                     literal sz_lit = mk_literal(set_sz);
+                    unsigned k = i.m_selects.size();
                     for (unsigned k = i.m_selects.size(); rational(k) < i.m_size; ++k) {
                         expr_ref idx = mk_index_skolem(set_sz, set, k);
                         app_ref sel(mk_select(set, idx), m);

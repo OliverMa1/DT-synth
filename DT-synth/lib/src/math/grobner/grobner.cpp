@@ -65,14 +65,19 @@ void grobner::del_equation(equation * eq) {
 }
 
 void grobner::del_monomials(ptr_vector<monomial>& ms) {
-    for (auto& m : ms) {
-        del_monomial(m);
+    ptr_vector<monomial>::iterator it  = ms.begin();
+    ptr_vector<monomial>::iterator end = ms.end();
+    for (; it != end; ++it) {
+        del_monomial(*it);
     }
     ms.reset();
 }
 
 void grobner::del_monomial(monomial * m) {
-    for (expr * v : m->m_vars) {
+    ptr_vector<expr>::iterator it2  = m->m_vars.begin();
+    ptr_vector<expr>::iterator end2 = m->m_vars.end();
+    for (; it2 != end2; ++it2) {
+        expr * v = *it2;
         m_manager.dec_ref(v);
     }
     dealloc(m);
@@ -182,8 +187,10 @@ void grobner::display_equation(std::ostream & out, equation const & eq) const {
 void grobner::display_equations(std::ostream & out, equation_set const & v, char const * header) const {
     if (!v.empty()) {
         out << header << "\n";
-        for (equation const* eq : v) 
-            display_equation(out, *eq);
+        equation_set::iterator it  = v.begin();
+        equation_set::iterator end = v.end();
+        for (; it != end; ++it)
+            display_equation(out, *(*it));
     }
 }
 
@@ -208,7 +215,10 @@ bool grobner::update_order(equation * eq) {
     if (eq->get_num_monomials() == 0)
         return false;
     monomial * first = eq->m_monomials[0];
-    for (monomial* m : eq->m_monomials) {
+    ptr_vector<monomial>::iterator it  = eq->m_monomials.begin();
+    ptr_vector<monomial>::iterator end = eq->m_monomials.end();
+    for (; it != end; ++it) {
+        monomial * m = *it;
         std::stable_sort(m->m_vars.begin(), m->m_vars.end(), m_var_lt);
     }
     std::stable_sort(eq->m_monomials.begin(), eq->m_monomials.end(), m_monomial_lt);
@@ -217,7 +227,10 @@ bool grobner::update_order(equation * eq) {
 
 void grobner::update_order(equation_set & s, bool processed) {
     ptr_buffer<equation> to_remove;
-    for (equation * eq : s) {
+    equation_set::iterator it  = s.begin();
+    equation_set::iterator end = s.end();
+    for (;it != end; ++it) {
+        equation * eq = *it;
         if (update_order(eq)) {
             if (processed) {
                 to_remove.push_back(eq);
@@ -225,8 +238,10 @@ void grobner::update_order(equation_set & s, bool processed) {
             }
         }
     }
-    for (equation* e : to_remove) 
-        s.erase(e);
+    ptr_buffer<equation>::iterator it2  = to_remove.begin();
+    ptr_buffer<equation>::iterator end2 = to_remove.end();
+    for (; it2 != end2; ++it2)
+        s.erase(*it2);
 }
 
 void grobner::update_order() {
@@ -567,8 +582,10 @@ void grobner::mul_append(unsigned start_idx, equation const * source, rational c
         new_m->m_coeff    *= coeff;
         new_m->m_vars.append(m->m_vars.size(), m->m_vars.c_ptr());
         new_m->m_vars.append(vars.size(), vars.c_ptr());
-        for (expr* e : new_m->m_vars) 
-            m_manager.inc_ref(e);
+        ptr_vector<expr>::iterator it  = new_m->m_vars.begin();
+        ptr_vector<expr>::iterator end = new_m->m_vars.end();
+        for (; it != end; ++it)
+            m_manager.inc_ref(*it);
         std::stable_sort(new_m->m_vars.begin(), new_m->m_vars.end(), m_var_lt);
         result.push_back(new_m);
     }
@@ -580,8 +597,10 @@ void grobner::mul_append(unsigned start_idx, equation const * source, rational c
 grobner::monomial * grobner::copy_monomial(monomial const * m) {
     monomial * r = alloc(monomial);
     r->m_coeff   = m->m_coeff;
-    for (expr* e : m->m_vars) 
-        add_var(r, e);
+    ptr_vector<expr>::const_iterator it  = m->m_vars.begin();
+    ptr_vector<expr>::const_iterator end = m->m_vars.end();
+    for (; it != end; ++it) 
+        add_var(r, *it);
     return r;
 }
 
@@ -673,7 +692,10 @@ grobner::equation * grobner::simplify_using_processed(equation * eq) {
     TRACE("grobner", tout << "simplifying: "; display_equation(tout, *eq); tout << "using already processed equalities\n";);
     do {
         simplified = false;
-        for (equation const* p : m_processed) {
+        equation_set::iterator it  = m_processed.begin();
+        equation_set::iterator end = m_processed.end();
+        for (; it != end; ++it) {
+            equation const * p = *it;
             equation * new_eq  = simplify(p, eq);
             if (new_eq) {
                 result     = true;
@@ -713,14 +735,19 @@ bool grobner::is_better_choice(equation * eq1, equation * eq2) {
 grobner::equation * grobner::pick_next() {
     equation * r = nullptr;
     ptr_buffer<equation> to_delete;
-    for (equation * curr : m_to_process) {
+    equation_set::iterator it  = m_to_process.begin();
+    equation_set::iterator end = m_to_process.end();
+    for (; it != end; ++it) {
+        equation * curr     = *it;
         if (is_trivial(curr))
             to_delete.push_back(curr);
         else if (is_better_choice(curr, r))
             r = curr;
     }
-    for (equation * e : to_delete) 
-        del_equation(e);
+    ptr_buffer<equation>::const_iterator it1  = to_delete.begin();
+    ptr_buffer<equation>::const_iterator end1 = to_delete.end();
+    for (; it1 != end1; ++it1)
+        del_equation(*it1);
     if (r)
         m_to_process.erase(r);
     TRACE("grobner", tout << "selected equation: "; if (!r) tout << "<null>\n"; else display_equation(tout, *r););
@@ -764,12 +791,18 @@ bool grobner::simplify_processed(equation * eq) {
         if (is_trivial(curr))
             to_delete.push_back(curr);
     }
-    for (equation* eq : to_insert) 
-        m_processed.insert(eq);
-    for (equation* eq : to_remove)
-        m_processed.erase(eq);
-    for (equation* eq : to_delete) 
-        del_equation(eq);
+    ptr_buffer<equation>::const_iterator it1  = to_insert.begin();
+    ptr_buffer<equation>::const_iterator end1 = to_insert.end();
+    for (; it1 != end1; ++it1)
+        m_processed.insert(*it1);
+    it1  = to_remove.begin();
+    end1 = to_remove.end();
+    for (; it1 != end1; ++it1)
+        m_processed.erase(*it1);
+    it1  = to_delete.begin();
+    end1 = to_delete.end();
+    for (; it1 != end1; ++it1)
+        del_equation(*it1);
     return !m_manager.canceled();
 }
 
@@ -777,10 +810,13 @@ bool grobner::simplify_processed(equation * eq) {
    \brief Use the given equation to simplify to-process terms.
 */
 void grobner::simplify_to_process(equation * eq) {
+    equation_set::iterator it  = m_to_process.begin();
+    equation_set::iterator end = m_to_process.end();
     ptr_buffer<equation> to_insert;
     ptr_buffer<equation> to_remove;
     ptr_buffer<equation> to_delete;
-    for (equation* curr : m_to_process) {
+    for (; it != end; ++it) {
+        equation * curr     = *it;
         equation * new_curr = simplify(eq, curr);
         if (new_curr != nullptr && new_curr != curr) {
             m_equations_to_unfreeze.push_back(curr);
@@ -791,12 +827,18 @@ void grobner::simplify_to_process(equation * eq) {
         if (is_trivial(curr))
             to_delete.push_back(curr);
     }
-    for (equation* eq : to_insert)
-        m_to_process.insert(eq);
-    for (equation* eq : to_remove)
-        m_to_process.erase(eq);
-    for (equation* eq : to_delete)
-        del_equation(eq);
+    ptr_buffer<equation>::const_iterator it1  = to_insert.begin();
+    ptr_buffer<equation>::const_iterator end1 = to_insert.end();
+    for (; it1 != end1; ++it1)
+        m_to_process.insert(*it1);
+    it1  = to_remove.begin();
+    end1 = to_remove.end();
+    for (; it1 != end1; ++it1)
+        m_to_process.erase(*it1);
+    it1  = to_delete.begin();
+    end1 = to_delete.end();
+    for (; it1 != end1; ++it1)
+        del_equation(*it1);
 }
 
 /**
@@ -882,7 +924,10 @@ void grobner::superpose(equation * eq1, equation * eq2) {
    \brief Superpose the given equations with the equations in m_processed.
 */
 void grobner::superpose(equation * eq) {
-    for (equation * curr : m_processed) {
+    equation_set::iterator it  = m_processed.begin();
+    equation_set::iterator end = m_processed.end();
+    for (; it != end; ++it) {
+        equation * curr        = *it;
         superpose(eq, curr);
     }
 }
@@ -926,8 +971,10 @@ bool grobner::compute_basis(unsigned threshold) {
 }
 
 void grobner::copy_to(equation_set const & s, ptr_vector<equation> & result) const {
-    for (equation * e : s) 
-        result.push_back(e);
+    equation_set::iterator it  = s.begin();
+    equation_set::iterator end = s.end();
+    for (; it != end; ++it)
+        result.push_back(*it);
 }
 
 /**

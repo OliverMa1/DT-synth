@@ -100,7 +100,7 @@ namespace sat {
                 v /= 10;
                 SASSERT(d > digits);
             }
-	    SASSERT(len + lastd < sizeof(buffer) + d);
+	    SASSERT(len + lastd - d < sizeof(buffer));
 	    memcpy(buffer + len, d, lastd - d);
 	    len += static_cast<unsigned>(lastd - d);            
 	    buffer[len++] = ' ';

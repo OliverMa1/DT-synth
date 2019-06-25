@@ -41,6 +41,7 @@ Revision History:
 #include "model/model_evaluator.h"
 #include "ast/has_free_vars.h"
 #include "ast/rewriter/rewriter_def.h"
+#include "util/cooperate.h"
 #include "tactic/tactical.h"
 #include "model/model_v2_pp.h"
 #include "util/obj_hashtable.h"
@@ -2047,6 +2048,7 @@ namespace qe {
         void checkpoint() {
             if (m.canceled()) 
                 throw tactic_exception(m.limit().get_cancel_msg());
+            cooperate("qe");
         }
 
 

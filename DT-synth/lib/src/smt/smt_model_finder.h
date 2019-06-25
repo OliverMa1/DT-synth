@@ -49,6 +49,7 @@ Revision History:
 #include "ast/ast.h"
 #include "ast/func_decl_dependencies.h"
 #include "smt/proto_model/proto_model.h"
+#include "util/cooperate.h"
 #include "tactic/tactic_exception.h"
 
 namespace smt {

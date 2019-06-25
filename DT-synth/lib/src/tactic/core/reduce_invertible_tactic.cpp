@@ -20,6 +20,7 @@ Notes:
 
 --*/
 
+#include "util/cooperate.h"
 #include "ast/bv_decl_plugin.h"
 #include "ast/arith_decl_plugin.h"
 #include "ast/ast_pp.h"
@@ -96,6 +97,7 @@ private:
     void checkpoint() { 
         if (m.canceled())
             throw tactic_exception(m.limit().get_cancel_msg());
+        cooperate("reduce-invertible");
     }
 
     expr_mark        m_inverted;

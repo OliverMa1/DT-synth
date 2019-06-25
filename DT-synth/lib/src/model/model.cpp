@@ -313,7 +313,7 @@ void model::cleanup_interp(top_sort& ts, func_decl* f) {
         if (e1 != e2) 
             fi->set_else(e2);
         for (auto& fe : *fi) {
-            e2 = cleanup_expr(ts, fe->get_result(), pid);
+            expr_ref e2 = cleanup_expr(ts, fe->get_result(), pid);
             if (e2 != fe->get_result()) {
                 fi->insert_entry(fe->get_args(), e2);
             }
@@ -525,15 +525,6 @@ bool model::is_false(expr* t) {
 bool model::is_true(expr_ref_vector const& ts) {
     for (expr* t : ts) if (!is_true(t)) return false;
     return true;
-}
-
-bool model::is_false(expr_ref_vector const& ts) {
-    for (expr* t : ts) if (is_false(t)) return true;
-    return false;
-}
-
-bool model::are_equal(expr* s, expr* t) {
-    return m_mev.are_equal(s, t);
 }
 
 void model::reset_eval_cache() {

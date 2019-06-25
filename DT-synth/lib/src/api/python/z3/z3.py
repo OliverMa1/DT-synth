@@ -301,9 +301,8 @@ class AstRef(Z3PPObject):
         Z3_inc_ref(self.ctx.ref(), self.as_ast())
 
     def __del__(self):
-        if self.ctx.ref() is not None and self.ast is not None:
+        if self.ctx.ref() is not None:
            Z3_dec_ref(self.ctx.ref(), self.as_ast())
-           self.ast = None
 
     def __deepcopy__(self, memo={}):
         return _to_ast_ref(self.ast, self.ctx)
@@ -1616,7 +1615,7 @@ def Implies(a, b, ctx=None):
     >>> Implies(p, q)
     Implies(p, q)
     >>> simplify(Implies(p, q))
-    Or(q, Not(p))
+    Or(Not(p), q)
     """
     ctx = _get_ctx(_ctx_from_ast_arg_list([a, b], ctx))
     s = BoolSort(ctx)
@@ -2028,7 +2027,7 @@ def _mk_quantifier(is_forall, vs, body, weight=1, qid="", skid="", patterns=[], 
 def ForAll(vs, body, weight=1, qid="", skid="", patterns=[], no_patterns=[]):
     """Create a Z3 forall formula.
 
-    The parameters `weight`, `qid`, `skid`, `patterns` and `no_patterns` are optional annotations.
+    The parameters `weight`, `qif`, `skid`, `patterns` and `no_patterns` are optional annotations.
 
     >>> f = Function('f', IntSort(), IntSort(), IntSort())
     >>> x = Int('x')
@@ -9395,7 +9394,7 @@ def _mk_fp_unary_norm(f, a, ctx):
     [a] = _coerce_fp_expr_list([a], ctx)
     if z3_debug():
         _z3_assert(is_fp(a), "First argument must be a Z3 floating-point expression")
-    return BoolRef(f(ctx.ref(), a.as_ast()), ctx)
+    return FPRef(f(ctx.ref(), a.as_ast()), ctx)
 
 def _mk_fp_unary_pred(f, a, ctx):
     ctx = _get_ctx(ctx)

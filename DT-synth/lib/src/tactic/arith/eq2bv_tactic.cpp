@@ -18,6 +18,7 @@ Notes:
 
 --*/
 #include "tactic/tactical.h"
+#include "util/cooperate.h"
 #include "tactic/arith/bound_manager.h"
 #include "ast/ast_pp.h"
 #include "ast/arith_decl_plugin.h"

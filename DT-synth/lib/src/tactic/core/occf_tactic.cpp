@@ -24,6 +24,7 @@ Revision History:
 #include "tactic/tactical.h"
 #include "tactic/core/occf_tactic.h"
 #include "tactic/generic_model_converter.h"
+#include "util/cooperate.h"
 
 class occf_tactic : public tactic {
     struct     imp {
@@ -37,6 +38,7 @@ class occf_tactic : public tactic {
         void checkpoint() {
             if (m.canceled())
                 throw tactic_exception(TACTIC_CANCELED_MSG);
+            cooperate("occf");
         }
 
         bool is_literal(expr * t) const {
