@@ -1,5 +1,5 @@
 C++ = g++
-CFLAGS =-I. -std=c++11 -I ./lib/src/api/c++ -I ./lib/src/api/ -L ./lib/ -lz3
+CFLAGS =-I. -std=c++11 -I ./lib/z3/include -I ./lib/z3/include -L ./lib/z3/bin -lz3
 DEPS = teacher.h
 OBJ = main.o
 ODIR=.
