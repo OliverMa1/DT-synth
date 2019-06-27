@@ -71,8 +71,11 @@ The entire benchmark suite of the paper can be executed using the following comm
 
     sh runAll_Paper.sh
 
+If the script is not enabled run this command first:
 
-The runAll.sh script will generate three log files, as described below. 
+    chmod +x runAll_Paper.sh
+
+The runAll.sh script will generate three log files in the directory /scripts/Tabulated-Data, as described below. 
   1. tabulated_infinite_dt.csv lists all the benchmark programs for the infinite arena benchmark using the dt-synth 
      program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive,
  Negative and Horn samples, the total time taken by the learner and the verification process.
@@ -100,14 +103,14 @@ any additional expressions like "x+y" or "x-y" and the game encoded in SMT-LIB.
 A template and a README can be found in /benchmarks/smt2template/  
   
   
-### Running scalability benchmarks and comparison to other tools
+## Running scalability benchmarks and comparison to other tools
 
 This section describes how to run the scalability benchmarks and compare the results to GAVS+ and TuLiP. 
 Note that this requires TuLiP to be installed:
 
     sh runAll_Scalability.sh
     
-The runAll_Scalability.sh script will generate five log files, as described below.     
+The runAll_Scalability.sh script will generate five log files in the directory /scripts/Tabulated-Data, as described below.     
   1. tabulated_scalability_dt.csv lists all the benchmark programs for the scalability benchmark using the dt-synth 
      program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
 Negative and Horn samples, the total time taken by the learner and the verification process. 
@@ -128,7 +131,7 @@ Negative and Horn samples, the total time taken by the learner and the verificat
 Negative and Horn samples, the total time taken by the learner and the verification process. 
 
 
-Comparing DT-Synth to GAVS+
+### Comparing DT-Synth to GAVS+
 --------------
 
 There is no script automating the benchmarks for GAVS+, thus you need to execute following steps to compute the benchmarks:
