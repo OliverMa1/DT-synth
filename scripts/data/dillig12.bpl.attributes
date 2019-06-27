@@ -1,3 +1,12 @@
 cat,$func,1
-int,x
-int,y
+int,b1
+int,b2
+int,b3
+int,b4
+int,b5
+int,p
+int,t12
+int,t23
+int,t34
+int,t45
+int,t51

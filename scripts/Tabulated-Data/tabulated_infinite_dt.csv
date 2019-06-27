@@ -1,0 +1,12 @@
+Benchmark program, Rounds, Positive, Negative, Total Time(ms)
+boxGame.json.time ,  9, 2.000000, 3.000000, 625.000000
+boxGamePaper.json.time ,  4, 1.000000, 2.000000, 247.000000
+cinderella_2_10.json.time , 
+diagonalGame.json.time ,  30, 14.000000, 8.000000, 5132.000000
+evasion.json.time ,  18, 1.000000, 9.000000, 4292.000000
+evasion_Paper.json.time ,  6, 1.000000, 1.000000, 542.000000
+follow_Paper.json.time ,  11, 1.000000, 6.000000, 717.000000
+program_repair.json.time ,  14, 1.000000, 2.000000, 1069.000000
+solitaryBoxGame.json.time ,  4, 1.000000, 2.000000, 194.000000
+square.json.time ,  61, 1.000000, 16.000000, 5951.000000
+zweigeradenPaper.json.time ,  23, 10.000000, 6.000000, 2713.000000

@@ -14,7 +14,7 @@ cutter() {
 }
 
 run_the_test() {
-
+  touch ./Tabulated-Data/tabulated_infinite_dt.csv
   FileNames=$(ls $path/*.time)
 
     echo "Benchmark program, Rounds, Positive, Negative, Total Time(ms)"> Tabulated-Data/tabulated_infinite_dt.csv

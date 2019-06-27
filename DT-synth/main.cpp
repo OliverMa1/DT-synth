@@ -483,7 +483,7 @@ const z3::expr & edges, z3::context & context, const z3::expr_vector & all_varia
  */
  void generate_stats(std::string & result, Game* & game, int steps, std::vector<double> & stats)
  {
-	 result += "Amount of steps needed: " + std::to_string(steps);
+	 /*result += "Amount of steps needed: " + std::to_string(steps);
 	 result += "\n";
 	 result += "Amount of variables used: " + std::to_string(game->get_variables_vector().size());
 	 result += "\n";
@@ -500,7 +500,7 @@ const z3::expr & edges, z3::context & context, const z3::expr_vector & all_varia
 	 avg = avg / horn_clauses.size();
 	 result += "\n";
 	 result += "Average length of horn constraints: " + std::to_string(avg);
-	 result += "\n";
+	 result += "\n";*/
 	 result += "Average teacher computation time: " + std::to_string(stats[0]/steps) + " milliseconds";
 	 result += "\n";
 	 result += "Lowest teacher computation time: " + std::to_string(stats[1]) + " milliseconds";
@@ -650,7 +650,7 @@ int main(int argc, char* argv[])
 			stats.push_back(uni);
 			std::string result;
 			generate_stats(result, game, safety_counter,stats);
-			std::cout << result;
+			std::cout << result << "\n";
 		}
 		catch(std::runtime_error e)
 		{
