@@ -28,15 +28,15 @@ y <= -2
   y <= 0
     true
     false
-Average teacher computation time: 46.000000 milliseconds
-Lowest teacher computation time: 19.000000 milliseconds
-Highest teacher computation time: 80.000000 milliseconds
-Average learner computation time: 3.000000 milliseconds
+Average teacher computation time: 44.250000 milliseconds
+Lowest teacher computation time: 20.000000 milliseconds
+Highest teacher computation time: 79.000000 milliseconds
+Average learner computation time: 2.750000 milliseconds
 Lowest learner computation time: 3.000000 milliseconds
-Highest learner computation time: 4.000000 milliseconds
-Total computation time: 247.000000 milliseconds
+Highest learner computation time: 3.000000 milliseconds
+Total computation time: 213.000000 milliseconds
 Positive counterexamples found: 1.000000
 Negative counterexamples found: 2.000000
 Existential counterexamples found: 0.000000
 Universal counterexamples found: 0.000000
-4, 1.000000, 2.000000, 247.000000
+4, 1.000000, 2.000000, 213.000000

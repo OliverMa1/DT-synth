@@ -2,7 +2,7 @@
 
 path="$(dirname "$PWD")"/SAT_RPNI_FIXED/rational_safety
 path1="$(dirname "$PWD")"/scripts/data
-export LD_LIBRARY_PATH=/home/tacas19/dt/artifact-evaluation-master/SAT_RPNI_FIXED/rational_safety/lib/
+export LD_LIBRARY_PATH=../SAT_RPNI_FIXED/rational_safety/lib
 echo "$path"
 echo "$path1"
 run_the_test() {
@@ -41,7 +41,7 @@ run_the_test() {
     java -cp ./bin/:./lib/automaton.jar:./lib/com.microsoft.z3.jar -Djava.library.path=./lib/ edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm > $path1/rpniInfinite/programrepair.time
 
   echo "Running Square Game"
-  sed -i "227s/.*/IGame game = new Square();/" $path/src/edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm.java
+  sed -i "227s/.*/IGame game = new Quadrat();/" $path/src/edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm.java
     ant
     timeout 300 java -cp ./bin/:./lib/automaton.jar:./lib/com.microsoft.z3.jar -Djava.library.path=./lib/ edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm > $path1/rpniInfinite/square.time
   echo "Test over."

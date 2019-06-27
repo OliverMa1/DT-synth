@@ -1,0 +1,36 @@
+---------- Statistics ----------
+Total learning time: 196.375 s
+Time teacher: 1.678 s
+Time learner: 194.692 s
+Size of solution: 7
+Iterations: 276
+Positive Counterexamples: 2
+Negative counterexamples: 251
+Existential implication counterexamples: 12
+Universal implications counterexamples: 10
+
+
+========== RESULT ==========
+
+digraph automaton {
+0 [shape="doublecircle"];
+1 [shape="circle"];
+2 [shape="circle"];
+3 [shape="circle", color="green"];
+4 [shape="circle"];
+5 [shape="circle"];
+6 [shape="circle"];
+0 -> 0 [label="(2 - 2)"];
+1 -> 1 [label="(1 - 1)"];
+1 -> 4 [label="(3 - 3)"];
+2 -> 2 [label="(0 - 0)"];
+2 -> 0 [label="(2 - 2)"];
+3 -> 6 [label="(0 - 0)"];
+3 -> 1 [label="(1 - 1)"];
+4 -> 4 [label="(0 - 0)"];
+4 -> 5 [label="(2 - 2)"];
+5 -> 0 [label="(2 - 2)"];
+6 -> 6 [label="(1 - 1)"];
+6 -> 2 [label="(3 - 3)"];
+};
+196.375, 7, 2, 251, 12, 10

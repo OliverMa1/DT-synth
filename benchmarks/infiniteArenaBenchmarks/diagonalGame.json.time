@@ -1,18 +1,468 @@
-Amount of steps needed: 30
-Amount of variables used: 3
-Amount of additional expressions used: 2
-Amount of counterexamples: 68
-Amount of horn constraints: 31
-Average length of horn constraints: 3.032258
-Average teacher computation time: 164.266667 milliseconds
+
+ Hypothesis: 
+
+
+false
+
+ Hypothesis: 
+
+
+y <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+y <= 1
+  true
+  false
+
+ Hypothesis: 
+
+
+y <= 2
+  true
+  false
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  true
+
+ Hypothesis: 
+
+
+y <= -3
+  false
+  x-y <= -3
+    false
+    true
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  x-y <= 2
+    true
+    false
+
+ Hypothesis: 
+
+
+x-y <= 2
+  y <= 2
+    true
+    x <= 0
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+x-y <= 2
+  y <= 2
+    true
+    x-y <= -3
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  z <= 0
+    x-y <= 2
+      true
+      false
+    false
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  z <= 0
+    x-y <= 2
+      true
+      false
+    y <= -1
+      false
+      y <= 0
+        false
+        true
+
+ Hypothesis: 
+
+
+x <= 1
+  x-y <= -3
+    false
+    z <= 0
+      x-y <= 2
+        true
+        false
+      y <= -1
+        false
+        y <= 0
+          false
+          true
+  false
+
+ Hypothesis: 
+
+
+x-y <= 2
+  x-y <= -3
+    false
+    z <= 0
+      true
+      y <= -1
+        false
+        y <= 0
+          false
+          true
+  false
+
+ Hypothesis: 
+
+
+x+y <= 4
+  y <= 1
+    y <= -2
+      x <= -1
+        true
+        false
+      true
+    x-y <= -3
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+x-y <= 2
+  x-y <= -3
+    false
+    z <= 0
+      true
+      x <= -2
+        false
+        true
+  false
+
+ Hypothesis: 
+
+
+x+y <= 4
+  x <= 0
+    x <= -1
+      x-y <= -2
+        false
+        true
+      y <= -3
+        false
+        y <= 2
+          true
+          false
+    true
+  false
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  y <= 1
+    x+y <= 2
+      x <= -2
+        false
+        x-y <= 2
+          true
+          false
+      false
+    true
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  y <= 1
+    x-y <= -2
+      false
+      x-y <= 2
+        true
+        false
+    true
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  x-y <= 2
+    x <= -2
+      z <= 0
+        true
+        x-y <= -2
+          false
+          true
+      true
+    false
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  z <= 0
+    x-y <= 2
+      true
+      false
+    x-y <= -2
+      false
+      x-y <= -1
+        false
+        x-y <= 0
+          false
+          x-y <= 1
+            false
+            x <= 1
+              true
+              false
+
+ Hypothesis: 
+
+
+x-y <= 2
+  x-y <= -3
+    false
+    z <= 0
+      true
+      x-y <= -2
+        false
+        x-y <= -1
+          false
+          true
+  false
+
+ Hypothesis: 
+
+
+x+y <= 4
+  x <= 0
+    x <= -1
+      y <= 1
+        true
+        false
+      z <= 0
+        y <= -3
+          false
+          y <= 2
+            true
+            false
+        false
+    true
+  x+y <= 5
+    false
+    true
+
+ Hypothesis: 
+
+
+x-y <= -3
+  false
+  z <= 0
+    x-y <= 2
+      true
+      false
+    x-y <= -2
+      false
+      x-y <= -1
+        false
+        x-y <= 0
+          false
+          x-y <= 1
+            false
+            x-y <= 2
+              x+y <= 0
+                true
+                false
+              false
+
+ Hypothesis: 
+
+
+y <= 3
+  y <= -3
+    x <= -1
+      true
+      false
+    x <= 3
+      x <= 0
+        y <= 2
+          x <= -1
+            x <= -2
+              true
+              x+y <= 0
+                true
+                false
+            true
+          false
+        true
+      z <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+y <= -3
+  x <= -1
+    true
+    false
+  y <= 2
+    x <= 3
+      x <= -1
+        x <= -2
+          true
+          x+y <= 0
+            true
+            false
+        true
+      false
+    x-y <= -3
+      false
+      true
+
+ Hypothesis: 
+
+
+y <= -3
+  x <= -1
+    true
+    false
+  y <= 2
+    z <= 0
+      x-y <= -3
+        false
+        true
+      y <= -2
+        false
+        x <= -2
+          false
+          x <= -1
+            false
+            x <= 0
+              true
+              false
+    x-y <= -3
+      false
+      true
+
+ Hypothesis: 
+
+
+y <= -3
+  x <= -1
+    y <= -4
+      false
+      true
+    false
+  y <= 2
+    z <= 0
+      x-y <= -3
+        false
+        true
+      y <= -2
+        false
+        x <= -2
+          false
+          x <= -1
+            false
+            x <= 0
+              true
+              false
+    x-y <= -3
+      false
+      true
+
+ Hypothesis: 
+
+
+y <= -3
+  x-y <= 2
+    true
+    false
+  y <= 2
+    z <= 0
+      x-y <= -3
+        false
+        true
+      y <= -2
+        false
+        x <= -2
+          false
+          x <= -1
+            false
+            x <= 0
+              true
+              false
+    x-y <= -3
+      false
+      true
+
+ Hypothesis: 
+
+
+x-y <= 2
+  x-y <= -3
+    false
+    z <= 0
+      true
+      x-y <= -2
+        false
+        x-y <= -1
+          false
+          x-y <= 0
+            true
+            false
+  false
+
+ Hypothesis: 
+
+
+x-y <= 2
+  x-y <= -3
+    false
+    z <= 0
+      true
+      x-y <= -2
+        false
+        x-y <= -1
+          false
+          x-y <= 0
+            true
+            false
+  false
+Average teacher computation time: 18035.900000 milliseconds
 Lowest teacher computation time: 59.000000 milliseconds
-Highest teacher computation time: 493.000000 milliseconds
-Average learner computation time: 4.300000 milliseconds
+Highest teacher computation time: 536515.000000 milliseconds
+Average learner computation time: 5.900000 milliseconds
 Lowest learner computation time: 3.000000 milliseconds
-Highest learner computation time: 6.000000 milliseconds
-Total computation time: 5132.000000 milliseconds
+Highest learner computation time: 47.000000 milliseconds
+Total computation time: 543588.000000 milliseconds
 Positive counterexamples found: 14.000000
 Negative counterexamples found: 8.000000
 Existential counterexamples found: 4.000000
 Universal counterexamples found: 3.000000
-30, 14.000000, 8.000000, 5132.000000
+30, 14.000000, 8.000000, 543588.000000

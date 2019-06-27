@@ -1,0 +1,6169 @@
+
+ Hypothesis: 
+
+
+false
+
+ Hypothesis: 
+
+
+f1a <= -1
+  false
+  true
+
+ Hypothesis: 
+
+
+f1b <= -1
+  false
+  true
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  true
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  true
+  false
+
+ Hypothesis: 
+
+
+f1b <= -1
+  false
+  f1a <= -1
+    false
+    true
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    true
+    false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  f1a <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  f1a <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  f1b <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  f1b <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  f1a <= -1
+    false
+    true
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  t1b <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  t1b <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc2 <= 1
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    f1a <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    f1a <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc2 <= 1
+    pc1 <= 0
+      false
+      true
+    false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  f1b <= -1
+    false
+    f1b <= 0
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  f1b <= -1
+    false
+    f1b <= 0
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1b <= 0
+      true
+      false
+    false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  t1b <= -1
+    false
+    t1b <= 0
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    f1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    f1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    t1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  f1a <= -1
+    false
+    f1a <= 0
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  f1a <= -1
+    false
+    f1a <= 0
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  f1a <= -1
+    false
+    f1a <= 0
+      true
+      false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  f1a <= -1
+    false
+    f1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  t1b <= -1
+    false
+    f1a <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    t1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      f1a <= -1
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    f1b <= -1
+      false
+      f1b <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    pc2 <= 1
+      f1a <= -1
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    f1b <= -1
+      false
+      f1b <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  t1b <= -1
+    false
+    f1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  t1b <= -1
+    false
+    f1b <= -1
+      false
+      true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    t1b <= -1
+      false
+      t1b <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    t1b <= -1
+      false
+      t1b <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      f1b <= -1
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    f1a <= -1
+      false
+      f1a <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    pc2 <= 1
+      f1b <= -1
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    f1a <= -1
+      false
+      f1a <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  t1b <= -1
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    t1b <= -1
+      false
+      f1a <= -1
+        false
+        true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    pc2 <= 1
+      pc2 <= 0
+        false
+        f1a <= -1
+          false
+          true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  t1b <= -1
+    false
+    f1a <= -1
+      false
+      t1b <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      t1b <= -1
+        false
+        true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    f1b <= -1
+      false
+      f1a <= -1
+        false
+        true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    f1b <= -1
+      false
+      f1a <= -1
+        false
+        true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc1 <= 1
+    f1b <= -1
+      false
+      f1a <= -1
+        false
+        true
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1b <= -1
+          false
+          true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      t1b <= -1
+        false
+        t1b <= 0
+          true
+          false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        t1b <= -1
+          false
+          true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 0
+            true
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    f1b <= -1
+      false
+      t1b <= -1
+        false
+        true
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 1
+  pc1 <= 0
+    false
+    t1b <= -1
+      false
+      f1a <= -1
+        false
+        true
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc1 <= 1
+    pc1 <= 0
+      false
+      f1b <= -1
+        false
+        f1b <= 0
+          true
+          false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      f1b <= -1
+        false
+        f1b <= 0
+          true
+          false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1b <= -1
+          false
+          f1b <= 0
+            true
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        t1b <= -1
+          false
+          t1b <= 0
+            true
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      f1a <= -1
+        false
+        f1b <= -1
+          false
+          true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1b <= -1
+            false
+            true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 0
+            f1b <= -1
+              false
+              true
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 0
+            t1b <= -1
+              false
+              f1b <= 0
+                true
+                false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1b <= -1
+          false
+          f1b <= 0
+            f1a <= -1
+              false
+              true
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1b <= -1
+          false
+          f1b <= 0
+            t1b <= -1
+              false
+              f1a <= 0
+                true
+                false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 0
+            t1b <= -1
+              false
+              f1b <= -1
+                false
+                f1b <= 0
+                  true
+                  false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 0
+            f1b <= -1
+              false
+              f1b <= 0
+                t1b <= 0
+                  true
+                  false
+                false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 1
+  pc2 <= 0
+    false
+    pc1 <= 1
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 0
+            f1b <= -1
+              false
+              f1b <= 0
+                t1b <= -1
+                  false
+                  t1b <= 0
+                    true
+                    false
+                false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 2
+  pc1 <= 2
+    t1b <= -1
+      false
+      t1b <= 0
+        f1a <= -1
+          false
+          f1a <= 1
+            f1b <= -1
+              false
+              f1b <= 1
+                true
+                false
+            false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 2
+  pc1 <= 2
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          f1a <= -1
+            false
+            f1a <= 1
+              f1b <= -1
+                false
+                f1b <= 1
+                  true
+                  false
+              false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 2
+  pc1 <= 2
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          f1a <= -1
+            false
+            f1a <= 1
+              pc2 <= 0
+                false
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    true
+                    false
+              false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 3
+  pc1 <= 3
+    t1b <= -1
+      false
+      t1b <= 0
+        f1a <= -1
+          false
+          f1a <= 1
+            f1a <= 0
+              f1b <= -1
+                false
+                f1b <= 1
+                  true
+                  false
+              false
+            false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 3
+  pc1 <= 3
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          f1a <= -1
+            false
+            f1a <= 1
+              f1a <= 0
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    true
+                    false
+                false
+              false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 3
+  pc1 <= 3
+    t1b <= -1
+      false
+      t1b <= 0
+        pc2 <= 0
+          false
+          f1a <= -1
+            false
+            f1a <= 1
+              f1b <= -1
+                false
+                f1b <= 1
+                  true
+                  false
+              false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 3
+  pc1 <= 3
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          pc2 <= 0
+            false
+            f1a <= -1
+              false
+              f1a <= 1
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    true
+                    false
+                false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 4
+  pc1 <= 4
+    t1b <= -1
+      false
+      t1b <= 0
+        f1a <= -1
+          false
+          f1a <= 1
+            pc2 <= 0
+              false
+              f1a <= 0
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    true
+                    false
+                false
+            false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 4
+  pc1 <= 4
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          f1a <= -1
+            false
+            f1a <= 1
+              pc2 <= 0
+                false
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    true
+                    false
+              false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 4
+  pc1 <= 4
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          f1a <= -1
+            false
+            f1a <= 1
+              f1a <= 0
+                f1b <= -1
+                  false
+                  f1b <= 0
+                    true
+                    f2a <= 0
+                      false
+                      true
+                false
+              false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 4
+  pc1 <= 4
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          pc2 <= 0
+            false
+            f1a <= -1
+              false
+              f1a <= 1
+                f1a <= 0
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      true
+                      false
+                  false
+                false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+pc2 <= 4
+  pc1 <= 4
+    t1b <= -1
+      false
+      t1b <= 0
+        pc1 <= 0
+          false
+          pc2 <= 0
+            false
+            f1a <= -1
+              false
+              f1a <= 1
+                f1a <= 0
+                  pc1 <= 1
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+                false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        f1b <= 0
+          f1b <= -1
+            false
+            pc2 <= 0
+              false
+              true
+          false
+        false
+    false
+
+ Hypothesis: 
+
+
+pc1 <= 4
+  t1b <= -1
+    false
+    t1b <= 0
+      f1b <= -1
+        false
+        f1b <= 1
+          f1b <= 0
+            f1a <= -1
+              false
+              f1a <= 1
+                pc2 <= 0
+                  false
+                  true
+                false
+            false
+          false
+      false
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 4
+            pc2 <= 0
+              false
+              f1b <= -1
+                false
+                f1b <= 0
+                  true
+                  false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 5
+      f1a <= -1
+        false
+        f1a <= 1
+          f1b <= 0
+            f1b <= -1
+              false
+              pc2 <= 0
+                false
+                true
+            false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+pc1 <= 4
+  t1b <= -1
+    false
+    t1b <= 0
+      f1b <= -1
+        false
+        f1b <= 1
+          f1b <= 0
+            f1a <= -1
+              false
+              f1a <= 1
+                f1a <= 0
+                  pc2 <= 0
+                    false
+                    f2a <= 0
+                      true
+                      false
+                  false
+                false
+            false
+          false
+      false
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 5
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            f1a <= 0
+              pc1 <= 0
+                false
+                pc1 <= 1
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      true
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            pc1 <= 0
+              false
+              pc1 <= 4
+                f1b <= -1
+                  false
+                  f1b <= 0
+                    true
+                    false
+                false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            pc1 <= 0
+              false
+              pc1 <= 4
+                pc1 <= 2
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      true
+                      false
+                  false
+                false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            pc1 <= 0
+              false
+              pc1 <= 4
+                pc1 <= 3
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      true
+                      false
+                  false
+                false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            pc1 <= 0
+              false
+              pc1 <= 4
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    f1b <= 0
+                      f1a <= 0
+                        true
+                        f2a <= 0
+                          false
+                          true
+                      false
+                    false
+                false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            f2a <= 0
+              f1a <= 0
+                pc2 <= 1
+                  pc1 <= 0
+                    false
+                    f1b <= -1
+                      false
+                      f1b <= 0
+                        true
+                        false
+                  false
+                false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+pc1 <= 4
+  t1b <= -1
+    false
+    t1b <= 0
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 1
+            f2a <= 0
+              f1a <= 0
+                pc1 <= 1
+                  pc2 <= 0
+                    false
+                    f1b <= -1
+                      false
+                      f1b <= 0
+                        true
+                        false
+                  false
+                false
+              false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 4
+  t1b <= -1
+    false
+    t1b <= 0
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 1
+            f2a <= 0
+              f1a <= 0
+                pc1 <= 1
+                  pc2 <= 0
+                    false
+                    pc2 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+                false
+              false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 4
+  t1b <= -1
+    false
+    t1b <= 0
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 1
+            pc2 <= 0
+              false
+              pc2 <= 6
+                f2a <= 0
+                  pc1 <= 2
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+                false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+pc1 <= 4
+  t1b <= -1
+    false
+    t1b <= 0
+      pc1 <= 0
+        false
+        f1a <= -1
+          false
+          f1a <= 1
+            pc2 <= 0
+              false
+              pc2 <= 6
+                f2a <= 0
+                  pc2 <= 2
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+                false
+            false
+      false
+  false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc2 <= 0
+            false
+            pc2 <= 3
+              f1b <= -1
+                false
+                f1b <= 1
+                  f1b <= 0
+                    pc1 <= 5
+                      true
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  pc1 <= 3
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  pc2 <= 3
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f1a <= 0
+                    pc1 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      f1b <= 0
+                        f1a <= 0
+                          true
+                          f2b <= 0
+                            false
+                            true
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              f2b <= 0
+                f1a <= 0
+                  pc1 <= 1
+                    pc2 <= 0
+                      false
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                    false
+                  false
+                false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  pc2 <= 1
+                    f1b <= -1
+                      false
+                      f1b <= 0
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  pc1 <= 2
+                    f1b <= -1
+                      false
+                      f1b <= 0
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  pc2 <= 2
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  pc1 <= 3
+                    f1b <= -1
+                      false
+                      f1b <= 0
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  pc2 <= 3
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        true
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f1a <= 0
+                    pc1 <= 1
+                      f2a <= 0
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f1a <= 0
+                    pc1 <= 1
+                      t2b <= 0
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      pc2 <= 1
+                        true
+                        t2b <= 0
+                          false
+                          true
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f1a <= 0
+                    pc1 <= 1
+                      pc2 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    pc2 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    pc1 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    pc2 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    pc1 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f1a <= 0
+                      pc1 <= 1
+                        f2a <= 0
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f1a <= 0
+                      pc1 <= 1
+                        pc2 <= 1
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      pc2 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      pc1 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      pc2 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      pc1 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      pc2 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          pc2 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f2a <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          f2a <= -2
+                            false
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                          false
+                        false
+                      false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  t2b <= 0
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        pc1 <= 2
+                          true
+                          f2b <= -2
+                            true
+                            false
+                        false
+                    false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    f2b <= -2
+                      false
+                      pc2 <= 1
+                        true
+                        false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    f2b <= -2
+                      false
+                      pc2 <= 2
+                        true
+                        false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f1b <= -1
+                  false
+                  f1b <= 1
+                    f2b <= -2
+                      false
+                      pc2 <= 3
+                        true
+                        f2b <= 1
+                          false
+                          true
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    pc1 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f1a <= 0
+                      pc1 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    pc1 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    pc1 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f1a <= 0
+                      pc1 <= 1
+                        f2a <= 0
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      pc1 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f1a <= 0
+                      pc1 <= 1
+                        t2b <= 0
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f1a <= 0
+                      pc1 <= 1
+                        f2b <= -1
+                          false
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      pc2 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      pc1 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      pc2 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      pc1 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      pc2 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          f2a <= 0
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    t2b <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          f2b <= -1
+                            false
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        pc2 <= 1
+                          true
+                          f2a <= 1
+                            false
+                            true
+                        false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      pc2 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      pc1 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      pc2 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      pc1 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 0
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      pc2 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          f2b <= -1
+                            false
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        pc2 <= 1
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        pc1 <= 2
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        pc2 <= 2
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        pc1 <= 3
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        pc2 <= 3
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        f1a <= 0
+                          pc1 <= 1
+                            f2b <= -1
+                              false
+                              f1b <= -1
+                                false
+                                f1b <= 0
+                                  true
+                                  false
+                            false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        f1a <= 0
+                          pc1 <= 1
+                            pc2 <= 1
+                              f1b <= -1
+                                false
+                                f1b <= 0
+                                  true
+                                  false
+                              false
+                            false
+                          false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= 0
+                  f2b <= -2
+                    false
+                    f2a <= 0
+                      t2b <= 0
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            pc1 <= 2
+                              true
+                              f2b <= -1
+                                true
+                                false
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc1 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc1 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 1
+                      f1b <= -1
+                        false
+                        f1a <= 0
+                          f1b <= 0
+                            true
+                            false
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc1 <= 2
+                      f1b <= -1
+                        false
+                        f2a <= 0
+                          f1b <= 0
+                            true
+                            false
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 2
+                      f1b <= -1
+                        false
+                        f1a <= 0
+                          f1b <= 1
+                            true
+                            false
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc1 <= 3
+                      f1b <= -1
+                        false
+                        f2a <= 0
+                          f1b <= 0
+                            true
+                            false
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f2a <= 0
+                          f1b <= 0
+                            true
+                            false
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f2a <= 0
+                          f1b <= 1
+                            true
+                            false
+                          false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      pc2 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          pc2 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        pc2 <= 1
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        pc1 <= 2
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        pc2 <= 2
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        pc1 <= 3
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        pc2 <= 3
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        f1a <= 0
+                          pc1 <= 1
+                            pc2 <= 1
+                              f1b <= -1
+                                false
+                                f1b <= 0
+                                  true
+                                  false
+                              false
+                            false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f2a <= 0
+                      t2b <= 0
+                        f1a <= 0
+                          pc1 <= 1
+                            f2a <= -2
+                              false
+                              f1b <= -1
+                                false
+                                f1b <= 0
+                                  true
+                                  false
+                            false
+                          false
+                        false
+                      false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2b <= -1
+                  false
+                  f2b <= 0
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        pc1 <= 2
+                          true
+                          pc2 <= 4
+                            false
+                            true
+                        false
+                    false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2b <= -1
+                    false
+                    f2b <= 0
+                      t2b <= 0
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            pc1 <= 2
+                              true
+                              f2a <= -2
+                                true
+                                false
+                            false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2a <= -2
+                    false
+                    pc2 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2a <= -2
+                    false
+                    pc1 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2a <= -2
+                    false
+                    pc2 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2a <= -2
+                    false
+                    pc1 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2a <= -2
+                    false
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 6
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              pc2 <= 0
+                false
+                f2a <= 0
+                  f2a <= -2
+                    false
+                    f1a <= 0
+                      pc1 <= 1
+                        f2a <= -1
+                          false
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                        false
+                      false
+                  false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    pc2 <= 7
+      f1a <= -1
+        false
+        f1a <= 1
+          pc1 <= 0
+            false
+            pc1 <= 5
+              f2a <= 0
+                f2a <= -2
+                  false
+                  f1a <= 0
+                    pc1 <= 1
+                      f2a <= -1
+                        false
+                        f1b <= 0
+                          f1b <= -1
+                            false
+                            pc2 <= 0
+                              false
+                              true
+                          false
+                      false
+                    false
+                false
+              false
+          false
+      false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                pc2 <= 0
+                  false
+                  pc2 <= 1
+                    f1b <= -1
+                      false
+                      f1a <= 0
+                        f1b <= 0
+                          true
+                          false
+                        false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                pc2 <= 0
+                  false
+                  pc2 <= 2
+                    f1b <= -1
+                      false
+                      f1a <= 0
+                        f1b <= 1
+                          true
+                          false
+                        false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                pc2 <= 0
+                  false
+                  pc2 <= 3
+                    f1b <= -1
+                      false
+                      f2b <= 0
+                        f1b <= 0
+                          true
+                          false
+                        false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                pc2 <= 0
+                  false
+                  pc2 <= 3
+                    f1b <= -1
+                      false
+                      f2b <= 0
+                        f1b <= 1
+                          true
+                          false
+                        false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                pc2 <= 0
+                  false
+                  pc2 <= 4
+                    pc1 <= 1
+                      f1b <= -1
+                        false
+                        f1b <= 0
+                          true
+                          false
+                      false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  f1a <= 0
+                    pc1 <= 1
+                      f2a <= -1
+                        false
+                        f1b <= 0
+                          f1b <= -1
+                            false
+                            pc2 <= 0
+                              false
+                              pc2 <= 1
+                                true
+                                false
+                          false
+                      false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        t2b <= 0
+                          f1b <= 0
+                            true
+                            false
+                          false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        t2b <= 0
+                          f1b <= 1
+                            true
+                            false
+                          false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      pc1 <= 2
+                        pc2 <= 1
+                          f1b <= -1
+                            false
+                            f1b <= 0
+                              true
+                              false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      pc2 <= 2
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f1a <= 0
+                        pc1 <= 1
+                          pc2 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 0
+                        pc1 <= 2
+                          pc2 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 0
+                        pc2 <= 2
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 0
+                        pc2 <= 3
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 0
+                        f1a <= 0
+                          pc1 <= 1
+                            pc2 <= 1
+                              f1b <= -1
+                                false
+                                f1b <= 0
+                                  true
+                                  false
+                              false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 0
+                        pc1 <= 3
+                          pc2 <= 2
+                            f1b <= -1
+                              false
+                              f1b <= 1
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 0
+                        pc2 <= 4
+                          f1a <= 0
+                            pc1 <= 1
+                              f1b <= -1
+                                false
+                                f1b <= 1
+                                  true
+                                  false
+                              false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 1
+                        f1a <= 0
+                          pc1 <= 1
+                            f2a <= -1
+                              false
+                              pc2 <= 1
+                                f1b <= -1
+                                  false
+                                  f1b <= 0
+                                    true
+                                    false
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -2
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      f2b <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            pc2 <= 3
+                              true
+                              f2a <= -1
+                                true
+                                false
+                            false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc2 <= 8
+          pc1 <= 0
+            false
+            pc1 <= 5
+              f2a <= 0
+                f2a <= -2
+                  false
+                  pc2 <= 0
+                    false
+                    f2b <= -1
+                      false
+                      t2b <= 0
+                        f2b <= 1
+                          f2b <= 0
+                            f1b <= -1
+                              false
+                              f1b <= 1
+                                pc1 <= 2
+                                  true
+                                  false
+                                false
+                            false
+                          false
+                        false
+                false
+              false
+          false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc1 <= 2
+                  pc2 <= 0
+                    false
+                    pc2 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc1 <= 3
+                  pc2 <= 0
+                    false
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc1 <= 2
+                  pc2 <= 0
+                    false
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc1 <= 3
+                  pc2 <= 0
+                    false
+                    pc2 <= 4
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc1 <= 2
+                  pc2 <= 0
+                    false
+                    pc2 <= 4
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+                  false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc1 <= 3
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      f1b <= 0
+                        pc2 <= 1
+                          pc2 <= 0
+                            false
+                            true
+                          false
+                        false
+                      false
+                  false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    pc2 <= 2
+                      f1b <= -1
+                        false
+                        f1b <= 1
+                          true
+                          false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      pc1 <= 2
+                        pc2 <= 2
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      pc2 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      pc2 <= 4
+                        pc1 <= 3
+                          f1b <= -1
+                            false
+                            f1b <= 1
+                              true
+                              false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    t2b <= 0
+                      pc2 <= 5
+                        f1a <= 0
+                          pc1 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 1
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    pc2 <= 8
+                      t2b <= 0
+                        f2b <= 0
+                          pc1 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 0
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    pc2 <= 8
+                      t2b <= 0
+                        f2b <= 0
+                          pc1 <= 2
+                            f1b <= -1
+                              false
+                              f1b <= 1
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                f2b <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    pc2 <= 8
+                      t2b <= 0
+                        f1a <= 0
+                          pc1 <= 1
+                            f1b <= -1
+                              false
+                              f1b <= 1
+                                true
+                                false
+                            false
+                          false
+                        false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc2 <= 0
+                  false
+                  t2b <= 0
+                    f1a <= 0
+                      pc1 <= 1
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            pc2 <= 2
+                              true
+                              false
+                            false
+                        false
+                      false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc2 <= 0
+                  false
+                  t2b <= 0
+                    pc2 <= 3
+                      f1b <= -1
+                        false
+                        t2b <= -2
+                          false
+                          f1b <= 0
+                            true
+                            false
+                      false
+                    false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            f2a <= 0
+              f2a <= -1
+                false
+                pc2 <= 0
+                  false
+                  f1b <= -1
+                    false
+                    f1b <= 1
+                      f2b <= -1
+                        false
+                        t2b <= 0
+                          pc2 <= 3
+                            true
+                            t2b <= -2
+                              true
+                              false
+                          false
+                      false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            pc2 <= 9
+              f2a <= 0
+                f2a <= -2
+                  false
+                  pc2 <= 0
+                    false
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        f2b <= -1
+                          false
+                          t2b <= 0
+                            pc1 <= 3
+                              true
+                              false
+                            false
+                        false
+                false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            pc2 <= 9
+              f2a <= 0
+                f2a <= -2
+                  false
+                  pc2 <= 0
+                    false
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        f2b <= -1
+                          false
+                          t2b <= 0
+                            pc1 <= 3
+                              true
+                              f2a <= -1
+                                true
+                                false
+                            false
+                        false
+                false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            pc2 <= 9
+              f2a <= 0
+                f2a <= -1
+                  false
+                  pc2 <= 0
+                    false
+                    f1b <= -1
+                      false
+                      f1b <= 1
+                        f1b <= 0
+                          f1a <= 0
+                            true
+                            pc1 <= 3
+                              true
+                              t2b <= 0
+                                false
+                                true
+                          false
+                        false
+                false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            pc2 <= 9
+              f2a <= 0
+                f2a <= -1
+                  false
+                  t2b <= 0
+                    pc2 <= 0
+                      false
+                      pc1 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                    false
+                false
+              false
+            false
+        false
+    false
+
+ Hypothesis: 
+
+
+t1b <= -1
+  false
+  t1b <= 0
+    f1a <= -1
+      false
+      f1a <= 1
+        pc1 <= 0
+          false
+          pc1 <= 5
+            pc2 <= 9
+              f2a <= 0
+                f2a <= -1
+                  false
+                  t2b <= 0
+                    pc2 <= 0
+                      false
+                      pc1 <= 3
+                        f1b <= -1
+                          false
+                          f1b <= 1
+                            true
+                            false
+                        false
+                    false
+                false
+              false
+            false
+        false
+    false
+Average teacher computation time: 73.700422 milliseconds
+Lowest teacher computation time: 21.000000 milliseconds
+Highest teacher computation time: 119.000000 milliseconds
+Average learner computation time: 17.932489 milliseconds
+Lowest learner computation time: 3.000000 milliseconds
+Highest learner computation time: 337.000000 milliseconds
+Total computation time: 23961.000000 milliseconds
+Positive counterexamples found: 1.000000
+Negative counterexamples found: 104.000000
+Existential counterexamples found: 131.000000
+Universal counterexamples found: 0.000000
+237, 1.000000, 104.000000, 23961.000000

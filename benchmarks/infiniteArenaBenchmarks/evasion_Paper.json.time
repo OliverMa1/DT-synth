@@ -1,18 +1,62 @@
-Amount of steps needed: 6
-Amount of variables used: 3
-Amount of additional expressions used: 0
-Amount of counterexamples: 116
-Amount of horn constraints: 19
-Average length of horn constraints: 7.210526
-Average teacher computation time: 82.833333 milliseconds
-Lowest teacher computation time: 20.000000 milliseconds
-Highest teacher computation time: 136.000000 milliseconds
+
+ Hypothesis: 
+
+
+false
+
+ Hypothesis: 
+
+
+x1-x2 <= 0
+  false
+  true
+
+ Hypothesis: 
+
+
+y1-y2 <= 0
+  false
+  true
+
+ Hypothesis: 
+
+
+z <= 0
+  x1-x2 <= 0
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+x1-x2 <= 0
+  false
+  z <= 0
+    true
+    x1-x2 <= 1
+      false
+      true
+
+ Hypothesis: 
+
+
+x1-x2 <= 0
+  false
+  z <= 0
+    true
+    x1-x2 <= 1
+      false
+      true
+Average teacher computation time: 83.000000 milliseconds
+Lowest teacher computation time: 21.000000 milliseconds
+Highest teacher computation time: 137.000000 milliseconds
 Average learner computation time: 5.166667 milliseconds
 Lowest learner computation time: 3.000000 milliseconds
 Highest learner computation time: 10.000000 milliseconds
-Total computation time: 542.000000 milliseconds
+Total computation time: 540.000000 milliseconds
 Positive counterexamples found: 1.000000
 Negative counterexamples found: 1.000000
 Existential counterexamples found: 1.000000
 Universal counterexamples found: 2.000000
-6, 1.000000, 1.000000, 542.000000
+6, 1.000000, 1.000000, 540.000000

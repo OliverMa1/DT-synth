@@ -2,7 +2,7 @@
 
 path="$(dirname "$PWD")"/benchmarks/scalabilityBenchmarks
 echo "$path"
-export LD_LIBRARY_PATH=/home/tacas19/dt/artifact-evaluation-master/DT-synth/lib/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:../DT-synth/lib/z3/bin-synth/lib/
 
 run_the_test() {
   g++ -std=c++11 -o a $path/GridWorldSequence1D.cpp

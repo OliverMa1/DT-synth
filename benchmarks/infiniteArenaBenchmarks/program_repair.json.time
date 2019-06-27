@@ -1,18 +1,271 @@
-Amount of steps needed: 14
-Amount of variables used: 3
-Amount of additional expressions used: 0
-Amount of counterexamples: 16
-Amount of horn constraints: 3
-Average length of horn constraints: 2.666667
-Average teacher computation time: 71.214286 milliseconds
+
+ Hypothesis: 
+
+
+false
+
+ Hypothesis: 
+
+
+l <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+l <= -1
+  false
+  l <= 0
+    true
+    false
+
+ Hypothesis: 
+
+
+pc <= 0
+  l <= -1
+    false
+    true
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    pc <= 0
+      true
+      false
+  false
+
+ Hypothesis: 
+
+
+pc <= -1
+  false
+  pc <= 0
+    true
+    false
+
+ Hypothesis: 
+
+
+pc <= -1
+  false
+  pc <= 0
+    true
+    pc <= 2
+      false
+      l <= 0
+        false
+        true
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    pc <= -1
+      false
+      pc <= 0
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    pc <= -1
+      false
+      pc <= 4
+        true
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  gl <= 0
+    l <= -1
+      false
+      pc <= -1
+        false
+        pc <= 0
+          true
+          false
+    false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  gl <= 0
+    l <= -1
+      false
+      pc <= -1
+        false
+        pc <= 4
+          true
+          false
+    false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    gl <= -1
+      false
+      gl <= 0
+        pc <= -1
+          false
+          pc <= 0
+            true
+            false
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    gl <= -1
+      false
+      gl <= 0
+        pc <= -1
+          false
+          pc <= 0
+            true
+            pc <= 2
+              false
+              pc <= 4
+                true
+                false
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    gl <= -1
+      false
+      gl <= 0
+        pc <= 0
+          pc <= -1
+            false
+            true
+          pc <= 2
+            false
+            pc <= 3
+              false
+              pc <= 4
+                true
+                false
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    gl <= -1
+      false
+      gl <= 0
+        pc <= 0
+          pc <= -1
+            false
+            true
+          pc <= 2
+            false
+            pc <= 3
+              false
+              pc <= 4
+                true
+                pc <= 5
+                  false
+                  true
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    gl <= -1
+      false
+      gl <= 0
+        pc <= 0
+          pc <= -1
+            false
+            true
+          pc <= 2
+            false
+            pc <= 3
+              false
+              pc <= 4
+                true
+                pc <= 5
+                  false
+                  pc <= 6
+                    true
+                    false
+        false
+  false
+
+ Hypothesis: 
+
+
+l <= 0
+  l <= -1
+    false
+    gl <= -1
+      false
+      gl <= 0
+        pc <= 0
+          pc <= -1
+            false
+            true
+          pc <= 2
+            false
+            pc <= 3
+              false
+              pc <= 4
+                true
+                pc <= 5
+                  false
+                  pc <= 6
+                    true
+                    false
+        false
+  false
+Average teacher computation time: 61.176471 milliseconds
 Lowest teacher computation time: 19.000000 milliseconds
-Highest teacher computation time: 86.000000 milliseconds
-Average learner computation time: 2.928571 milliseconds
+Highest teacher computation time: 90.000000 milliseconds
+Average learner computation time: 3.058824 milliseconds
 Lowest learner computation time: 3.000000 milliseconds
-Highest learner computation time: 3.000000 milliseconds
-Total computation time: 1069.000000 milliseconds
+Highest learner computation time: 4.000000 milliseconds
+Total computation time: 1175.000000 milliseconds
 Positive counterexamples found: 1.000000
-Negative counterexamples found: 2.000000
-Existential counterexamples found: 10.000000
+Negative counterexamples found: 7.000000
+Existential counterexamples found: 8.000000
 Universal counterexamples found: 0.000000
-14, 1.000000, 2.000000, 1069.000000
+17, 1.000000, 7.000000, 1175.000000

@@ -1,0 +1,1411 @@
+
+ Hypothesis: 
+
+
+false
+
+ Hypothesis: 
+
+
+b1 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+b2 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+b3 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+b1 <= 0
+  b2 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 0
+  b1 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b1 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b1 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b2 <= 0
+  b3 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b2 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b2 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 0
+  b4 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b3 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b5 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 0
+  b2 <= 0
+    b3 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b1 <= 0
+    b2 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b1 <= 0
+    b2 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 0
+  b4 <= 0
+    b1 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b3 <= 0
+    b1 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b5 <= 0
+    b1 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b2 <= 0
+  b3 <= 0
+    b4 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b2 <= 0
+    b3 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b5 <= 0
+    b2 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 0
+  b4 <= 0
+    b5 <= 0
+      true
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 0
+  b2 <= 0
+    b3 <= 0
+      b4 <= 0
+        true
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 0
+  b1 <= 0
+    b2 <= 0
+      b3 <= 0
+        true
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 0
+  b5 <= 0
+    b1 <= 0
+      b2 <= 0
+        true
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 0
+  b4 <= 0
+    b5 <= 0
+      b1 <= 0
+        true
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b2 <= 0
+  b3 <= 0
+    b4 <= 0
+      b5 <= 0
+        true
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 0
+  b2 <= 0
+    b3 <= 0
+      b4 <= 0
+        b5 <= 0
+          true
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 7
+  b1 <= 10
+    b2 <= 10
+      b4 <= 10
+        b5 <= 10
+          true
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 10
+  b1 <= 20
+    b2 <= 20
+      b4 <= 20
+        b5 <= 20
+          true
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 13
+  b1 <= 30
+    b2 <= 30
+      b4 <= 30
+        b5 <= 30
+          true
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 16
+  b1 <= 9
+    b2 <= 10
+      p <= 0
+        b4 <= 0
+          b5 <= 0
+            true
+            false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 16
+  b1 <= 19
+    b2 <= 20
+      b4 <= 9
+        b5 <= 10
+          true
+          false
+        b1 <= 0
+          b4 <= 10
+            true
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 16
+  b5 <= 19
+    b1 <= 20
+      b2 <= 9
+        b4 <= 10
+          true
+          false
+        b5 <= 0
+          b2 <= 10
+            true
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 16
+  b5 <= 19
+    b4 <= 20
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b5 <= 0
+          b1 <= 10
+            true
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 16
+  b5 <= 19
+    b4 <= 20
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b5 <= 0
+          b2 <= 0
+            b1 <= 10
+              true
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 18
+  b5 <= 19
+    b4 <= 19
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b4 <= 0
+          b2 <= 0
+            b1 <= 10
+              true
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 18
+  b5 <= 29
+    b4 <= 19
+      b2 <= 20
+        b1 <= 9
+          true
+          b1 <= 20
+            p <= 0
+              true
+              false
+            false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 28
+  b1 <= 29
+    b2 <= 9
+      b5 <= 10
+        b4 <= 10
+          true
+          false
+        false
+      b4 <= 0
+        b2 <= 10
+          true
+          false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 28
+  b2 <= 9
+    b5 <= 10
+      b1 <= 20
+        b4 <= 10
+          true
+          false
+        false
+      false
+    b1 <= 0
+      b2 <= 10
+        b4 <= 0
+          b5 <= 0
+            true
+            false
+          false
+        false
+      false
+  false
+
+ Hypothesis: 
+
+
+b2 <= 9
+  b5 <= 10
+    b1 <= 20
+      b4 <= 10
+        b3 <= 7
+          true
+          false
+        false
+      false
+    false
+  b5 <= 5
+    b2 <= 20
+      b4 <= 8
+        true
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b3 <= 27
+  b2 <= 9
+    b5 <= 10
+      b1 <= 20
+        b4 <= 10
+          true
+          false
+        false
+      false
+    b1 <= 0
+      b2 <= 10
+        b4 <= 0
+          b5 <= 0
+            true
+            false
+          false
+        false
+      false
+  false
+
+ Hypothesis: 
+
+
+b2 <= 9
+  b5 <= 10
+    b1 <= 20
+      b4 <= 10
+        b3 <= 7
+          true
+          false
+        false
+      false
+    false
+  b5 <= 5
+    b2 <= 20
+      b3 <= 0
+        b4 <= 0
+          true
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b2 <= 9
+  b5 <= 10
+    b1 <= 20
+      b4 <= 10
+        b3 <= 7
+          true
+          false
+        false
+      false
+    false
+  b5 <= 5
+    b2 <= 20
+      b3 <= 0
+        b1 <= 0
+          b4 <= 0
+            true
+            false
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b2 <= 29
+  b1 <= 30
+    b5 <= 27
+      b3 <= 18
+        b4 <= 19
+          true
+          b1 <= 0
+            false
+            p <= 0
+              true
+              false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b2 <= 29
+  b1 <= 30
+    b5 <= 27
+      b4 <= 19
+        b3 <= 18
+          b4 <= 9
+            true
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b5 <= 10
+    b3 <= 7
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b1 <= 10
+          b2 <= 0
+            true
+            false
+          false
+      false
+    false
+  b3 <= 0
+    b4 <= 10
+      b5 <= 0
+        true
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b5 <= 10
+    b3 <= 7
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b1 <= 10
+          b2 <= 0
+            true
+            false
+          false
+      false
+    false
+  b3 <= 0
+    b4 <= 10
+      b1 <= 0
+        b5 <= 0
+          true
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b5 <= 10
+    b3 <= 7
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b1 <= 10
+          b2 <= 0
+            true
+            false
+          false
+      false
+    false
+  b3 <= 0
+    b4 <= 10
+      b2 <= 0
+        b5 <= 0
+          true
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b5 <= 10
+    b3 <= 7
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b1 <= 10
+          b2 <= 0
+            true
+            false
+          false
+      false
+    false
+  b3 <= 0
+    b4 <= 10
+      b1 <= 0
+        b2 <= 0
+          b5 <= 0
+            true
+            false
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b5 <= 10
+    b3 <= 7
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b1 <= 10
+          b2 <= 0
+            true
+            false
+          false
+      false
+    false
+  b1 <= 1
+    b4 <= 17
+      p <= 0
+        b2 <= 0
+          b5 <= 0
+            true
+            false
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b5 <= 10
+    b3 <= 7
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b1 <= 10
+          b2 <= 0
+            true
+            false
+          false
+      false
+    false
+  b3 <= 28
+    b1 <= 1
+      b4 <= 17
+        p <= 0
+          b2 <= 0
+            b5 <= 0
+              true
+              false
+            false
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b1 <= 29
+  b2 <= 30
+    b5 <= 27
+      b3 <= 18
+        b4 <= 19
+          b1 <= 9
+            true
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 29
+  b2 <= 29
+    b5 <= 27
+      b3 <= 18
+        b4 <= 19
+          b1 <= 9
+            true
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 29
+  b4 <= 29
+    b2 <= 9
+      b3 <= 18
+        b5 <= 18
+          b4 <= 17
+            b1 <= 18
+              true
+              b2 <= 0
+                true
+                false
+            false
+          false
+        false
+      b2 <= 22
+        p <= 0
+          b3 <= 0
+            b5 <= 0
+              true
+              false
+            false
+          false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 29
+  b4 <= 29
+    b2 <= 9
+      b3 <= 18
+        b5 <= 18
+          b1 <= 9
+            true
+            p <= 0
+              true
+              false
+          false
+        false
+      b3 <= 0
+        b5 <= 0
+          b4 <= 0
+            b2 <= 10
+              true
+              false
+            b2 <= 10
+              true
+              false
+          false
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 17
+  b4 <= 19
+    b1 <= 30
+      b5 <= 18
+        b2 <= 8
+          true
+          b1 <= 1
+            b5 <= 0
+              b1 <= 0
+                b3 <= 0
+                  b2 <= 10
+                    true
+                    false
+                  true
+                true
+              true
+            false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b3 <= 17
+  b4 <= 19
+    b1 <= 30
+      b5 <= 18
+        b2 <= 8
+          true
+          b5 <= 1
+            b2 <= 10
+              true
+              false
+            false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 18
+  b3 <= 23
+    b1 <= 28
+      b4 <= 18
+        b2 <= 9
+          b1 <= 18
+            true
+            b2 <= 0
+              true
+              false
+          b4 <= 0
+            b2 <= 10
+              true
+              false
+            b5 <= 0
+              b2 <= 10
+                true
+                false
+              false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 19
+  b4 <= 29
+    b3 <= 9
+      b5 <= 9
+        b2 <= 10
+          p <= 0
+            true
+            b4 <= 0
+              true
+              false
+          false
+        b1 <= 0
+          b5 <= 10
+            true
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 19
+  b2 <= 9
+    b5 <= 10
+      b3 <= 10
+        b4 <= 17
+          b5 <= 9
+            true
+            b1 <= 0
+              true
+              false
+          false
+        false
+      false
+    b5 <= 5
+      b4 <= 18
+        b3 <= 0
+          b4 <= 0
+            b2 <= 10
+              true
+              false
+            b2 <= 10
+              true
+              false
+          false
+        false
+      false
+  false
+
+ Hypothesis: 
+
+
+b4 <= 9
+  b2 <= 9
+    b3 <= 18
+      b1 <= 20
+        b5 <= 18
+          true
+          false
+        false
+      false
+    b2 <= 20
+      b5 <= 6
+        b3 <= 10
+          b1 <= 0
+            true
+            false
+          false
+        false
+      false
+  b1 <= 19
+    b5 <= 20
+      b4 <= 17
+        b3 <= 10
+          p <= 0
+            b2 <= 2
+              true
+              false
+            false
+          false
+        false
+      false
+    false
+
+ Hypothesis: 
+
+
+b5 <= 17
+  b3 <= 23
+    b4 <= 18
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b2 <= 20
+          b5 <= 0
+            b1 <= 10
+              true
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 17
+  b3 <= 22
+    b4 <= 18
+      b1 <= 9
+        b2 <= 10
+          true
+          false
+        b2 <= 20
+          b5 <= 0
+            b1 <= 10
+              true
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 17
+  b1 <= 28
+    b3 <= 19
+      b2 <= 9
+        b4 <= 9
+          p <= 0
+            true
+            b1 <= 0
+              true
+              false
+          p <= 0
+            b4 <= 10
+              true
+              false
+            false
+        b5 <= 0
+          b4 <= 18
+            b4 <= 0
+              b2 <= 10
+                true
+                false
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b5 <= 17
+  b1 <= 28
+    b3 <= 19
+      b2 <= 9
+        b4 <= 9
+          p <= 0
+            true
+            b3 <= 0
+              true
+              false
+          p <= 0
+            b4 <= 10
+              true
+              false
+            false
+        b5 <= 0
+          b4 <= 18
+            b4 <= 0
+              b2 <= 10
+                true
+                false
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 22
+    b5 <= 15
+      b4 <= 17
+        b3 <= 19
+          b1 <= 9
+            true
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 22
+    b5 <= 15
+      b4 <= 17
+        b3 <= 19
+          p <= 0
+            true
+            b1 <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 28
+    b3 <= 9
+      b4 <= 9
+        p <= 0
+          b5 <= 10
+            true
+            false
+          b1 <= 0
+            true
+            false
+        b1 <= 1
+          b1 <= 0
+            p <= 0
+              b4 <= 10
+                b5 <= 0
+                  true
+                  false
+                false
+              false
+            false
+          false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b5 <= 26
+    b2 <= 29
+      b3 <= 9
+        b4 <= 9
+          p <= 0
+            true
+            b1 <= 0
+              true
+              false
+          b1 <= 1
+            b1 <= 0
+              p <= 0
+                b4 <= 10
+                  true
+                  false
+                false
+              false
+            false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 28
+    b5 <= 14
+      b4 <= 17
+        b3 <= 9
+          p <= 0
+            true
+            b4 <= 0
+              b1 <= 0
+                true
+                b2 <= 0
+                  false
+                  true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 28
+    b5 <= 14
+      b4 <= 17
+        b3 <= 9
+          b1 <= 8
+            b4 <= 9
+              true
+              p <= 0
+                true
+                false
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 28
+    b5 <= 14
+      b4 <= 17
+        b3 <= 9
+          b1 <= 8
+            b4 <= 9
+              true
+              p <= 0
+                true
+                b5 <= -2
+                  true
+                  false
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b2 <= 28
+    b5 <= 14
+      b4 <= 17
+        b3 <= 9
+          b1 <= 8
+            b4 <= 9
+              true
+              p <= 0
+                true
+                b5 <= -2
+                  true
+                  b5 <= 0
+                    false
+                    true
+            p <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false
+
+ Hypothesis: 
+
+
+b1 <= 18
+  b4 <= 29
+    b5 <= 14
+      b3 <= 19
+        b2 <= 10
+          p <= 0
+            true
+            b1 <= 0
+              true
+              false
+          false
+        false
+      false
+    false
+  false

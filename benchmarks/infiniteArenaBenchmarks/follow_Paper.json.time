@@ -1,18 +1,121 @@
-Amount of steps needed: 11
-Amount of variables used: 3
-Amount of additional expressions used: 0
-Amount of counterexamples: 23
-Amount of horn constraints: 27
-Average length of horn constraints: 2.000000
-Average teacher computation time: 60.454545 milliseconds
-Lowest teacher computation time: 19.000000 milliseconds
-Highest teacher computation time: 108.000000 milliseconds
-Average learner computation time: 2.909091 milliseconds
+
+ Hypothesis: 
+
+
+false
+
+ Hypothesis: 
+
+
+x1-x2 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+y1-y2 <= 0
+  true
+  false
+
+ Hypothesis: 
+
+
+z <= 0
+  false
+  true
+
+ Hypothesis: 
+
+
+x1-x2 <= 0
+  y1-y2 <= 0
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+x1-x2 <= 1
+  y1-y2 <= 1
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+x1-x2 <= 1
+  y1-y2 <= 2
+    true
+    false
+  false
+
+ Hypothesis: 
+
+
+y1-y2 <= 1
+  x1-x2 <= 1
+    z <= 0
+      true
+      y1-y2 <= 0
+        true
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+y1-y2 <= 1
+  x1-x2 <= 2
+    z <= 0
+      true
+      y1-y2 <= 0
+        true
+        false
+    false
+  false
+
+ Hypothesis: 
+
+
+y1-y2 <= 1
+  z <= 0
+    x1-x2 <= 1
+      true
+      false
+    x1-x2 <= 0
+      y1-y2 <= 0
+        true
+        false
+      false
+  false
+
+ Hypothesis: 
+
+
+y1-y2 <= 1
+  z <= 0
+    x1-x2 <= 1
+      true
+      false
+    x1-x2 <= 0
+      y1-y2 <= 0
+        true
+        false
+      false
+  false
+Average teacher computation time: 66.454545 milliseconds
+Lowest teacher computation time: 21.000000 milliseconds
+Highest teacher computation time: 138.000000 milliseconds
+Average learner computation time: 3.000000 milliseconds
 Lowest learner computation time: 3.000000 milliseconds
-Highest learner computation time: 3.000000 milliseconds
-Total computation time: 717.000000 milliseconds
+Highest learner computation time: 4.000000 milliseconds
+Total computation time: 799.000000 milliseconds
 Positive counterexamples found: 1.000000
 Negative counterexamples found: 6.000000
 Existential counterexamples found: 0.000000
 Universal counterexamples found: 3.000000
-11, 1.000000, 6.000000, 717.000000
+11, 1.000000, 6.000000, 799.000000
