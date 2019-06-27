@@ -1,0 +1,245 @@
+
+
+***********************************************************
+GAVS+: Symbolic controller synthesis for PDDL systems.
+Contact: Chihhong Cheng, TU Munich [chengch@in.tum.de]
+***********************************************************
+
+
+====================
+Print out for each parameter, whether it is OK to omit construction (replace them by True or False)
+elev_req: false
+elev_loc: false
+p0tran: false
+
+====================
+Start GR[1] game solving
+GAVS+: Interpret the specification using parser
+GF (OR(elev_req f1)(elev_req f2)(elev_req f3)) => GF (OR(NOT(elev_req f1))(elev_loc f1)) && GF (OR(NOT(elev_req f2))(elev_loc f2)) && GF (OR(NOT(elev_req f3))(elev_loc f3))
+***********************************************************
+GAVS+: symbolic Generalized Reactiivity (Streett[1]) game synthesis engine [using JDD]
+***********************************************************
+Saturation of Z
+Strategy exists for the General Reactivity (Streett[1]) condition!
+***********************************************************
+The total process time for the GR[1] solver is 0.051 sec
+Print out the strategy from specification []<> p_0 && ... && []<> p_m => []<> q_0 && ... &&[]<> q_n
+/* PART A: Strategy of mode-switch when q_i is reached (with variable "mode") */
+/* ==================== */
+IF ( mode = 0 ) {
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && p0tran)
+	) {
+		move_down({})
+		mode := (mode + 1) % 3
+	}
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_loc(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && p0tran)
+	) {
+		move_still({})
+		mode := (mode + 1) % 3
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && p0tran)
+	) {
+		move_up({})
+		mode := (mode + 1) % 3
+	}
+}
+
+IF ( mode = 1 ) {
+	IF (
+	( !elev_loc(f2) && elev_loc(f3) && !elev_req(f2) && p0tran)
+	 || ( elev_loc(f2) && !elev_loc(f3) && p0tran)
+	) {
+		move_down({})
+		mode := (mode + 1) % 3
+	}
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f2) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && elev_loc(f3) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_loc(f3) && !elev_req(f2) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && p0tran)
+	) {
+		move_still({})
+		mode := (mode + 1) % 3
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f2) && p0tran)
+	) {
+		move_up({})
+		mode := (mode + 1) % 3
+	}
+}
+
+IF ( mode = 2 ) {
+	IF (
+	( !elev_loc(f2) && elev_loc(f3) && p0tran)
+	 || ( elev_loc(f2) && !elev_loc(f3) && !elev_req(f3) && p0tran)
+	) {
+		move_down({})
+		mode := (mode + 1) % 3
+	}
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && elev_loc(f3) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_loc(f3) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_still({})
+		mode := (mode + 1) % 3
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && elev_loc(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_loc(f3) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && p0tran)
+	) {
+		move_up({})
+		mode := (mode + 1) % 3
+	}
+}
+
+/* PART B: Strategy on mode i to reach closer to q_i */
+/* ==================== */
+IF ( mode = 0 ) {
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && elev_req(f1) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && elev_req(f1) && p0tran)
+	) {
+		move_down({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && elev_loc(f3) && elev_req(f1) && p0tran)
+	) {
+		move_up({})
+		
+	}
+}
+
+IF ( mode = 1 ) {
+	IF (
+	( !elev_loc(f2) && elev_loc(f3) && elev_req(f2) && p0tran)
+	) {
+		move_down({})
+		
+	}
+	IF (
+	( elev_loc(f1) && !elev_loc(f2) && elev_req(f2) && p0tran)
+	) {
+		move_up({})
+		
+	}
+}
+
+IF ( mode = 2 ) {
+	IF (
+	( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && elev_req(f3) && p0tran)
+	) {
+		move_down({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_loc(f3) && elev_req(f3) && p0tran)
+	) {
+		move_up({})
+		
+	}
+}
+
+/* PART C: Strategy on mode i to infinitely loop within {!p_0 ... !p_m} */
+/* ==================== */
+IF ( mode = 0 ) {
+	IF (
+	( !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_down({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_still({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_up({})
+		
+	}
+}
+
+IF ( mode = 1 ) {
+	IF (
+	( !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_down({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_still({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_up({})
+		
+	}
+}
+
+IF ( mode = 2 ) {
+	IF (
+	( !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_down({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && !elev_loc(f2) && elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && elev_loc(f2) && !elev_loc(f3) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_still({})
+		
+	}
+	IF (
+	( !elev_loc(f1) && elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	 || ( elev_loc(f1) && !elev_loc(f2) && !elev_req(f1) && !elev_req(f2) && !elev_req(f3) && p0tran)
+	) {
+		move_up({})
+		
+	}
+}
+

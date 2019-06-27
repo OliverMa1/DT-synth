@@ -1,0 +1,1 @@
+java -Xmx1000m -jar GAVS+.jar

@@ -1,0 +1,12 @@
+## An example of the MDP (modified from the website http://www.cse.lehigh.edu/~munoz/CSE335)
+## Chih-Hong Cheng, TU Munich
+## public final static int MDP_GAME_CONTROL = 1;
+## public final static int MDP_GAME_STOCHASTIC = 2;
+## 0: waitH, 1: High, 2:searchH, 3: recharge, 4: searchL, 5: Low, 6:waitL
+0 2 1 1:0.2
+1 1 0 C 2 C 
+2 2 1 0.4:6 5 0.6:1
+3 2 1 1:0
+4 2 1 0.8:-5 5 0.2:4
+5 1 3 C 4 C 6 C
+6 2 5 1:0.2

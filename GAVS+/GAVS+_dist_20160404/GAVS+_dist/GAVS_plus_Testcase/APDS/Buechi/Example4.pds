@@ -1,0 +1,9 @@
+## Comments used in the pds file
+## Section 3.4.4 in T. Cachat's doctoral thesis for the test of Buechi condition
+## Chih-Hong Cheng
+P0_STATE = {P, Q}
+P1_STATE = {} 
+ALPHABET = {a}
+RULE = {Q a -> Q a a; Q a -> P; P a -> P}
+INIT = { P a }
+GOAL = { P }

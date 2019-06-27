@@ -1,0 +1,9 @@
+## Comments used in the pds file
+## Chih-Hong Cheng
+## Have strategy
+P0_STATE = {S0, S2}
+P1_STATE = {S1} 
+ALPHABET = {a, b, c}
+RULE = { S2 b -> S1 b c; S0 b -> S1; S0 b -> S1 a; S1 a -> S2 a b; S1 a -> S2 a; S1 a -> S2 b; S2 b -> S2 a b; S2 a -> S2 a b; S2 a -> S2 a }
+INIT = { S0 b c}
+GOAL = { S1 a b c ; S2 a b c}

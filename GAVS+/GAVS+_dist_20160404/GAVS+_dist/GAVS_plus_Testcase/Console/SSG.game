@@ -1,0 +1,9 @@
+## An example of the simple stochastic game 
+## The constant below is used as indication of parameters 
+## 0:v1, 1:v2, 2:v5, 3:v3, 4:v4 
+## In the coloring, we use 0 to indicate it is a normal vertex, 1 as a P0SINK, and 2 as a P1SINK
+0:0 1 1 C 2 C
+1:0 4 3 P 2 P
+2:0 6 3 S 4 S
+3:1 6
+4:2 6

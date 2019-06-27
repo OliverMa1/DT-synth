@@ -1,0 +1,9 @@
+## Comments used in the pds file
+## Example in the paper "Symbolic Strategy Synthesis for Games on Pushdown Graphs"
+## Chih-Hong Cheng
+P0_STATE = {p}
+P1_STATE = {} 
+ALPHABET = {a}
+RULE = { p a -> p; p a -> p a a }
+INIT = { p a a }
+GOAL = { p a a a}

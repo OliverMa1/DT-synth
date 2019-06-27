@@ -1,0 +1,10 @@
+## Comments used in the pds file
+## An example for the test of Buechi condition
+## Chih-Hong Cheng
+P0_STATE = {P0, P2}
+P1_STATE = {P1} 
+ALPHABET = {a, b}
+RULE = {P1 a -> P0 a b; P1 a -> P2 b; P2 b -> P0 a a; P2 b -> P2 b; P0 a -> P1 a}
+## There exists a startegy to visit location P0 infinitely
+INIT = { P1 a b }
+GOAL = { P0 }

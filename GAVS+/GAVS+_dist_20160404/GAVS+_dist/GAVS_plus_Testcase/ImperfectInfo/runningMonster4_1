@@ -1,0 +1,28 @@
+## A circle consisting of 4 cells
+## The player must not meet the monster
+## player and monster can move either forward or backward or stay
+## the player can observe(hear) that the monster is either in one of the cells
+## behind him or in front of him
+##
+## the states are modeled as pairs of positions of the player and the monster
+## player at 0
+0,3:Back:INI Forward:0 1,3 Backward:0 3,3 Forward:1 0,0 Backward:1 0,2 Stay:0 0,3 Stay:1 0,3
+0,1:Front:INI Forward:0 1,1 Backward:0 3,1 Forward:1 0,2 Backward:1 0,0 Stay:0 0,1 Stay:1 0,1
+0,2:Nothing:INI Forward:0 1,2 Backward:0 3,2 Forward:1 0,3 Backward:1 0,1 Stay:0 0,2 Stay:1 0,2
+0,0:Nothing Eat:1 Lunch
+## player at 1
+1,0:Back:INI Forward:0 2,0 Backward:0 0,0 Forward:1 1,1 Backward:1 1,3 Stay:0 1,0 Stay:1 1,0
+1,2:Front:INI Forward:0 2,2 Backward:0 0,2 Forward:1 1,3 Backward:1 1,1 Stay:0 1,2 Stay:1 1,2
+1,3:Nothing:INI Forward:0 2,3 Backward:0 0,3 Forward:1 1,0 Backward:1 1,2 Stay:0 1,3 Stay:1 1,3
+1,1:Nothing Eat:1 Lunch
+## player at 2
+2,1:Back:INI Forward:0 3,1 Backward:0 1,1 Forward:1 2,2 Backward:1 2,0 Stay:0 2,1 Stay:1 2,1
+2,3:Front:INI Forward:0 3,3 Backward:0 1,3 Forward:1 2,0 Backward:1 2,2 Stay:0 2,3 Stay:1 2,3
+2,0:Nothing:INI Forward:0 3,0 Backward:0 1,0 Forward:1 2,1 Backward:1 2,3 Stay:0 2,0 Stay:1 2,0
+2,2:Nothing Eat:1 Lunch
+## player at 3
+3,2:Back:INI Forward:0 0,2 Backward:0 2,2 Forward:1 3,3 Backward:1 3,1 Stay:0 3,2 Stay:1 3,2
+3,0:Front:INI Forward:0 0,0 Backward:0 2,0 Forward:1 3,1 Backward:1 3,3 Stay:0 3,0 Stay:1 3,0
+3,1:Nothing:INI Forward:0 0,1 Backward:0 2,1 Forward:1 3,2 Backward:1 3,0 Stay:0 3,1 Stay:1 3,1
+3,3:Nothing Eat:1 Lunch
+Lunch:Nothing Eat:1 Lunch

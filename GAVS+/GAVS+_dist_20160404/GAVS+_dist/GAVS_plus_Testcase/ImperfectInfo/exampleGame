@@ -1,0 +1,9 @@
+## Example game from:
+## http://cfv.ulb.ac.be/sites/default/files/TechRep_CFV_2006_58.pdf
+1:1,2 a:0 1' b:0 Bad
+2:1:INI a:0 Bad b:0 2'
+3:2:INI a:0 3' b:0 Bad
+1':1,2 u:1 2 u:1 3
+2':1 u:1 1
+3':2 u:1 1
+Bad:1 u:1 Bad

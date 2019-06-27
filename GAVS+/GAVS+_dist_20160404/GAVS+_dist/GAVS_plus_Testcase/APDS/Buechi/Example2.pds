@@ -1,0 +1,13 @@
+## Comments used in the pds file
+## Simple Example (section 3.4.3) in T. Cachat's doctoral thesis for the test of Buechi condition
+## Here we use the symbol "b" to represent "bottom" in the thesis. 
+## Chih-Hong Cheng
+P0_STATE = {P1}
+P1_STATE = {P0, P2} 
+ALPHABET = {a, b}
+RULE = { P0 b -> P0 a b; P0 a -> P0 a a; P0 a -> P1 a; P1 a -> P1; P1 b -> P0 b; P1 b -> P2 b; P2 b -> P2 b; P2 a -> P2 }
+## When INIT = {P0 a a}, there exists no strategy. 
+## INIT = { P0 a a }
+## When INIT = {P0 a a b}, there exists a strategy. 
+INIT = { P0 a a b }
+GOAL = { P0 }

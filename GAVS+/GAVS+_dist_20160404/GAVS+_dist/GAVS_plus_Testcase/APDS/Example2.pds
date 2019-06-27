@@ -1,0 +1,8 @@
+## Comments used in the pds file
+## Chih-Hong Cheng
+P0_STATE = {S0, S2}
+P1_STATE = {S1} 
+ALPHABET = {a, b, c}
+RULE = { S1 a -> S1; S2 b -> S1 b c; S0 b -> S1; S1 a -> S0 a }
+INIT = { S0 a b }
+GOAL = { S1 a b c ; S2 a c b a}

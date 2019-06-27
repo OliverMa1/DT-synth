@@ -1,0 +1,13 @@
+## A circle consisting of 5 cells
+## The player must not meet the monster
+## player and monster can move either forward or backward
+## the player can observe(hear) that the monster is either in one of the cells
+## behind him or in front of him
+##
+## the states are modeled as the distances between the player and the monster
+## (equivalence-classes of the states of runningMonsterFull)
+NearBehind:Behind Forward:0 FarBehind Backward:0 Lunch Close:1 Lunch Far:1 FarBehind
+FarBehind:Behind:INI Forward:0 FarFront Backward:0 NearBehind Close:1 NearBehind Far:1 FarFront
+NearFront:Front Forward:0 Lunch Backward:0 FarFront Close:1 Lunch Far:1 FarFront
+FarFront:Front:INI Forward:0 NearFront Backward:0 FarBehind Close:1 NearFront Far:1 FarBehind
+Lunch:Behind Eat:1 Lunch
