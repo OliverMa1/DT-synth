@@ -138,7 +138,7 @@ There is no script automating the benchmarks for GAVS+, thus you need to execute
 
 The python scripts are used to generate the .pddl domain and problem files.
 
-1- Run the python script in ./dt/artifact-evaluation-master/GAVS+. Edit the first line "k = 100" to the desired value to test.
+1- Run the python script in ./GAVS+. Edit the first line "k = 100" to the desired value to test.
 
 2- Run GAVS+ (use: java -jar GAVS+.jar in ./dt/artifact-evaluation-master/GAVS+/GAVS+_dist_20160404/GAVS+_dist )
 
