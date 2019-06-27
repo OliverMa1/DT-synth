@@ -2,11 +2,11 @@
 
 path="$(dirname "$PWD")"/SAT_RPNI_FIXED/rational_safety
 path1="$(dirname "$PWD")"/scripts/data
-export LD_LIBRARY_PATH=../SAT_RPNI_FIXED/rational_safety/lib
 echo "$path"
 echo "$path1"
 run_the_test() {
   cd $path
+  export LD_LIBRARY_PATH=$LIBRARY_PATH:./lib/
   ant
   sed -i '239s/.*/ILearner learner = new RPNILearner(game.getAlphabetSize());/' $path1/Algorithm.java
   cp $path1/Algorithm.java $path/src/edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm.java
