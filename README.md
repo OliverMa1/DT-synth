@@ -88,6 +88,9 @@ Negative and Horn samples, the total time taken by the learner and the verificat
      program with execution details. The execution details includes number of rounds between teacher and learner, number of Positive, 
 Negative and Horn samples, the total time taken by the learner and the verification process. 
      
+The data is saved in the directory /scripts/Tabulated-Data
+
+
 Changing games
 --------------
 Most of the benchmarks are available as .json file in data/benchmarks.
@@ -106,7 +109,9 @@ A template and a README can be found in /benchmarks/smt2template/
 ## Running scalability benchmarks and comparison to other tools
 
 This section describes how to run the scalability benchmarks and compare the results to GAVS+ and TuLiP. 
-Note that this requires TuLiP to be installed:
+Note that this requires TuLiP to be installed, the instructions on how to install TuLiP can be found in /TuLip.
+
+The script to run the benchmarks can be executed as follows:
 
     sh runAll_Scalability.sh
     

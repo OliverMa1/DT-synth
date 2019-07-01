@@ -2,12 +2,12 @@
 
 path="$(dirname "$PWD")"/SAT_RPNI_FIXED/rational_safety
 path1="$(dirname "$PWD")"/scripts/data
-export LD_LIBRARY_PATH=/home/tacas19/dt/artifact-evaluation-master/SAT_RPNI_FIXED/rational_safety/lib/
 echo "$path"
 echo "$path1"
 run_the_test() {
   cd $path
   ant
+  export LD_LIBRARY_PATH=$LIBRARY_PATH:./lib/
   cp $path1/FixedpointAlgorithm.java $path/src/edu/illinois/automaticsafetygames/finitelybranching/main/FixedpointAlgorithm.java
   for x in 20 40 80 120 160 200 250 300; do 
     echo $x

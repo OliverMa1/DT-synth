@@ -1,7 +1,7 @@
 ---------- Statistics ----------
-Total learning time: 1.454 s
-Time teacher: 0.124 s
-Time learner: 1.330 s
+Total learning time: 1.593 s
+Time teacher: 0.122 s
+Time learner: 1.468 s
 Size of solution: 6
 Iterations: 77
 Positive Counterexamples: 1
@@ -29,4 +29,4 @@ digraph automaton {
 3 -> 2 [label="(1 - 1)"];
 4 -> 5 [label="(1 - 1)"];
 };
-1.454, 6, 1, 54, 10, 11
+1.593, 6, 1, 54, 10, 11

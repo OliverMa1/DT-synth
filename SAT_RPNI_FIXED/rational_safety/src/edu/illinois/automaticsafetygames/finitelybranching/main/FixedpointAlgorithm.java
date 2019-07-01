@@ -8,6 +8,7 @@ import dk.brics.automaton.Automaton;
 import edu.illinois.automaticsafetygames.finitelybranching.teacher.AutomatonTeacher;
 import edu.illinois.automaticsafetygames.games.IGame;
 import edu.illinois.automaticsafetygames.games.examples.FMCAD2015ExampleMixed;
+import edu.illinois.automaticsafetygames.games.examples.*;
 import edu.illinois.automaticsafetygames.tools.Tools;
 public class FixedpointAlgorithm {
 
@@ -93,16 +94,13 @@ public class FixedpointAlgorithm {
 	public static void main(String[] args) {
                 long startTime = System.nanoTime(); 
 
-		IGame game = new FMCAD2015ExampleMixed(0, 5, 1);
+IGame game = new GridWorldSequence1D(200);
 
 		Automaton result = computeFixedpoint(game.getSafeVertices(), game.getPlayer0Vertices(),
 				game.getPlayer1Vertices(), game.getTransitions(),
 				game.getAlphabetSize());
+                System.out.println(TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS) + " ");
 
-                System.out.println("\n" + TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS) );
-		 System.out.println(String.format(
-		 "%n%n========== RESULT ==========%n%n%1$s",
-		 Tools.automatonToDot(result)));
 
 
 	}

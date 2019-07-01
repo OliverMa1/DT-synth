@@ -1,0 +1,50 @@
+---------- Statistics ----------
+Total learning time: 2.824 s
+Time teacher: 0.260 s
+Time learner: 2.563 s
+Size of solution: 12
+Iterations: 142
+Positive Counterexamples: 1
+Negative counterexamples: 115
+Existential implication counterexamples: 14
+Universal implications counterexamples: 11
+
+
+========== RESULT ==========
+
+digraph automaton {
+0 [shape="circle"];
+1 [shape="circle"];
+2 [shape="circle"];
+3 [shape="doublecircle"];
+4 [shape="doublecircle"];
+5 [shape="circle", color="green"];
+6 [shape="circle"];
+7 [shape="circle"];
+8 [shape="circle"];
+9 [shape="circle"];
+10 [shape="circle"];
+11 [shape="circle"];
+0 -> 7 [label="(2 - 2)"];
+1 -> 11 [label="(2 - 2)"];
+1 -> 3 [label="(3 - 3)"];
+2 -> 2 [label="(0 - 0)"];
+2 -> 10 [label="(1 - 1)"];
+2 -> 1 [label="(2 - 2)"];
+2 -> 8 [label="(3 - 3)"];
+3 -> 3 [label="(0 - 0)"];
+3 -> 9 [label="(1 - 1)"];
+3 -> 7 [label="(2 - 2)"];
+5 -> 2 [label="(0 - 0)"];
+5 -> 6 [label="(1 - 1)"];
+6 -> 6 [label="(0 - 0)"];
+6 -> 11 [label="(2 - 2)"];
+6 -> 0 [label="(3 - 3)"];
+7 -> 4 [label="(2 - 2)"];
+8 -> 8 [label="(0 - 0)"];
+8 -> 4 [label="(1 - 2)"];
+9 -> 4 [label="(1 - 1)"];
+10 -> 0 [label="(3 - 3)"];
+11 -> 8 [label="(3 - 3)"];
+};
+2.824, 12, 1, 115, 14, 11
