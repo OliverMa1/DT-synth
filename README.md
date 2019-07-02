@@ -69,11 +69,11 @@ The following instructions describe how the benchmarks can be run on a machine t
 --------------
 The entire benchmark suite of the paper can be executed using the following command from inside the ./scripts directory:
 
-    sh runAll_Paper.sh
+    sh runAll_paper.sh
 
 If the script is not enabled run this command first:
 
-    chmod +x runAll_Paper.sh
+    chmod +x runAll_paper.sh
 
 The runAll.sh script will generate three log files in the directory /scripts/Tabulated-Data, as described below. 
   1. tabulated_infinite_dt.csv lists all the benchmark programs for the infinite arena benchmark using the dt-synth 
