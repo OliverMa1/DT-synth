@@ -21,6 +21,12 @@ run_the_test() {
     ant 
     java -cp ./bin/:./lib/automaton.jar:./lib/com.microsoft.z3.jar -Djava.library.path=./lib/ edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm > $path1/satInfinite/box.time
 
+  echo "Running Box Unlimited Game"
+  sed -i "227s/.*/IGame game = new BoxGameUnlimited();/" $path/src/edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm.java
+    ant 
+    java -cp ./bin/:./lib/automaton.jar:./lib/com.microsoft.z3.jar -Djava.library.path=./lib/ edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm > $path1/satInfinite/boxunlimited.time
+
+
   echo "Running Solitary Box Game"
   sed -i "227s/.*/IGame game = new SolitaryBoxGame();/" $path/src/edu/illinois/automaticsafetygames/finitelybranching/main/Algorithm.java
     ant
